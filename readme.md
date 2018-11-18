@@ -153,7 +153,7 @@ H - Exit windows mode
         umain()
         {
               .
-              .       Application
+              -     Application
               .
         }
 ```
@@ -290,12 +290,12 @@ H - Exit windows mode
              `--------------'                   `--------------'
                   |    | Event receipt               |    |
                   |    |                             |    |
-                  |    |    .--------------.         |    |
+                  |    |    .---------------       |    |
        m_Fork     |    `-<--|  S L E E P   |----<----'    | m_Exit
                   |         |              |              |
                   |         `--------------' Waiting for  |
                   |                           an  Event   |
-                  |         .--------------.              |
+                  |         .---------------            |
                   `------<--| U N U S E D  |----<---------'
                             |              |
                             `--------------'
@@ -386,7 +386,7 @@ H - Exit windows mode
   process. This is an asynchronous IPC.
 
 
-     .---------.            .---------.
+     .----------          .---------.
      |Process 1|            |Process 2|
      |    -    |            |    -    |
      |    _    |            |Init sig |
@@ -394,7 +394,7 @@ H - Exit windows mode
      |    _    |            |    _    |
      |    _    |            |    _    |                      .----------.
      |       ===Send Signal====>     ======Soft interrupt===>|  Signal  |
-     |    _    |            |    <-------------------.       |  action  |
+     |    _    |            |    <--------------------     |  action  |
      |    _    |            |    _    |              |       |    __    |
      |    _    |            |    _    |              |       |    __    |
      `---------'            `---------'              |       `----------'
@@ -671,110 +671,110 @@ API
 
 
 
-.   m_AdjustPTR            : Adjuste the child process HEAP pointer
-.   m_Alarm                : Create a delay without stopping the calling process
-.   m_Beep                 : Create a beep with a given frequency
-.   m_box                  : Draw box
-.   m_Chdir                : Change default directory
-.   m_ChgActiveSession     : Change the current session
-.   m_Close                : Close a file, device or pipe
-.   m_Countsem             : Get semaphore counter current value
-.   m_Creat                : Create a file
-.   m_Creatsem             : Create a semaphore
-.   m_CursorShape          : Modify the cursor shape
-.   m_DateTime             : Get time and date
-.   m_delwin               : Delete window
-.   m_Delsem               : Delete a semaphore
-.   m_Dup                  : Duplicate a file handle
-.   m_Dup2                 : Duplicate a file handle to a specified handle
-.   m_endwin               : Stop window mode to a given session
-.   m_Exec                 : Execute a new process
-.   m_Flush                : Flush the session video buffer attached to the calling process
-.   m_Fork                 : Create a child process
-.   m_Fprintf              : Print formatted output to a file, pipe or device
-.   m_Free                 : Release a memory block
-.   m_Fscanf               : Make formatted input from a file, pipe or device
-.   m_Getc                 : Read character from a file, pipe or device
-.   m_Getch                : Read character from STDIN
-.   m_Getche               : Read character with echo from STDIN
-.   m_Getcwd               : Get the calling process current working directory
-.   m_Getpos               : Get the cursor position
-.   m_GetPriority          : Get the calling process priority
-.   m_GetProcSessionHandle : Get the session handle corresponding to a given process
-.   m_Getpid               : Get the calling process ID
-.   m_GetProcName          : Get the calling process name
-.   m_Getppid              : Get the calling process parent ID
-.   m_GetSession           : Attach a new session to the calling process
-.   m_getyx                : Get current window (x,y) coordonnates
-.   m_Gotoxy               : Change current cursor position
-.   m_Gsleep               : Suspend the calling process for "n" ticks
-.   m_initscr              : Initialize window mode to a given session
-.   m_initStdscrPTR        : Initialize standard screen pointer
-.   m_Ioctl                : Control a character device
-.   m_Kill                 : Send a signal to a process
-.   m_Lock                 : Lock file access
-.   m_Lseek                : Change file pointer value
-.   m_Malloc               : Allocate a memory block from the global heap
-.   m_Mkdir                : Create directory
-.   m_Msgclr               : Clear message area
-.   m_Msgrdv               : Make a rendez vous with process(es)
-.   m_Msgsync              : Send a message
-.   m_Msgwait              : Wait for a message
-.   m_mvwin                : Move window
-.   m_newwin               : Create window
-.   m_Nice                 : Reduce the calling process priority
-.   m_Open                 : Open file or device
-.   m_Pause                : Wait for any signal
-.   m_Pipe                 : Create a pipe
-.   m_Printf               : Print formatted output to STDOUT
-.   m_Putc                 : Write character to a file, pipe or device
-.   m_Pwaitsem             : Wait for a resource with priority
-.   m_Read                 : Read a character from a file, pipe or device
-.   m_Remove               : Remove a specified file
-.   m_Resetsem             : Reset a semaphore counter
-.   m_Scanf                : Make formatted input from STDIN
-.   m_Seprintf             : Print formatted output to SESSION STDOUT
-.   m_SessionGetch         : Read a character from the STDIN of a given session
-.   m_Setcva               : Modify default video attribut
-.   m_Setdrv               : Change default drive
-.   m_SetErrHandler        : Set the default critical error handle
-.   m_SetProcName          : Set process name
-.   m_Sgetc                : Read character from a file, pipe or device with priority
-.   m_Sgetch               : Read character from STDIN with priority
-.   m_Sgetche              : Read character with echo from STDIN with priority
-.   m_Shutdown             : Exit to DOS
-.   m_Signal               : Initialize action to perform on signal reception
-.   m_Sigsem               : Release resource to other process
-.   m_Sleep                : Suspend the calling process for "n" seconds
-.   m_Sprintf              : Print formatted output to string
-.   m_Spy                  : SPY interpreter
-.   m_Sscanf               : Make formatted input from string
-.   m_Tell                 : Get current file pointer value
-.   m_touchwin             : Global window refresh
-.   m_Unlock               : Unlock access file
-.   m_Wait                 : Wait for child process completion
-.   m_Waitsem              : Wait for a resource
-.   m_Wakeup               : Wake up a suspended process
-.   m_Write                : Write to a file, pipe or device
-.   m_Exit                 : Terminate the calling process
-.   m_waddch               : Write character window buffer
-.   m_wautocrlf            : Enable automatic return on window right side
-.   m_wclrtobot            : Delete characters from current position to end of window buffer
-.   m_wclrtoeol            : Delete characters from current position to end of line
-.   m_wdelch               : Delete current position character
-.   m_wdeleteln            : Delete current line
-.   m_wecho                : Enable echo to window
-.   m_werase               : Purge window buffer
-.   m_wgetch               : Read character from STDIN in window mode
-.   m_winch                : Get window current position character
-.   m_winsch               : Insert character to window current position
-.   m_winsertln            : Insert line
-.   m_wmove                : Move window current position
-.   m_wpop                 : Pop window (make it invisible)
-.   m_wprintw              : Write formatted string to window
-.   m_wpush                : Push window (make it visible)
-.   m_wrefresh             : Refresh just modified part of window buffer
-.   m_wresize              : Redefine window's size and position
-.   m_wscroll              : Scroll window buffer
-.   m_wscanw               : Make formatted input from STDIN to window
-.   m_wselect              : Select window as ACTIVE (it gets the keyboard focus)
+- m_AdjustPTR            : Adjuste the child process HEAP pointer
+- m_Alarm                : Create a delay without stopping the calling process
+- m_Beep                 : Create a beep with a given frequency
+- m_box                  : Draw box
+- m_Chdir                : Change default directory
+- m_ChgActiveSession     : Change the current session
+- m_Close                : Close a file, device or pipe
+- m_Countsem             : Get semaphore counter current value
+- m_Creat                : Create a file
+- m_Creatsem             : Create a semaphore
+- m_CursorShape          : Modify the cursor shape
+- m_DateTime             : Get time and date
+- m_delwin               : Delete window
+- m_Delsem               : Delete a semaphore
+- m_Dup                  : Duplicate a file handle
+- m_Dup2                 : Duplicate a file handle to a specified handle
+- m_endwin               : Stop window mode to a given session
+- m_Exec                 : Execute a new process
+- m_Flush                : Flush the session video buffer attached to the calling process
+- m_Fork                 : Create a child process
+- m_Fprintf              : Print formatted output to a file, pipe or device
+- m_Free                 : Release a memory block
+- m_Fscanf               : Make formatted input from a file, pipe or device
+- m_Getc                 : Read character from a file, pipe or device
+- m_Getch                : Read character from STDIN
+- m_Getche               : Read character with echo from STDIN
+- m_Getcwd               : Get the calling process current working directory
+- m_Getpos               : Get the cursor position
+- m_GetPriority          : Get the calling process priority
+- m_GetProcSessionHandle : Get the session handle corresponding to a given process
+- m_Getpid               : Get the calling process ID
+- m_GetProcName          : Get the calling process name
+- m_Getppid              : Get the calling process parent ID
+- m_GetSession           : Attach a new session to the calling process
+- m_getyx                : Get current window (x,y) coordonnates
+- m_Gotoxy               : Change current cursor position
+- m_Gsleep               : Suspend the calling process for "n" ticks
+- m_initscr              : Initialize window mode to a given session
+- m_initStdscrPTR        : Initialize standard screen pointer
+- m_Ioctl                : Control a character device
+- m_Kill                 : Send a signal to a process
+- m_Lock                 : Lock file access
+- m_Lseek                : Change file pointer value
+- m_Malloc               : Allocate a memory block from the global heap
+- m_Mkdir                : Create directory
+- m_Msgclr               : Clear message area
+- m_Msgrdv               : Make a rendez vous with process(es)
+- m_Msgsync              : Send a message
+- m_Msgwait              : Wait for a message
+- m_mvwin                : Move window
+- m_newwin               : Create window
+- m_Nice                 : Reduce the calling process priority
+- m_Open                 : Open file or device
+- m_Pause                : Wait for any signal
+- m_Pipe                 : Create a pipe
+- m_Printf               : Print formatted output to STDOUT
+- m_Putc                 : Write character to a file, pipe or device
+- m_Pwaitsem             : Wait for a resource with priority
+- m_Read                 : Read a character from a file, pipe or device
+- m_Remove               : Remove a specified file
+- m_Resetsem             : Reset a semaphore counter
+- m_Scanf                : Make formatted input from STDIN
+- m_Seprintf             : Print formatted output to SESSION STDOUT
+- m_SessionGetch         : Read a character from the STDIN of a given session
+- m_Setcva               : Modify default video attribut
+- m_Setdrv               : Change default drive
+- m_SetErrHandler        : Set the default critical error handle
+- m_SetProcName          : Set process name
+- m_Sgetc                : Read character from a file, pipe or device with priority
+- m_Sgetch               : Read character from STDIN with priority
+- m_Sgetche              : Read character with echo from STDIN with priority
+- m_Shutdown             : Exit to DOS
+- m_Signal               : Initialize action to perform on signal reception
+- m_Sigsem               : Release resource to other process
+- m_Sleep                : Suspend the calling process for "n" seconds
+- m_Sprintf              : Print formatted output to string
+- m_Spy                  : SPY interpreter
+- m_Sscanf               : Make formatted input from string
+- m_Tell                 : Get current file pointer value
+- m_touchwin             : Global window refresh
+- m_Unlock               : Unlock access file
+- m_Wait                 : Wait for child process completion
+- m_Waitsem              : Wait for a resource
+- m_Wakeup               : Wake up a suspended process
+- m_Write                : Write to a file, pipe or device
+- m_Exit                 : Terminate the calling process
+- m_waddch               : Write character window buffer
+- m_wautocrlf            : Enable automatic return on window right side
+- m_wclrtobot            : Delete characters from current position to end of window buffer
+- m_wclrtoeol            : Delete characters from current position to end of line
+- m_wdelch               : Delete current position character
+- m_wdeleteln            : Delete current line
+- m_wecho                : Enable echo to window
+- m_werase               : Purge window buffer
+- m_wgetch               : Read character from STDIN in window mode
+- m_winch                : Get window current position character
+- m_winsch               : Insert character to window current position
+- m_winsertln            : Insert line
+- m_wmove                : Move window current position
+- m_wpop                 : Pop window (make it invisible)
+- m_wprintw              : Write formatted string to window
+- m_wpush                : Push window (make it visible)
+- m_wrefresh             : Refresh just modified part of window buffer
+- m_wresize              : Redefine window's size and position
+- m_wscroll              : Scroll window buffer
+- m_wscanw               : Make formatted input from STDIN to window
+- m_wselect              : Select window as ACTIVE (it gets the keyboard focus)
