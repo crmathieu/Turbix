@@ -1,0 +1,4 @@
+essai.obj : essai.c
+
+aessai.obj : aessai.asm
+

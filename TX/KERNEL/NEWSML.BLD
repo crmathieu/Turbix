@@ -1,0 +1,9 @@
+txsml
+y
++xenstart+perr+Bcreate+b_sched+Bkill+start+init &
++dosopen+dosread+qlist+message+semaph+nconsole+newmeml+clock+it_hard &
++it_dos+iodos+b_cxtswp+system+xvideo+video+tty+io3 &
++printf+signal+scanf+subprn+msg_us+device+fspipe+fdesc &
++curs
+txsml.lst
+

@@ -1,0 +1,307 @@
+C:\TX\US\BCREATE.C
+Turbo C  Version 2.0  Copyright (c) 1987, 1988 Borland International
+c:\tx\us\bcreate.c:
+
+        Available memory 141204
+C:\TX\US\MESSAGE.C
+Turbo C  Version 2.0  Copyright (c) 1987, 1988 Borland International
+c:\tx\us\message.c:
+
+        Available memory 157924
+C:\TX\US\MSG_US.C
+Turbo C  Version 2.0  Copyright (c) 1987, 1988 Borland International
+c:\tx\us\msg_us.c:
+
+        Available memory 171002
+C:\TX\US\SIGNAL.C
+Turbo C  Version 2.0  Copyright (c) 1987, 1988 Borland International
+c:\tx\us\signal.c:
+
+        Available memory 148716
+C:\TX\US\B_SCHED.C
+Turbo C  Version 2.0  Copyright (c) 1987, 1988 Borland International
+c:\tx\us\b_sched.c:
+Warning c:\tx\us\b_sched.c 292: Parameter 'forcePUSHBP' is never used in function _kernelMode
+Warning c:\tx\us\b_sched.c 304: Parameter 'forcePUSHBP' is never used in function _userMode
+Warning c:\tx\us\b_sched.c 379: Undefined structure 'window'
+
+        Available memory 142354
+C:\TX\US\SUSPEND.C
+Turbo C  Version 2.0  Copyright (c) 1987, 1988 Borland International
+c:\tx\us\suspend.c:
+
+        Available memory 158312
+C:\TX\US\INIT.C
+Turbo C  Version 2.0  Copyright (c) 1987, 1988 Borland International
+c:\tx\us\init.c:
+Warning c:\tx\us\init.c 252: Non-portable pointer assignment in function getListOfList
+Warning c:\tx\us\init.c 300: Undefined structure 'window'
+
+        Available memory 129972
+C:\TX\US\QLIST.C
+Turbo C  Version 2.0  Copyright (c) 1987, 1988 Borland International
+c:\tx\us\qlist.c:
+
+        Available memory 155408
+C:\TX\US\BKILL.C
+Turbo C  Version 2.0  Copyright (c) 1987, 1988 Borland International
+c:\tx\us\bkill.c:
+
+        Available memory 154092
+C:\TX\US\START.C
+Turbo C  Version 2.0  Copyright (c) 1987, 1988 Borland International
+c:\tx\us\start.c:
+
+        Available memory 160154
+C:\TX\US\IO3.C
+Turbo C  Version 2.0  Copyright (c) 1987, 1988 Borland International
+c:\tx\us\io3.c:
+Warning c:\tx\us\io3.c 545: Undefined structure 'window'
+
+        Available memory 136732
+C:\TX\US\PERR.C
+Turbo C  Version 2.0  Copyright (c) 1987, 1988 Borland International
+c:\tx\us\perr.c:
+Warning c:\tx\us\perr.c 53: Redefinition of 'NSYSERR' is not identical
+
+        Available memory 175276
+C:\TX\US\DEVICE.C
+Turbo C  Version 2.0  Copyright (c) 1987, 1988 Borland International
+c:\tx\us\device.c:
+Warning c:\tx\us\device.c 278: Undefined structure 'window'
+
+        Available memory 139534
+C:\TX\US\SEMAPH.C
+Turbo C  Version 2.0  Copyright (c) 1987, 1988 Borland International
+c:\tx\us\semaph.c:
+
+        Available memory 153184
+C:\TX\US\XENSTART.C
+Turbo C  Version 2.0  Copyright (c) 1987, 1988 Borland International
+c:\tx\us\xenstart.c:
+Warning c:\tx\us\xenstart.c 389: Undefined structure 'window'
+
+        Available memory 128478
+C:\TX\US\UTASK.C
+Turbo C  Version 2.0  Copyright (c) 1987, 1988 Borland International
+c:\tx\us\utask.c:
+Warning c:\tx\us\utask.c 168: 'argv' is assigned a value which is never used in function umain
+Warning c:\tx\us\utask.c 184: Possibly incorrect assignment in function setlongjmp
+
+        Available memory 133950
+C:\TX\US\NCONSOLE.C
+Turbo C  Version 2.0  Copyright (c) 1987, 1988 Borland International
+c:\tx\us\nconsole.c:
+Warning c:\tx\us\nconsole.c 110: Suspicious pointer conversion in function _VIOinit
+
+        Available memory 111718
+C:\TX\US\PRINTF.C
+Turbo C  Version 2.0  Copyright (c) 1987, 1988 Borland International
+c:\tx\us\printf.c:
+
+        Available memory 127606
+C:\TX\US\SUBPRN.C
+Turbo C  Version 2.0  Copyright (c) 1987, 1988 Borland International
+c:\tx\us\subprn.c:
+
+        Available memory 173354
+C:\TX\US\SCANF.C
+Turbo C  Version 2.0  Copyright (c) 1987, 1988 Borland International
+c:\tx\us\scanf.c:
+Warning c:\tx\us\scanf.c 259: Unreachable code in function _Scnf
+Warning c:\tx\us\scanf.c 373: 'sign' is assigned a value which is never used in function _Scnf
+Warning c:\tx\us\scanf.c 373: 'fmax' is assigned a value which is never used in function _Scnf
+Warning c:\tx\us\scanf.c 373: 'fill' is assigned a value which is never used in function _Scnf
+Warning c:\tx\us\scanf.c 373: Undefined structure 'window'
+
+        Available memory 122542
+C:\TX\US\CLOCK.C
+Turbo C  Version 2.0  Copyright (c) 1987, 1988 Borland International
+c:\tx\us\clock.c:
+
+        Available memory 140700
+C:\TX\US\NEWMEML.C
+Turbo C  Version 2.0  Copyright (c) 1987, 1988 Borland International
+c:\tx\us\newmeml.c:
+Warning c:\tx\us\newmeml.c 272: Suspicious pointer conversion in function _stackAlloc
+
+        Available memory 149788
+C:\TX\US\TTY.C
+Turbo C  Version 2.0  Copyright (c) 1987, 1988 Borland International
+c:\tx\us\tty.c:
+Warning c:\tx\us\tty.c 271: Suspicious pointer conversion in function _writecopy
+Warning c:\tx\us\tty.c 272: Suspicious pointer conversion in function _writecopy
+Warning c:\tx\us\tty.c 277: Suspicious pointer conversion in function _writecopy
+Warning c:\tx\us\tty.c 279: Suspicious pointer conversion in function _writecopy
+Warning c:\tx\us\tty.c 360: Undefined structure 'window'
+
+        Available memory 141526
+C:\TX\US\SPYTAB.C
+Turbo C  Version 2.0  Copyright (c) 1987, 1988 Borland International
+c:\tx\us\spytab.c:
+
+        Available memory 173862
+C:\TX\US\SHELL.C
+Turbo C  Version 2.0  Copyright (c) 1987, 1988 Borland International
+c:\tx\us\shell.c:
+Warning c:\tx\us\shell.c 374: Parameter 'pr' is never used in function _writePrompt
+Warning c:\tx\us\shell.c 374: Undefined structure 'window'
+
+        Available memory 115404
+C:\TX\US\SPYCOM.C
+Turbo C  Version 2.0  Copyright (c) 1987, 1988 Borland International
+c:\tx\us\spycom.c:
+Warning c:\tx\us\spycom.c 273: Suspicious pointer conversion in function c_ps
+Warning c:\tx\us\spycom.c 396: Parameter 'argv' is never used in function c_more
+Warning c:\tx\us\spycom.c 396: Parameter 'argc' is never used in function c_more
+Warning c:\tx\us\spycom.c 566: Suspicious pointer conversion in function c_proc
+Warning c:\tx\us\spycom.c 568: Suspicious pointer conversion in function c_proc
+
+        Available memory 122046
+C:\TX\US\WIND1.C
+Turbo C  Version 2.0  Copyright (c) 1987, 1988 Borland International
+c:\tx\us\wind1.c:
+
+        Available memory 113486
+C:\TX\US\WIND2.C
+Turbo C  Version 2.0  Copyright (c) 1987, 1988 Borland International
+c:\tx\us\wind2.c:
+
+        Available memory 119536
+C:\TX\US\WDEMO.C
+Turbo C  Version 2.0  Copyright (c) 1987, 1988 Borland International
+c:\tx\us\wdemo.c:
+Warning c:\tx\us\wdemo.c 179: 'no_fils' is assigned a value which is never used in function wdemo
+Warning c:\tx\us\wdemo.c 179: Parameter 'argv' is never used in function wdemo
+Warning c:\tx\us\wdemo.c 179: Parameter 'argc' is never used in function wdemo
+Warning c:\tx\us\wdemo.c 201: 'no_fils' is assigned a value which is never used in function wdemo1
+Warning c:\tx\us\wdemo.c 201: Parameter 'argv' is never used in function wdemo1
+Warning c:\tx\us\wdemo.c 201: Parameter 'argc' is never used in function wdemo1
+
+        Available memory 120506
+C:\TX\US\FDESC.C
+Turbo C  Version 2.0  Copyright (c) 1987, 1988 Borland International
+c:\tx\us\fdesc.c:
+Warning c:\tx\us\fdesc.c 462: Undefined structure 'LOL'
+
+        Available memory 140536
+C:\TX\US\DOSOPEN.C
+Turbo C  Version 2.0  Copyright (c) 1987, 1988 Borland International
+c:\tx\us\dosopen.c:
+
+        Available memory 145030
+C:\TX\US\DOSREAD.C
+Turbo C  Version 2.0  Copyright (c) 1987, 1988 Borland International
+c:\tx\us\dosread.c:
+Warning c:\tx\us\dosread.c 230: 'countI' is assigned a value which is never used in function _Fwrite
+
+        Available memory 149004
+C:\TX\US\IODOS.C
+Turbo C  Version 2.0  Copyright (c) 1987, 1988 Borland International
+c:\tx\us\iodos.c:
+Warning c:\tx\us\iodos.c 196: Parameter 'ss' is never used in function _checkINT15
+Warning c:\tx\us\iodos.c 196: Parameter 'subfunc' is never used in function _checkINT15
+Warning c:\tx\us\iodos.c 261: 'pid' is assigned a value which is never used in function _3checkINT15
+Warning c:\tx\us\iodos.c 261: Parameter 'ss' is never used in function _3checkINT15
+Warning c:\tx\us\iodos.c 321: 'finES' is assigned a value which is never used in function _2checkINT15
+Warning c:\tx\us\iodos.c 321: Parameter 'ss' is never used in function _2checkINT15
+Warning c:\tx\us\iodos.c 393: Parameter 'bp' is never used in function _int24
+Warning c:\tx\us\iodos.c 393: Parameter 'si' is never used in function _int24
+Warning c:\tx\us\iodos.c 425: Non-portable pointer assignment in function _verify_floppy
+Warning c:\tx\us\iodos.c 447: 'val' is assigned a value which is never used in function _verify_floppy
+Warning c:\tx\us\iodos.c 447: Undefined structure 'LOL'
+
+        Available memory 138038
+C:\TX\US\LIBC.C
+Turbo C  Version 2.0  Copyright (c) 1987, 1988 Borland International
+c:\tx\us\libc.c:
+
+        Available memory 178268
+C:\TX\US\XVIDEO.C
+Turbo C  Version 2.0  Copyright (c) 1987, 1988 Borland International
+c:\tx\us\xvideo.c:
+Warning c:\tx\us\xvideo.c 26: Non-portable pointer conversion
+Warning c:\tx\us\xvideo.c 73: Suspicious pointer conversion in function _init_vs
+Warning c:\tx\us\xvideo.c 73: Suspicious pointer conversion in function _init_vs
+
+        Available memory 112336
+C:\TX\US\GRLIB.C
+Turbo C  Version 2.0  Copyright (c) 1987, 1988 Borland International
+c:\tx\us\grlib.c:
+Warning c:\tx\us\grlib.c 289: Undefined structure 'window'
+
+        Available memory 137656
+C:\TX\US\FMEDIUM.C
+Turbo C  Version 2.0  Copyright (c) 1987, 1988 Borland International
+c:\tx\us\fmedium.c:
+
+        Available memory 153560
+C:\TX\US\FSPIPE.C
+Turbo C  Version 2.0  Copyright (c) 1987, 1988 Borland International
+c:\tx\us\fspipe.c:
+
+        Available memory 152028
+C:\TX\US\SYSTEM.ASM
+Microsoft (R) Macro Assembler Version 5.10A
+Copyright (C) Microsoft Corp 1981, 1989.  All rights reserved.
+
+
+  48766 + 168716 Bytes symbol space free
+
+      0 Warning Errors
+      0 Severe  Errors
+C:\TX\US\IT_HARD.ASM
+Microsoft (R) Macro Assembler Version 5.10A
+Copyright (C) Microsoft Corp 1981, 1989.  All rights reserved.
+
+
+  48864 + 168619 Bytes symbol space free
+
+      0 Warning Errors
+      0 Severe  Errors
+C:\TX\US\IT_DOS.ASM
+Microsoft (R) Macro Assembler Version 5.10A
+Copyright (C) Microsoft Corp 1981, 1989.  All rights reserved.
+
+
+  48896 + 168587 Bytes symbol space free
+
+      0 Warning Errors
+      0 Severe  Errors
+C:\TX\US\VIDEO.ASM
+Microsoft (R) Macro Assembler Version 5.10A
+Copyright (C) Microsoft Corp 1981, 1989.  All rights reserved.
+
+
+  48850 + 168631 Bytes symbol space free
+
+      0 Warning Errors
+      0 Severe  Errors
+C:\TX\US\GR.ASM
+Microsoft (R) Macro Assembler Version 5.10A
+Copyright (C) Microsoft Corp 1981, 1989.  All rights reserved.
+
+
+  48856 + 162480 Bytes symbol space free
+
+      0 Warning Errors
+      0 Severe  Errors
+C:\TX\US\CURS.ASM
+Microsoft (R) Macro Assembler Version 5.10A
+Copyright (C) Microsoft Corp 1981, 1989.  All rights reserved.
+
+
+  48860 + 168622 Bytes symbol space free
+
+      0 Warning Errors
+      0 Severe  Errors
+C:\TX\US\B_CXTSWP.ASM
+Microsoft (R) Macro Assembler Version 5.10A
+Copyright (C) Microsoft Corp 1981, 1989.  All rights reserved.
+
+
+  48858 + 170672 Bytes symbol space free
+
+      0 Warning Errors
+      0 Severe  Errors
+

@@ -1,0 +1,180 @@
+
+                  ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+                  ³     INTERFACE FEATURES       ³
+                  ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+
+
+    EDITOR FEATURES
+    ---------------
+
+
+    BLOCK
+    Mark begin  block ............................. ^K^B
+    Mark end of block ............................. ^K^K
+    Copy block to current position ................ ^K^C
+    Delete block .................................. ^K^Y
+    Move block .................................... ^K^V
+    Hide block .................................... ^K^H
+    Read block from paste file .................... ^K^R
+    Write block to paste file ..................... ^K^W
+
+
+    LINE
+    Erase current character ....................... ^G
+    Erase previous character ...................... ^H
+    Next right character .......................... ^D or arrow right
+    Next left character ........................... ^S or arrow left
+    Previous line ................................. ^E or arrow up
+    Next line ..................................... ^X or arrow down
+    Return without moving cursor .................. ^N
+    Word backward ................................. ^A
+    Word foreward ................................. ^F
+    Delete from current position to end of Word ... ^T
+    Delete current line ........................... ^Y
+    Delete from current position to end of line ... ^Q^Y
+    Look right side of line ....................... ^J
+
+
+    FILE
+    Previous page ................................. Page up
+    Next page ..................................... Page down
+    Top of page ................................... ^Q^E
+    End of page ................................... ^Q^X
+    Top of file ................................... ^Q^R or ^Page up
+    End of file ................................... ^Q^C or ^Page down
+
+
+    MOUSE
+    Scroll to top ...................... Left button on upper side
+    Scroll to bottom.................... Left button on lower side
+    Scroll to right .................... Left button on right side
+    Scroll to left ..................... Left button on left side
+    Page up ............................ Right button on upper side
+    Page down .......................... Right button on lower side
+    Line end ........................... Right button on right side
+    Line home .......................... Right button on left side
+    Mark begin block ................... Left button click in file
+    Mark end of block .................. define the block with left
+                                         button hold until release
+
+    NOTE
+    You can copy example from help item to user file through
+    the paste mechanism (Write / Read block).
+
+
+    MENU FEATURES
+    -------------
+
+     1         2          3             4          5         6          7
+ ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+ ³  File      Edit      Compile      Project      Run      Option      Help ³
+ ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+    FILE MENU
+    ÚÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+    ³ Open...        ³   - Open or creat a file
+    ³ previous File  ³   - Load the previous file
+    ³ Group...       ³   - Access up to 16 most recent files used
+    ÃÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´
+    ³ Purge group    ³   - Purge files from group
+    ÃÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´
+    ³ Save           ³   - Save current file with its current name
+    ³ save As...     ³   - Save current file under a given name
+    ÃÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´
+    ³ Change dir...  ³   - Change the current directory
+    ³ Dos            ³   - Start a DOS shell with a large amount of memory
+    ³ Quit           ³   - Quit Multitasking kernel for Dos Interface
+    ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+
+    EDIT MENU
+    ÚÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+    ³ Editor            ³ - Enter to edit window
+    ÃÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´
+    ³ Find string...    ³ - Find a character string
+    ³ find Next         ³ - Next occurrence of character string
+    ³ Replace string... ³ - Replace a character string by another string
+    ÃÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´
+    ³ Copy block        ³ - Copy a defined block to the cursor position
+    ³ delete Block      ³ - Delete a defined block
+    ³ Move block        ³ - Move a defined block to the cursor position
+    ÃÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´
+    ³ Write block       ³ - Copy a defined block to the paste file
+    ³ read blOck        ³ - Copy the paste file contents to the cursor position
+    ³ pAste file...     ³ - Change paste file name
+    ÃÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´
+    ³ Line length...    ³ - maximum number of characters in a line
+    ³ Goto line...      ³ - Go to a line number
+    ³ tAbulation...     ³ - Modify tabulation value
+    ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+    COMPILE MENU
+    ÚÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+    ³ Compile         ³  - Compile the current source file
+    ³ Assemble        ³  - Assemble the current source file
+    ³ Link to TURBIX  ³  - Link current object file with the kernel
+    ³ Show results    ³  - Display compile, assemble or link results
+    ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+    PROJECT MENU
+    ÚÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+    ³ Project file name...   ³ 1 Enter project file name
+    ÃÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´
+    ³ Update REF database    ³ 2 Create a DATA BASE referencing the use of functions
+    ³ Go to declaration...   ³ 3 Go to a function declaration
+    ³ Function references... ³ 4 Display the source files using a
+    ÃÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´   given function
+    ³ Built project          ³ 5 Start the make utility for the project
+    ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ   file previously entered
+
+        In order to respect C and Assembler convention calls, options 3
+        and 4 use the type of the file loaded by the editor. When an
+        assemble file is loaded, they assume that function names have to
+        be completely entered (with an underscore). If a C file is loaded,
+        no underscore is needed.
+
+
+    RUN MENU
+    ÚÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿   Ú Run the project defined in the
+    ³ run Project     ³ ÄÄÙ Project Menu
+    ³ run Current exe ³ ÄÄÄ Run exe file corresponding to the
+    ³ Command line... ³ ÄÄ¿ current source file
+    ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ   À Enter command line before starting
+                            the executable file
+
+
+
+    OPTION MENU
+    ÚÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+    ³ Installation... ³ - Open installation menu
+    ³ Parameters...   ³ - Enter TI parameters
+    ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+
+    HELP MENU
+    ÚÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+    ³ Help on help         ³ - Give all manners to get help
+    ³ About TURBIX         ³ - TURBIX features
+    ³ Editor features      ³ - Editor and Menu features
+    ³ Make syntaxis        ³ - Rules to write a project file
+    ³ Library help index...³ - Display the TURBIX system calls
+    ³ ASCII characters Set ³ - Ascii characters tables
+    ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+
+
+    INSTALLATION MENU
+    ÚÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+    ³ Compiler/linker directory...     ³ - Turbo C and Assembler directories
+    ³ Assembler directory...           ³   Default values are C:\TC
+    ³ C iNclude directory...           ³                      C:\TASM
+    ³ C Librairies directory...        ³                      C:\TC\INCLUDE
+    ÃÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´                      C:\TC\LIB
+    ³ TURBIX include/User directory... ³ - TURBIX directories
+    ³ TURBIX Libraries directory...    ³   Default values are C:\TX\USR
+    ³ Help files directory...          ³                      C:\TX\KERNEL
+    ÃÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´                      C:\TX\TI\HELP
+    ³ Save configuration...            ³
+    ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+

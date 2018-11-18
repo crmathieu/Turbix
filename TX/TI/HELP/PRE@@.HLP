@@ -1,0 +1,656 @@
+
+                  здддддддддддддддддддддддддддддддддддддд©
+                  Ё     TURBIX PROGRAMMING OVERVIEW      Ё
+                  юдддддддддддддддддддддддддддддддддддддды
+
+
+        INTRODUCTION
+        ------------
+        A - Terminology
+        B - Package contents
+        C - Kernel initialization
+        D - Return to DOS
+        E - Creating an application
+        F - System processes
+
+        PROCESS MANAGEMENT
+        ------------------
+        A - Introduction
+        B - Process states
+        C - Process scheduling
+        D - Inter process communication
+        E - Process synchronization
+
+        INPUT/OUTPUT
+        ------------
+        A - Terminology
+        B - Overview
+
+        WINDOWS
+        -------
+        A - Introduction
+        B - Enter windows mode
+        C - Window creation
+        D - Window focus
+        E - Window refresh
+        F - Window deletion
+        G - Standard screen
+        H - Exit windows mode
+
+        CONCLUSION
+        ----------
+
+
+дддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд
+
+
+  Forward
+  -------
+
+  Today, micro computers operating systems begin to be more efficient
+  and powerful. These systems allow to run several processes at the same
+  time, to synchronize their execution with adapted tools, and to control
+  possible resource conflicts between processes.
+
+  Although such system exist, they need strong configuration and are
+  complicated to program, and that's why programming multitasking software
+  still remains a matter of software companies.
+
+  Because programming involves concepts and tools which need more and more
+  skills, TURBIX can be considered as the best way to start learning how
+  these systems work and to be able to write programs using these concepts.
+
+  TURBIX is a library including a multitasking kernel which will allow you
+  to get skills on multitasking programming. The concepts provided are
+  the same as those available on multitasking operating systems. This
+  package enables the writing of multitasking applications in "C" language
+  and binds it with the kernel. The result is a DOS multitasking program.
+
+
+дддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд
+
+
+  INTRODUCTION
+  ------------
+
+  A) TERMINOLOGY
+
+  The KERNEL is a set of procedures which control CPU sharing,
+  contexts swapping, process creation, process deletion, files
+  access, semaphores, signals, messages and pipes mechanisms.
+
+  This mutitasking kernel for Dos application (TURBIX) encompasses
+  the kernel and system calls that can be used by a process.
+
+  A PROCESS is a piece of code which has begun to run with its own
+  stack. A process owns only its local variables which are stored on
+  the stack. All processes share the same global variables, including
+  the kernel variables. If you decide to declare a variable as global
+  in your program, be aware that every other processes will be able to
+  access it.
+
+  Do not forget that the final result is a Dos executable file, which
+  encompasses the kernel and your pieces of code and variables. The scope
+  of the multitasking is just your program.
+
+
+  B) PACKAGE COMPONENTS
+
+  This package is designed to work with the BORLAND C compiler, but
+  doesn't include this compiler. The LARGE memory model is the only
+  one supported, therefore you'll have to install LARGE TURBO C library.
+
+
+  C) KERNEL INITIALIZATION
+
+  When a TURBIX application starts, the kernel gets all the available
+  DOS memory, initializes its own memory management and builds the
+  first process.
+
+  This first process has to create system tables, initialize file
+  system, start other system processes and finally start YOUR
+  application. After doing this business, the first process enters an
+  infinite loop that will keep CPU resource when no other process will
+  be able to run.
+
+
+  D) RETURN TO DOS
+
+  To stop the kernel and return to the DOS interpreter, the user
+  has to type CTRL+RETURN.
+  It is possible to return to DOS by program with the "m_Shutdown"
+  system call.
+
+
+
+  E) CREATE AN APPLICATION
+
+  The user application entry point is called "umain" (User Main).
+  if you forget it and use "main", a link error will occur.
+
+  The programmer has TWO possibilities
+
+  1)    Create his application in the user entry point "umain". In
+        such case, there is no possibility to control what the
+        process does.
+
+                   зддддддддддддддддддд©
+                   Ё    APPLICATION    Ё
+                   цддддддддддддддддддд╢
+                   Ё    K E R N E L    Ё
+                   юддддддддддддддддддды
+
+        umain()
+        {
+              .
+              .       Application
+              .
+        }
+
+
+  2)    Create his application through the spy interpreter.
+        In this case, you can easily check how the application
+        is working, controlling its STATE, I/O, EVENT which causes
+        suspension etc...
+
+        To do so, you just have to call the spy interpreter
+        in interactive mode from the user entry point.
+
+        This spy provides a set of commands which are useful
+        to see resource states and system tools. When the spy
+        prompt ('#') appears, type "help" to get the available
+        commands.
+
+        In this command set, the "user_app" command is the
+        user entry point through the spy interpreter.
+
+        So, creating an application and testing it through the
+        SPY consist of:
+
+            1) Creating the application under the name "user_app"
+            2) Calling the spy interpreter in the user entry "umain"
+            3) Typing the "session" command to create a spy session
+            4) Typing "user_app" to start the user application
+            5) At any time, swapping from one session to another and
+               using spy command in the spy session to check how the
+               application works.
+
+              здддддддддбдддддддддбдддддддддбддддддддд© available
+              Ёuser_app Ёspy tool1Ёspy tool2Ёspy toolNЁ commands
+              цдддддддддадддддддддадддддддддаддддддддд╢
+              Ё                 S P Y                 Ё
+              цддддддддддддддддддддддддддддддддддддддд╢
+              Ё              K E R N E L              Ё
+              юддддддддддддддддддддддддддддддддддддддды
+
+          #include "const.h"
+          umain(argc, argv)
+          int argc;
+          char *argv[];
+          {
+              extern int m_Spy(); /* spy declaration */
+              char *p[3];
+              int noUse;
+
+              /* ... start the spy interpreter in interactive mode */
+              if (m_Fork() == 0) {
+                  p[0] = "spy";
+                  p[1] = "-i";
+                  p[2] = NULL;
+                  m_Exec(m_Spy, p);
+              }
+              m_Wait(&noUse);
+          }
+
+          /* user application that will be
+           * called by the SPY
+           */
+          user_app(argc, argv)
+          int argc;
+          char *argv[];
+          {
+
+                /* User program */
+                        .
+                        .
+                        .
+
+                m_Exit(0);     /* return to Spy */
+          }
+
+
+
+  F) SYSTEM PROCESSES
+
+  The kernel creates through the first process several processes
+  (called system processes). These processes are used to control
+  resource access and to manage hardware interrupts.
+
+
+дддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд
+
+
+  PROCESS MANAGEMENT
+  ------------------
+
+  A) INTRODUCTION
+
+  Each process is known through an integer value called Process
+  IDentifier (or PID). This value is used by the kernel to update
+  internal process variables (opened files, Parent process PID,
+  state etc...). A process works with TWO stacks: a USER stack
+  on which local variables are defined and a KERNEL stack used
+  with some system calls. The kernel doesn't check stack overflow,
+  so the programmer will have to be careful with the size of local
+  variables. (Stack size = 4096 bytes)
+
+  Because some jobs are more important than others, each process owns
+  a given priority level. The processes created by the user have the
+  same priority level, but this can be modified with the "m_Nice"
+  system call that reduces the priority of a given process.
+
+
+  B) PROCESS STATES
+
+  Each process behavior is defined by an internal process variable; its
+  contents describes the Process state.
+
+        There are THREE possible values:
+
+        -  READY        The process is able to run but another
+                        process is using the CPU
+
+        -  RUNNING      The process is using the CPU
+
+        -  SLEEP        The process is waiting for an event, a
+                        resource availability or a delay
+
+  Note:
+  There is a fourth state that corresponds to an uncreated process.
+
+
+
+  A process shifts from one state to another according to
+  this diagram:
+
+                              System call or
+             здддддддддддддд© clock interrupt   здддддддддддддд©
+             Ё  R E A D Y   цддддддддд>ддддддддд╢ R U N N I N GЁ
+             Ё              цддддддддд<ддддддддд╢              Ё
+             юддддбддддбдддды                   юддддбддддбдддды
+                  Ё    Ё Event receipt               Ё    Ё
+                  Ё    Ё                             Ё    Ё
+                  Ё    Ё    здддддддддддддд©         Ё    Ё
+       m_Fork     Ё    юд<дд╢  S L E E P   цдддд<дддды    Ё m_Exit
+                  Ё         Ё              Ё              Ё
+                  Ё         юдддддддддддддды Waiting for  Ё
+                  Ё                           an  Event   Ё
+                  Ё         здддддддддддддд©              Ё
+                  юдддддд<дд╢ U N U S E D  цдддд<ддддддддды
+                            Ё              Ё
+                            юдддддддддддддды
+
+
+
+
+
+  A process will enter a SLEEP state when waiting for one of
+  the following events:
+
+
+  EV_SEM          Resource availability
+  EV_ZOM          Parent process acknowledgement
+  EV_MESS         Message receipt
+  EV_TMESS        Message receipt with time out
+  EV_PAUSE        Signal receipt
+  EV_CLOCK        End of delay
+  EV_PIPE         Pipe availability
+  EV_WAIT         End of child signal
+  EV_LOCK         File unlocking
+
+
+  C) PROCESS SCHEDULING
+
+  The kernel updates a linked list made of all the READY processes.
+  These processes are put on the list from the highest priority
+  level down to the lowest.
+
+  Because priorities are static, the kernel doesn't guarantee that
+  all the READY processes will be able to get the CPU after a given
+  amount of time. A process with a low priority level won't run until
+  there will be no more higher priority level process on the list.
+
+  The kernel is PREEMPTIVE, which means that it is able to interrupt
+  the running process and resume another process even though processes
+  don't make system calls. When a process starts running, it owns the CPU
+  for a given slice of time called TIMESLICE. Between two timeslices, the
+  kernel doesn't schedule any process.
+
+
+  The kernel changes the running process when
+
+
+  1)      The running process makes a system call
+          that causes a wait on event
+          (ex: I/O operation)
+
+  2)      The running process reaches the end of a
+          timeslice and there are other READY processes
+          with an equal or higher priority level than
+          the current process.
+
+
+  For a given priority level, processes are scheduled according to
+  the ROUND ROBIN algorithm.
+
+  Note:
+  The first process is always in READY state, but its priority level
+  is the lowest possible. So, the first process will get the CPU when
+  no other process will be ready to run.
+
+
+
+
+  D) INTER PROCESS COMMUNICATION
+
+
+  If a process can be considered as an independent thread of code, it
+  must be able to exchange information with other processes. According
+  to the kind of information and data, the programmer will use MESSAGES,
+  SIGNALS or PIPES to create an Inter Process Communication.
+
+
+  1)    Messages
+
+  Messages mechanism is a simple, easy to use tool. It consists of
+  sending and receiving ONE BYTE messages. Receiving processes will
+  wait for a message for a given amount of time or indefinitely. This
+  is a synchronous IPC.
+
+  2)    Signals
+
+  Signals mechanism may refer to interrupt mechanism. When a process
+  initializes an action to a given signal (with the m_Signal system
+  call), this action will be able to start at any time during the
+  process execution as soon as the signal will be received by the
+  process. This is an asynchronous IPC.
+
+
+     зддддддддд©            зддддддддд©
+     ЁProcess 1Ё            ЁProcess 2Ё
+     Ё    -    Ё            Ё    -    Ё
+     Ё    _    Ё            ЁInit sig Ё
+     Ё    _    Ё            Ё ACTION  Ё
+     Ё    _    Ё            Ё    _    Ё
+     Ё    _    Ё            Ё    _    Ё                      здддддддддд©
+     Ё       ===Send Signal====>     ======Soft interrupt===>Ё  Signal  Ё
+     Ё    _    Ё            Ё    <ддддедддддддддддддд©       Ё  action  Ё
+     Ё    _    Ё            Ё    _    Ё              Ё       Ё    __    Ё
+     Ё    _    Ё            Ё    _    Ё              Ё       Ё    __    Ё
+     юддддддддды            юддддддддды              Ё       юддддбддддды
+                                                     юдддддддддддды
+
+
+
+  3)    Pipes
+
+  A pipe is a buffer where DATA can be transferred in FIFO order,
+  in an unidirectional way. Access to the pipe is performed exactly
+  in the same way as for files access except that the calling process
+  can be suspended (on empty pipe for "m_Read" or on full pipe for
+  "m_Write"). Although the kernel checks pipe operations, the programmer
+  should close unused handles.
+
+
+
+  E) PROCESSES SYNCHRONIZATION
+
+  A process can synchronize its execution with other processes. There
+  are several ways to realize this.
+
+  The first and simplest method is to wait for a process completion. A
+  process creates a child process and waits for its death with the
+  "m_Wait" system call. The parent process remains suspended during
+  this time.
+
+  The second method uses semaphores. There are no resources to protect,
+  but just processes to synchronize. A process makes a "m_Waitsem"
+  system call on a semaphore previously created with an initial
+  count value equal to ZERO. Consequently, the "m_Wait" system call
+  suspends the calling process. This process will be resumed when a
+  "m_Sigsem" system call will be made in an other process.
+
+  The third method uses messages. The processes are synchronized
+  with message receipts.
+
+  Pipes could be used too.
+
+  Generally, each system call which is able to suspend or resume a
+  process could be used as a synchronization mechanism.
+
+
+дддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд
+
+
+  INPUT / OUPUT
+  -------------
+  A) TERMINOLOGY
+
+        SESSION
+
+        a session is a virtual screen and keyboard. When a process
+        is created, it is always attached to a given session. The
+        kernel manages 10 sessions, but at a given instant, only
+        one session is active, that is, owns physical screen and
+        keyboard resources.
+
+                   здддддддддд©
+               здддаддддддд©  Ё
+            зддадддддддд©2 Ё  Ё
+            Ё         1 Ё  Ё  Ё
+            Ё  Session  Ё  цдды
+            Ё           цдды         зддддддддддд©
+            юддддддддддды            Ё  Active   Ё
+                                     Ё           Ё
+                                     Ё Session   Ё
+                                     юддддддддддды
+
+
+        This session mechanism allows to clearly separate processes
+        standard Input/Output. A session remains valid while there is
+        at least one process running in this session. When the last
+        process terminates in a given session, the session becomes
+        invalid and all necessary resources are released.
+
+
+        There are THREE session system calls:
+        "m_GetSession", "m_GetProcSessionHandle", "m_ChgActivSession".
+        they are used respectively to attach a new session to a given
+        process, to get a session handle attached to a given process, and
+        to change the active session.
+
+
+        The User can change the active session from the keyboard
+        by typing SHIFT+Fi, where "i" is the choosen session number
+        (called session handle too).
+
+
+        This allows to start a user application through the spy
+        interpreter in a given session and to switch to another
+        session in order to control how the application works.
+
+
+
+        FILE SYSTEM
+
+        TURBIX allows to use up to 255 different files at the same time
+        (set "files = 255" in the config.sys). The file system manages
+        concurrent access to a same file from several processes. In order
+        to prevent multiple accesses when critical system calls are used
+        (write operations), processes will have to lock and unlock files.
+
+
+  B) OVERVIEW
+
+        Input/Output are managed on THREE levels
+
+        1 - Application
+        2 - Stream
+        3 - Device
+
+  1)    The application level corresponds to system calls. These system
+        calls are the same whatever the kind of object (pipe, file or
+        session)
+
+  2)    The stream level is an internal level that switches the user
+        operation to a specific code which manages a class of objects
+        (called STREAM). The kernel manages 3 stream classes: PIPE,
+        FILE and SESSION. A stream connects a process to a given object.
+
+  3)    The device level performs I/O requests for an object belonging
+        to a given stream class.
+
+  Each process owns an internal table used to manage Input/Output.
+  A valid entry in this table corresponds to an active stream; when
+  a process wants to use open, pipe or create I/O system calls, the
+  file system initializes internal variables and returns an index
+  (or handle - or file descriptor) in the table. This handle is the
+  link between the process and the object to use.
+
+  The 3 first slots in the table (handle 0, 1, 2) are automatically
+  initialized when the process is created.
+
+      handle 0 refers to the STANDARD INPUT
+      handle 1 refers to the STANDARD OUPUT
+      handle 2 refers to the STANDARD ERROR
+
+
+  When the kernel calls the user application through the "umain"
+  entry point, the standard input, output and error refer to the
+  initial session: S0
+
+  All child processes inherit objects opened by the parent process.
+  The kernel updates internal object use counters; an object will
+  remain available while its corresponding counter will be positive.
+
+  Note: When a child process inherits an opened object, both processes
+  (child and parent) use the same stream, in other words they share
+  not only the object, but the object reference variable too (for
+  example: if the object is a file, child and parent processes will
+  share the same file pointer)
+
+
+дддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд
+
+
+  WINDOWS
+  -------
+
+  TURBIX includes a set of character window functions close to
+  the UNIX "curs" functions. These functions are useful to build
+  multitasking windowed applications.
+
+
+  A) INTRODUCTION
+  A window is a screen area that can be managed independently
+  from other parts of the screen. It encompasses variables which
+  define how the window works, its position to the screen, the current
+  position in the window, an internal buffer which corresponds to the
+  window contents etc...(see "win.h" for further details about the
+  window structure).
+
+
+  B) ENTER WINDOWS MODE
+  Before using windows functions, the session where windows will be
+  used has to be initialized in windows mode. The "m_initscr" function
+  performs this initialization.
+
+  All sessions can be set to windows mode at the same time.
+
+
+  C) WINDOW CREATION
+  When the session works in windows mode, the "m_newwin" function is
+  used to define window parameters. The "m_box" function draws window
+  borders when needed. After calling these functions, a window is
+  created but it is not yet visible on the screen. To make a window
+  visible, the "m_wpush" function has to be called.
+
+
+  D) WINDOW FOCUS
+  When several windows are pushed on the screen, they all work at the
+  same time even though they are overlapped. The last pushed window owns
+  the FOCUS, which means it is able to get keyboard input characters. If
+  other windows are waiting for input characters, processes attached to
+  these windows are suspended until the window will get the focus. The
+  "m_wselect" function is used to give the focus to a given window. This
+  operation can be performed with the keyboard when typing ALT+TAB to
+  give the focus in a round robin way.
+
+
+  E) WINDOW REFRESH
+  All characters written with window functions are stored in an
+  internal buffer. The buffer contents are not automatically write
+  to the window location on the screen. This operation is done when
+  using the "m_wrefresh" function. This function makes a global refresh
+  (the whole buffer contents) or a partial refresh (just what has been
+  modified into the window buffer since the last refresh) according to
+  the control flag contents in the window structure.
+
+        control FLAGS are:
+
+        W_SCROLLON           enable scrolling
+        W_AUTOCRLF           CR LF on right border or truncate
+        W_FOREGRND           window that hold the focus
+        W_VISIBLE            the window is visible
+        W_GLOBALR            refresh the whole window buffer
+        W_ECHO               echo on input
+
+  The programmer could change the flag contents himself, but it is better
+  to use window functions to perform this job.
+
+
+  F) WINDOW DELETION
+  A window can be deleted with the "m_delwin" function. Yet, if a process
+  is attached to such a window, it remains in the system without standard
+  I/O. As a general rule to avoid this, all attached processes to future
+  deleted windows will have to be killed.
+
+
+  G) STANDARD SCREEN
+  When the session has been initialized in windows mode, the whole
+  screen is considered as a default window called "standard screen";
+  this default window is a little bit different from other windows in
+  the following ways:
+
+        - Drawing borders is not allowed
+        - Pushing or popping this window is not allowed
+
+  Because initializing windows mode implicitly creates the default
+  window, it is already visible and doesn't need to be pushed.
+
+  If the standard screen is needed, the "m_initStdscrPTR" function will
+  be used to get the standard screen window pointer.
+
+
+  H) EXIT WINDOWS MODE
+  to exit from windows mode and return to full screen mode,
+  the "m_endwin" function has to be called. It releases all resources
+  needed for windows mode and sets the session to full screen mode.
+
+
+дддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд
+
+
+  CONCLUSION
+  ----------
+
+  TURBIX is an easy to use and powerful tool to understand the new
+  concepts introduced by the multitasking operating systems. TURBIX
+  could be used not only as a pedagogic platform to procure skills
+  for students in computer science, but for professional applications
+  too. The user will find some programming examples in the source
+  file "sample.c".
+
+
+
+

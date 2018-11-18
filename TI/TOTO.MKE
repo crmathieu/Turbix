@@ -1,0 +1,8 @@
+agetinfo.obj : agetinfo.asm
+
+getinfo.obj : getinfo.c
+
+cript.obj : cript.c
+
+#gogo.exe : cript.obj getinfo.obj
+

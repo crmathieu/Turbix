@@ -1,0 +1,7 @@
+xenstart+\tc\lib\C0L+wdemo+perr+
+Bcreate+b_sched+Bkill+start+init+utask+dosopen+dosread+
+qlist+message+semaph+nconsole+newmeml+clock+it_hard+it_dos+iodos+
+b_cxtswp+system+xvideo+video+tty+io3+printf+signal+scanf+subprn+
+msg_us+device+fspipe+spytab+fdesc+
+shell+curs+wind1+wind2+spycom,ulk,,\tc\lib\emu  \tc\lib\MATHL \tc\lib\CL
+

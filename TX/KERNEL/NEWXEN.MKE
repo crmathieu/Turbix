@@ -1,0 +1,122 @@
+sys.$  : kernel.h proc.h const.h clock.h disk.h fs\fcache.h
+
+Bcreate.obj : Bcreate.c sys.$   mem.h io.h signal.h
+
+message.obj : message.c proc.h kernel.h
+
+msg_us.obj : msg_us.c
+
+ipcmsg.obj : ipcmsg.c +
+             proc.h   +
+             kernel.h
+
+mkdmou.obj : mkdmou.c proc.h kernel.h tty.h
+
+signal.obj : signal.c proc.h kernel.h signal.h
+
+b_sched.obj : b_sched.c  q.h proc.h kernel.h pc.h
+
+suspend.obj : suspend.c  kernel.h proc.h
+
+init.obj : init.c   kernel.h proc.h sem.h mem.h q.h tty.h io.h disk.h
+
+qlist.obj : qlist.c  proc.h kernel.h q.h
+
+Bkill.obj : Bkill.c    kernel.h proc.h sem.h io.h mem.h
+
+start.obj : start.c proc.h kernel.h
+
+io3.obj : io3.c   proc.h kernel.h io.h tty.h disk.h
+
+
+device.obj : device.c   proc.h kernel.h io.h tty.h disk.h console.h fs\ftype.h
+
+semaph.obj : semaph.c proc.h kernel.h q.h sem.h
+
+xenstart.obj : xenstart.c kernel.h proc.h  mem.h disk.h  signal.h const.h
+
+utask.obj : utask.c kernel.h proc.h  disk.h
+
+nconsole.obj : nconsole.c kbd.h console.h kernel.h proc.h   serial.h tty.h window.h
+
+printf.obj : printf.c proc.h
+
+subprn.obj : subprn.c
+
+scanf.obj : scanf.c proc.h
+
+clock.obj : clock.c proc.h   signal.h clock.h
+
+newmeml.obj : newmeml.c   proc.h kernel.h mem.h
+
+
+tty.obj : tty.c   kernel.h proc.h tty.h io.h serial.h window.h
+
+cmdtab.obj : cmdtab.c cmd.h
+
+
+shell.obj : shell.c   kernel.h proc.h shell.h cmd.h  disk.h
+
+syscmd.obj : syscmd.c const.h   proc.h kernel.h type.h fs\fcache.h  +
+             fs\ftype.h const.h                                     +
+             tty.h
+command.obj : command.c   proc.h kernel.h io.h
+
+wind1.obj : wind1.c   proc.h kernel.h io.h tty.h window.h console.h
+
+wind2.obj : wind2.c   proc.h kernel.h io.h tty.h window.h console.h
+
+wdemo.obj : wdemo.c   proc.h kernel.h io.h tty.h window.h console.h
+
+
+fat.obj : fs\fat.c   proc.h kernel.h io.h fs\ftype.h
+
+disk.obj : disk.c   kernel.h proc.h disk.h floppy.h disk.h fs\ftype.h
+
+libc.obj : libc.c proc.h kernel.h
+
+xvideo.obj : xvideo.c console.h proc.h kernel.h tty.h window.h
+
+grlib.obj : grlib.c console.h proc.h kernel.h tty.h
+
+fmedium.obj : fmedium.c
+
+fcache.obj : fs\fcache.c proc.h kernel.h fs\fcache.h fs\ftype.h const.h   disk.h
+
+file.obj : fs\file.c proc.h fs\fcache.h fs\ftype.h const.h
+
+fmain.obj :  fs\fmain.c proc.h fs\fcache.h fs\ftype.h const.h
+
+fsdisk.obj : fs\fsdisk.c proc.h fs\fcache.h fs\ftype.h const.h
+
+futility.obj : fs\futility.c proc.h fs\fcache.h fs\ftype.h const.h
+
+fdesc.obj : fs\fdesc.c proc.h fs\fcache.h fs\ftype.h const.h fs\file.h
+
+fsopen.obj : fs\fsopen.c proc.h fs\fcache.h fs\ftype.h const.h fs\file.h
+
+fspath.obj : fs\fspath.c proc.h fs\fcache.h fs\ftype.h const.h fs\file.h
+
+fsread.obj : fs\fsread.c proc.h fs\fcache.h fs\ftype.h const.h fs\file.h
+
+fstat.obj : fs\fstat.c proc.h fs\fcache.h fs\ftype.h const.h fs\file.h
+
+
+fspipe.obj : fs\fspipe.c proc.h fs\fstream.h fs\ftype.h
+
+
+
+system.obj : system.asm
+
+it_hard.obj : it_hard.asm
+
+video.obj : video.asm
+
+gr.obj : gr.asm
+
+curs.obj : curs.asm
+
+b_cxtswp.obj : b_cxtswp.asm
+
+#utask.exe : utask.obj
+

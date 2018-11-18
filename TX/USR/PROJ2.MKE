@@ -1,0 +1,10 @@
+#
+# Proj2
+#
+
+example2.obj : example2.c
+
+sample.obj   : sample.c
+
+multi2.exe : example2.obj sample.obj
+

@@ -1,0 +1,113 @@
+sys.$  : kernel.h proc.h const.h clock.h
+
+Bcreate.obj : Bcreate.c sys.$   mem.h io.h signal.h
+
+message.obj : message.c proc.h kernel.h
+
+msg_us.obj : msg_us.c
+
+#ipcmsg.obj : ipcmsg.c proc.h kernel.h
+
+signal.obj : signal.c proc.h kernel.h signal.h
+
+#mkdmou.obj : mkdmou.c proc.h kernel.h tty.h
+
+b_sched.obj : b_sched.c  q.h proc.h kernel.h pc.h
+
+suspend.obj : suspend.c  kernel.h proc.h
+
+init.obj : init.c   kernel.h proc.h sem.h mem.h q.h tty.h io.h
+
+qlist.obj : qlist.c  proc.h kernel.h q.h
+
+Bkill.obj : Bkill.c    kernel.h proc.h sem.h io.h mem.h
+
+start.obj : start.c proc.h kernel.h
+
+io3.obj : io3.c   proc.h kernel.h io.h tty.h
+
+perr.obj : perr.c error.h
+
+device.obj : device.c   proc.h kernel.h io.h tty.h   console.h  ftype.h
+
+semaph.obj : semaph.c proc.h kernel.h q.h sem.h
+
+xenstart.obj : xenstart.c kernel.h proc.h  mem.h    signal.h const.h
+
+utask.obj : utask.c kernel.h proc.h
+
+nconsole.obj : nconsole.c kbd.h console.h kernel.h proc.h   serial.h tty.h window.h
+
+printf.obj : printf.c proc.h
+
+subprn.obj : subprn.c
+
+scanf.obj : scanf.c proc.h
+
+clock.obj : clock.c proc.h   signal.h clock.h
+
+newmeml.obj : newmeml.c   proc.h kernel.h mem.h
+
+
+tty.obj : tty.c   kernel.h proc.h tty.h io.h serial.h window.h
+
+#cmdtabnf.obj : cmdtabnf.c cmd.h
+
+spytab.obj : spytab.c cmd.h
+
+shell.obj : shell.c   kernel.h proc.h shell.h cmd.h
+
+#syscmd.obj : syscmd.c const.h   proc.h kernel.h type.h +
+#             ftype.h const.h +
+#             tty.h
+
+#command.obj : command.c   proc.h kernel.h io.h
+
+spycom.obj : spycom.c proc.h kernel.h io.h
+
+wind1.obj : wind1.c   proc.h kernel.h io.h tty.h window.h console.h
+
+wind2.obj : wind2.c   proc.h kernel.h io.h tty.h window.h console.h
+
+wdemo.obj : wdemo.c   proc.h kernel.h io.h tty.h window.h console.h
+
+fdesc.obj : fdesc.c   proc.h kernel.h iodos.h
+
+dosopen.obj : dosopen.c sys.$ iodos.h
+
+dosread.obj : dosread.c sys.$ iodos.h
+
+iodos.obj : iodos.c sys.$ iodos.h
+
+libc.obj : libc.c proc.h kernel.h
+
+xvideo.obj : xvideo.c console.h proc.h kernel.h tty.h window.h
+
+grlib.obj : grlib.c console.h proc.h kernel.h tty.h
+
+fmedium.obj : fmedium.c
+
+
+
+fspipe.obj : fspipe.c proc.h ftype.h
+
+
+
+system.obj : system.asm
+
+it_hard.obj : it_hard.asm
+
+it_dos.obj : it_dos.asm
+
+video.obj : video.asm
+
+gr.obj : gr.asm
+
+curs.obj : curs.asm
+
+b_cxtswp.obj : b_cxtswp.asm
+
+#utask.obj : utask.c
+
+#utask.exe : utask.obj
+

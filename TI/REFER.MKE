@@ -1,0 +1,65 @@
+#
+# Program: MSxed
+#
+
+var.obj : var.c
+
+iturbo.obj : iturbo.c
+
+cvideo.obj : cvideo.c
+
+config.obj : config.c
+
+fterm.obj : fterm.c
+
+findfunc.obj : findfunc.c
+
+mouse.obj : mouse.c
+
+direct.obj : direct.c
+
+menu3.obj : menu3.c
+
+startup2.obj : startup2.c
+
+bigbuf3.obj : bigbuf3.c
+
+block5.obj : block5.c
+
+display.obj : display.c
+
+edmain2.obj : edmain2.c
+
+help.obj : help.c
+
+wlink.obj : wlink.c
+
+wtools.obj : wtools.c
+
+ledass.obj : ledass.asm
+
+edass.obj : edass.asm
+
+amdi.obj : amdi.asm
+
+#
+# Partie TURBO
+#
+
+ti.obj : ti.c
+
+mmsg_us.obj : mmsg_us.c
+
+txmake.obj : txmake.c
+
+emsg_us.obj : emsg_us.c
+
+txcomp.obj : txcomp.c
+
+txlink.obj : txlink.c
+
+txref.obj : txref.c
+
+refcall.obj : refcall.c
+
+

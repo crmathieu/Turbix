@@ -1,0 +1,4 @@
+bigbuf3.obj+startup2.obj+cvideo.obj+direct.obj+fterm.obj+help.obj+
+menu3.obj+block5.obj+display.obj+config.obj+edass.obj+mouse.obj+iturbo+
+edmain2.obj,Xed.exe,,llibcr em libh llibfp;
+

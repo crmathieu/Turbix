@@ -1,0 +1,4 @@
+\tc\lib\c0l+bigbuf3.obj+startup2.obj+cvideo.obj+direct.obj+fterm.obj+var+
+menu3.obj+block5.obj+display.obj+config.obj+edass.obj+mouse.obj+iturbo+help.obj+
+edmain2.obj,Xed.exe,,\tc\lib\emu  \tc\lib\MATHL \tc\lib\CL
+

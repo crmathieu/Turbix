@@ -1,0 +1,17 @@
+/*----------------------------------------------------------------------------
+ * _scheduler - process le plus prioritaire/reveille par la tache horloge
+ *----------------------------------------------------------------------------
+ */
+_scheduler()
+{
+      if (isDelay)
+          if (--*firstDelay <= 0)
+              if (*clkstate == SLEEP) {
+                  *clkstate = READY;
+                  _insertKFR(CALLOUT, rdytail, 50);
+              }
+      if (itvalidee)
+          _swpProc();
+      else
+         ticks++;
+}
