@@ -1,4 +1,4 @@
-/*  TURBIX Error Codes */
+/*  DUNIX Error Codes */
 
 #define EZERO    0              /* Error 0                      */
 #define EINVFNC  1              /* Invalid function number      */

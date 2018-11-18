@@ -85,7 +85,7 @@ char sysHaltStr[] = "%s -- System halted.\n";
 /* shell */
 char   errhd[]     = "\nSyntax error\n";
 char   fmt[]       = "\nCannot open %s\n";
-char   shBanStr[]  = "Turbix Spy utility\n";
+char   shBanStr[]  = "DUNIX Spy utility\n";
 char   shExitStr[] = "\nexit from Spy\n";
 char   shNotFStr[] = "\n%s: not found\n";
 char   shExitSIGQUITStr[] = "\nexit %s\n";
@@ -116,7 +116,7 @@ char killStr[]     = "use: kill [pid]\n";
 char killOkStr[]   = "Cannot kill: %d\n";
 char killNokStr[]  = "* %s * killed\n";
 char badPidStr[]   = "\nBad Process Id\n";
-char moreStr[]     = "ÄÄ more ÄÄ\n";
+char moreStr[]     = "ï¿½ï¿½ more ï¿½ï¿½\n";
 char badDrvStr[]   = "\nincorrect drive assign\n";
 
 char dirFileStr[]  = "\n-%c%c%c%c  %8s %3s   %6lu  %2d/%02d/%02d   %2d:%02d";
@@ -168,7 +168,7 @@ char errInitBigPool[]  = "can't initialize bigbloc pool\n";
 char dosPartInac[]     = "\nMSDOS Partition not activ on disk %s\n";
 char activPartNotDos[] = "\nactiv Partition is not MSDOS : P_SYS flag = %u\n";
 char errboundPart[]    = "\nWARNING : # sectors before partition : %d does not match \n          with Begining partition's parameters : %d\n";
-char diskNotSupp[]     = "\n          disk type probably not supported - Exit from Turbix\n";
+char diskNotSupp[]     = "\n          disk type probably not supported - Exit from DUNIX\n";
 char badSig[]          = "\nBad boot bloc signature = %x\n";
 char bootBlkNr[]       = "boot bloc number = %lx\n";
 char noDosActivPart[]  = "\nNo MSDOS activ Partition on disk %s\n";

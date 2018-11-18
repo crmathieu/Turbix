@@ -1,4 +1,4 @@
-/*  TURBIX Error Codes strings */
+/*  DUNIX Error Codes strings */
 
 #include "kernel.h"
 #include "error.h"

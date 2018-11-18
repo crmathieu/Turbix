@@ -21,13 +21,13 @@ char  y_o[2][4] = {{'Y','y','N','n'},{'O','o','N','n'}};
    MENU3
  ************/
 /* gestion de l'insertion du disque de travail par install.exe */
-/* signature de d‚but de zone : le dernier ‚l‚ment est le checksum */
+/* signature de dï¿½but de zone : le dernier ï¿½lï¿½ment est le checksum */
 unsigned char debZone[8] = {168, 01, 172, 174, 149, 143, 239, 139};
-/*                           ¨        ¬    ®    •        ï    ‹   */
+/*                           ï¿½        ï¿½    ï¿½    ï¿½    ï¿½    ï¿½    ï¿½   */
 /*                          A8   01   AC   AE   95   8F   EF   8B  */
 
-/* ‚l‚ments … ins‚rer */
-char configFile[] = "c:\\tx\\ti\\ti.pro"; /* c par d‚faut */
+/* ï¿½lï¿½ments ï¿½ insï¿½rer */
+char configFile[] = "c:\\tx\\ti\\ti.pro"; /* c par dï¿½faut */
 
    unsigned char         arrLeft   = 0x1b,
                          arrRight  = 0x1a,
@@ -80,17 +80,17 @@ struct OBJ edwin,      /* window de l'editeur     */
 struct OBJ *pedwin;    /* pointe sur la fenetre courante d'edition */
 
 
-unsigned char boxtype[7][11] = {{'Ú','¿','À','Ù','³','Ä','Ã','´','Â','Á','Å'},   /* type 1 */
-                                {'Õ','¸','Ô','¾','³','Í','Æ','µ','Ñ','Ï','Ø'},   /* type 2 */
-                                {'Ö','·','Ó','½','º','Ä','Ç','¶','Ò','Ğ','×'},   /* type 3 */
-                                {'É','»','È','¼','º','Í','Ì','¹','Ë','Ê','Î'},   /* type 4 */
-                                {'°','°','°','°','°','°','°','°','°','°','°'},   /* type 5 */
-                                {'Ç','¶','Ó','½','º','Ä','Ç','¶','Ò','Ğ','×'},   /* status */
+unsigned char boxtype[7][11] = {{'ï¿½','ï¿½','ï¿½','ï¿½','ï¿½','ï¿½','ï¿½','ï¿½','ï¿½','ï¿½','ï¿½'},   /* type 1 */
+                                {'ï¿½','ï¿½','ï¿½','ï¿½','ï¿½','ï¿½','ï¿½','ï¿½','ï¿½','ï¿½','ï¿½'},   /* type 2 */
+                                {'ï¿½','ï¿½','ï¿½','ï¿½','ï¿½','ï¿½','ï¿½','ï¿½','ï¿½','ï¿½','ï¿½'},   /* type 3 */
+                                {'ï¿½','ï¿½','ï¿½','ï¿½','ï¿½','ï¿½','ï¿½','ï¿½','ï¿½','ï¿½','ï¿½'},   /* type 4 */
+                                {'ï¿½','ï¿½','ï¿½','ï¿½','ï¿½','ï¿½','ï¿½','ï¿½','ï¿½','ï¿½','ï¿½'},   /* type 5 */
+                                {'ï¿½','ï¿½','ï¿½','ï¿½','ï¿½','ï¿½','ï¿½','ï¿½','ï¿½','ï¿½','ï¿½'},   /* status */
                                 {' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' '},   /* external windows */
 };
 
 
-unsigned char fillpattern[] = {'°','±','²','Û','Ü','İ','Ş','ß'};
+unsigned char fillpattern[] = {'ï¿½','ï¿½','ï¿½','ï¿½','ï¿½','ï¿½','ï¿½','ï¿½'};
 
 
 /* INITIALISATION TABLE D'ACCES */
@@ -123,7 +123,7 @@ struct ctab Ctab[] = { ALT_F,  NOTERMINAL, {0 ,NP,NP,NP,NP,NP,NP,NP,NP,NP},
 
 
 /* lorsque la rubrique ne comporte pas de sous menu, la fonction
- * appliqu‚e est terminale.
+ * appliquï¿½e est terminale.
  */
 
 /* MASTER MENU */
@@ -142,12 +142,12 @@ unsigned ReturnFromSaveFile = 0;  /* variable de positionnement sur retour SAVE 
 struct ITem filestr[] = {{" Open...            F3 ",'O',F3,     0,1, 0,NULL,doLoad},
                          {" previous File      F5 ",'F',F5,     0,10,0,NULL,doLoadlast},
                          {" Group...       ALT-F3 ",'G',ALT_F3, 0,1, 1,&pickMenu,ScanVmenu},
-                         {"ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ",' ',NOEXTC, 0,0, 0,NULL,nullfunc},
+                         {"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½",' ',NOEXTC, 0,0, 0,NULL,nullfunc},
                          {" Purge group           ",'P',NOEXTC, 0,1, 0,NULL,doClearPick},
-                         {"ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ",' ',NOEXTC, 0,0, 0,NULL,nullfunc},
+                         {"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½",' ',NOEXTC, 0,0, 0,NULL,nullfunc},
                          {" Save               F2 ",'S',F2,     0,1, 0,NULL,doSaveFile},
                          {" save As...            ",'A',NOEXTC, 0,6, 0,NULL,doSaveAs},
-                         {"ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ",' ',NOEXTC, 0,0, 0,NULL,nullfunc},
+                         {"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½",' ',NOEXTC, 0,0, 0,NULL,nullfunc},
                          {" Change dir...         ",'C',NOEXTC, 0,1, 0,NULL,doChgDir},
                          {" Dos           ALT-F10 ",'D',ALT_F10,0,1, 0,NULL,doShell},
                          {" Quit            ALT-Q ",'Q',ALT_Q,  0,1, 0,NULL,doQuit},
@@ -164,7 +164,7 @@ struct  MOUSE_FIELD mfDir[5];
 struct ITem comstr[] = {{ " Check API           ", 'h',NOEXTC,0,2,0,NULL,doCheck},
                          {" Compile          F4 ", 'C',NOEXTC,0,1,0,NULL,doCompile},
                          {" Assemble         F7 ", 'A',NOEXTC,0,1,0,NULL,doAssemble},
-                         {" Link to TURBIX   F8 ", 'L',NOEXTC,0,1,0,NULL,doLink},
+                         {" Link to DUNIX   F8 ", 'L',NOEXTC,0,1,0,NULL,doLink},
                          {" Show results        ", 'S',NOEXTC,0,1,0,NULL,doShowMess},
                          {"", ' ',NOEXTC,0,0,0,NULL,NULL}};
 
@@ -177,7 +177,7 @@ struct ITem runstr[] = {{ " run Project     ", 'P',NOEXTC,0,5,0,NULL,doRunPrj},
 
 /* HELP MENU */
 struct ITem helpstr[]  = {{" Help on help            ", 'H',NOEXTC,0,1,  0,NULL,doHelp},
-                          {" About TURBIX            ", 'A',NOEXTC,0,1,  0,NULL,doHelp},
+                          {" About DUNIX            ", 'A',NOEXTC,0,1,  0,NULL,doHelp},
                           {" Editor features         ", 'E',NOEXTC,0,1,  0,NULL,doHelp},
                           {" Make syntaxis           ", 'M',NOEXTC,0,1,  0,NULL,doHelp},
                           {" Library index by type...", 'L',ALT_F1,0,1,  0,NULL,doHelp},
@@ -189,19 +189,19 @@ struct ITem helpstr[]  = {{" Help on help            ", 'H',NOEXTC,0,1,  0,NULL,
 
 /* EDIT menu */
 struct ITem editstr[]  = {{" Editor                  F6 ", 'E',F6    ,0,1,0,NULL,doEdit},
-                          {"ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ", ' ',NOEXTC,0,0,0,NULL,nullfunc},
+                          {"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", ' ',NOEXTC,0,0,0,NULL,nullfunc},
                           {" Find string...    Ctrl-Q-F ", 'F',NOEXTC,0,1,0,NULL,doFindstr},
                           {" find Next         Ctrl-L   ", 'N',NOEXTC,0,6,0,NULL,doFindnext},
                           {" Replace string... Ctrl-Q-A ", 'R',NOEXTC,0,1,0,NULL,doRepl},
-                          {"ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ", ' ',NOEXTC,0,0,0,NULL,nullfunc},
+                          {"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", ' ',NOEXTC,0,0,0,NULL,nullfunc},
                           {" Copy block        Ctrl-K-C ", 'C',NOEXTC,0,1,0,NULL,doDuplicate},
                           {" delete Block      Ctrl-K-Y ", 'B',NOEXTC,0,8,0,NULL,doDelete},
                           {" Move block        Ctrl-K-V ", 'M',NOEXTC,0,1,0,NULL,doMove},
-                          {"ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ", ' ',NOEXTC,0,0,0,NULL,nullfunc},
+                          {"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", ' ',NOEXTC,0,0,0,NULL,nullfunc},
                           {" Write block       Ctrl-K-W ", 'W',NOEXTC,0,1,0,NULL,doCopyToPaste},
                           {" read blOck        Ctrl-K-R ", 'O',NOEXTC,0,8,0,NULL,doReadFromPaste},
                           {" pAste file...              ", 'A',NOEXTC,0,2,0,NULL,doChgPaste},
-                          {"ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ", ' ',NOEXTC,0,0,0,NULL,nullfunc},
+                          {"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", ' ',NOEXTC,0,0,0,NULL,nullfunc},
                           {" Line length...    Ctrl-Q-L ", 'L',NOEXTC,0,1,0,NULL,doLineLength},
                           {" Goto line...      Ctrl-Q-G ", 'G',NOEXTC,0,1,0,NULL,doGoto},
                           {" Tabulation...              ", 'T',NOEXTC,0,1,0,NULL,doTabulation},
@@ -210,11 +210,11 @@ struct ITem editstr[]  = {{" Editor                  F6 ", 'E',F6    ,0,1,0,NULL
 
 /* BUILD MENU */
 struct ITem bltstr[]  = {{" Project file name...           ", 'P',NOEXTC,0,1,0,NULL,doChgMkfile},
-                         {"ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ", ' ',NOEXTC,0,0,0,NULL,nullfunc},
+                         {"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", ' ',NOEXTC,0,0,0,NULL,nullfunc},
                          {" Update REF database            ", 'U',NOEXTC,0,1,0,NULL,doBuildDB},
                          {" Go to declaration...   Ctrl-F2 ", 'G',NOEXTC,0,1,0,NULL,doGotoDef},
                          {" Function references... Ctrl-F3 ", 'F',NOEXTC,0,1,0,NULL,doDispRef},
-                         {"ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ", ' ',NOEXTC,0,0,0,NULL,nullfunc},
+                         {"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", ' ',NOEXTC,0,0,0,NULL,nullfunc},
                          {" Built project               F9 ", 'B',F9    ,0,1,0,NULL,doMake},
                          {"",                          ' ',NOEXTC,0,0,0,NULL,NULL}};
 
@@ -255,12 +255,12 @@ struct ITem confstr[] = {{" Compiler/linker directory...     ", 'C',NOEXTC,0,1,0
                          {" Assembler directory...           ", 'A',NOEXTC,0,1,0,NULL,doGetAss},
                          {" C iNclude directory...           ", 'N',NOEXTC,0,4,0,NULL,doGetInc},
                          {" C Librairies directory...        ", 'L',NOEXTC,0,3,0,NULL,doGetLib},
-                         {"ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ", ' ',NOEXTC,0,0,0,NULL,nullfunc},
-                         {" TURBIX include/User directory... ", 'U',NOEXTC,0,16,0, NULL,doGetUsr},
-/*                         {" TURBIX Include directory...     ", 'I',NOEXTC,0,5,0,NULL,doGetIncMkd},*/
-                         {" TURBIX Libraries directory...    ", 'T',NOEXTC,0,1,0,NULL,doGetNmx},
+                         {"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", ' ',NOEXTC,0,0,0,NULL,nullfunc},
+                         {" DUNIX include/User directory... ", 'U',NOEXTC,0,16,0, NULL,doGetUsr},
+/*                         {" DUNIX Include directory...     ", 'I',NOEXTC,0,5,0,NULL,doGetIncMkd},*/
+                         {" DUNIX Libraries directory...    ", 'T',NOEXTC,0,1,0,NULL,doGetNmx},
                          {" Help files directory...          ", 'H',NOEXTC,0,1,0,NULL,doInstHelp},
-                         {"ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ", ' ',NOEXTC,0,0,0,NULL,nullfunc},
+                         {"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", ' ',NOEXTC,0,0,0,NULL,nullfunc},
                          {" Save configuration               ", 'S',NOEXTC,0,1, 0,NULL,doSconfig},
                          {"",                               ' ',NOEXTC,0, 0,0,NULL,NULL}};
 
@@ -270,7 +270,7 @@ char Yes[] = "Yes ";
 char No[]  = "No  ";
 
 /* LOGO */
-char logoStr[] = " -- TURBIX Development Interface -- ";
+char logoStr[] = " -- DUNIX Development Interface -- ";
 
 int mouse_present, nbuttom;
 
@@ -320,7 +320,7 @@ struct file_lst file_lst;
 
 #define FILE_SIZE sizeof(struct file_lst)
 
-int dir_lst_nfiles,  /* # de fichiers selectionn‚s dans la directory */
+int dir_lst_nfiles,  /* # de fichiers selectionnï¿½s dans la directory */
     dir_lst_npages;  /* # de pages de directory */
 
 char  file_name[80], fpath[80], work[80];
@@ -481,7 +481,7 @@ unsigned  char   WINink,         /* avant plan fenetre */
                  WINHLPblock,
 
                  MENUborder,     /* cadre menu */
-                 MENUselected,   /* article selectionn‚ */
+                 MENUselected,   /* article selectionnï¿½ */
                  MENUlcom,       /* lettre de commande */
                  MENUink,        /* avant plan menu */
                  MENUpaper,      /* arriere plan menu */
@@ -490,7 +490,7 @@ unsigned  char   WINink,         /* avant plan fenetre */
 
 
 /* VARIABLES de travail de l'editeur */
-int        fdcurr;     /* file descriptor du fichier charg‚        */
+int        fdcurr;     /* file descriptor du fichier chargï¿½        */
 char       *linebuf;   /* tampon ligne             */
 char  far *bigbuf;     /* buffer de reception du fichier           */
 unsigned   fsize,      /* taille actuelle du fichier en memoire    */
@@ -499,7 +499,7 @@ unsigned   fsize,      /* taille actuelle du fichier en memoire    */
            topPage,    /* offset ligne en sommet de fenetre        */
            topBlock,   /* offset ligne de debut bloc               */
            bottomBlock;/* offset ligne de fin de block             */
-int        fillCh,     /* # Blancs ajout‚s apres une fin de ligne  */
+int        fillCh,     /* # Blancs ajoutï¿½s apres une fin de ligne  */
            fflag,      /* gestion etat du fichier dans l'editeur   */
            blockatt,   /* attribut block defini                    */
            current_line_no, /* no de la ligne courante             */
@@ -547,7 +547,7 @@ char productName[] = { /* str =    Interface (M.D.I)  */
 0x2c,0x44,0x60,0x7b,0x75,0x63,0x74,0x72,0x77,0x70,0x36,0x3f,
 0x5c,0x50,0x33,0x3b, 0
 };*/
-char _lg56[] = { /*  TURBIX development Interface  */
+char _lg56[] = { /*  DUNIX development Interface  */
 0x20,0x55,0x57,0x51,0x46,0x4c,0x5e,0x27,0x6c,0x6c,0x7c,0x6e,
 0x60,0x62,0x7e,0x62,0x75,0x7f,0x66,0x33,0x5d,0x7b,0x62,0x72,
 0x6a,0x7f,0x7b,0x78,0x79,0x3d,0
@@ -602,7 +602,7 @@ struct configuration conf;
  **********/
 
 /* interface entre compilateurs microsoft et Borland :
- * Adaptation des fonctions du turbo … la syntaxe
+ * Adaptation des fonctions du turbo ï¿½ la syntaxe
  * Microsoft
  */
 
@@ -706,7 +706,7 @@ char  *hlpFile[] = { /* fonction           -          Fichier */
 /*                    "m_ReadEventMou",           "h84.hlp",*/
 /*                    "m_EventMaskMou",           "h85.hlp",*/
 
-                    /* S‚maphore */
+                    /* Sï¿½maphore */
                     "m_Countsem",                  "h7.hlp",
                     "m_Creatsem",                  "h9.hlp",
                     "m_Delsem",                    "H12.hlp",
@@ -725,7 +725,7 @@ char  *hlpFile[] = { /* fonction           -          Fichier */
                     "m_Msgsync",                   "h37.hlp",
                     "m_Msgwait",                   "h38.hlp",
 
-                    /* M‚moire */
+                    /* Mï¿½moire */
                     "m_AdjustPTR",                 "h0.hlp",
                     "m_Free",                   "h65.hlp",
                     "m_Malloc",                 "h66.hlp",
@@ -737,7 +737,7 @@ char  *hlpFile[] = { /* fonction           -          Fichier */
                     "m_Sleep",                     "h55.hlp",
                     "m_Wakeup",                    "h63.hlp",
 
-                    /* Vid‚o */
+                    /* Vidï¿½o */
                     "m_Beep",                      "h2.hlp",
                     "m_ChgActiveSession",          "h5.hlp",
                     "m_CursorShape",               "h10.hlp",

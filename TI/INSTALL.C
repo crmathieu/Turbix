@@ -44,12 +44,12 @@ struct stat entry;
 
 struct OBJ *wm, wmake;
 /*char work[80];*/
-unsigned char boxtype[6][11] = {{'з','©','ю','ы','Ё','д','ц','╢','б','а','е'},   /* type 1 */
-                                {'у','╦','т','╬','Ё','м','ф','╣','я','о','ь'},   /* type 2 */
-                                {'ж','╥','с','╫','╨','д','г','╤','р','п','в'},   /* type 3 */
-                                {'и','╩','х','╪','╨','м','л','╧','к','й','н'},   /* type 4 */
-                                {'╟','╟','╟','╟','╟','╟','╟','╟','╟','╟','╟'},   /* type 5 */
-                                {'г','╤','с','╫','╨','д','г','╤','р','п','в'}};  /* type 6 : STATUS */
+unsigned char boxtype[6][11] = {{'О©╫','О©╫','О©╫','О©╫','О©╫','О©╫','О©╫','О©╫','О©╫','О©╫','О©╫'},   /* type 1 */
+                                {'О©╫','О©╫','О©╫','О©╫','О©╫','О©╫','О©╫','О©╫','О©╫','О©╫','О©╫'},   /* type 2 */
+                                {'О©╫','О©╫','О©╫','О©╫','О©╫','О©╫','О©╫','О©╫','О©╫','О©╫','О©╫'},   /* type 3 */
+                                {'О©╫','О©╫','О©╫','О©╫','О©╫','О©╫','О©╫','О©╫','О©╫','О©╫','О©╫'},   /* type 4 */
+                                {'О©╫','О©╫','О©╫','О©╫','О©╫','О©╫','О©╫','О©╫','О©╫','О©╫','О©╫'},   /* type 5 */
+                                {'О©╫','О©╫','О©╫','О©╫','О©╫','О©╫','О©╫','О©╫','О©╫','О©╫','О©╫'}};  /* type 6 : STATUS */
 
 
 
@@ -112,21 +112,21 @@ char  *yesNoStr[] = {"[Y]", "[N]"};
 /*
  *  Pour le transfer des fichiers (step3) , prendre une string sur 2
  *      disquette KERNEL:
- *              \TURBIX\KERNEL
+ *              \DUNIX\KERNEL
  *
  *      disquette MDI:
- *              \TURBIX\TI
- *              \TURBIX\USR
+ *              \DUNIX\TI
+ *              \DUNIX\USR
  *
  *      disquette HELP:
- *              \TURBIX\TI\HELP
+ *              \DUNIX\TI\HELP
  */
 
-char *tarDir[]  =    {":\\turbix",              /* directorie turbix */
-                      ":\\turbix\\kernel",      /* directorie des librairies & include */
-                      ":\\turbix\\ti",         /* directorie de l'editeur */
-                      ":\\turbix\\ti\\help",   /* help editeur */
-                      ":\\turbix\\usr",         /* directorie utilisateur */
+char *tarDir[]  =    {":\\DUNIX",              /* directorie DUNIX */
+                      ":\\DUNIX\\kernel",      /* directorie des librairies & include */
+                      ":\\DUNIX\\ti",         /* directorie de l'editeur */
+                      ":\\DUNIX\\ti\\help",   /* help editeur */
+                      ":\\DUNIX\\usr",         /* directorie utilisateur */
                       "",
                       ""
 };
@@ -140,27 +140,27 @@ char *disquettesLabel[] = {"KERNEL",
 /****************  FRANCAIS
 char razline[]    = "                                           ";
 char step0Msg[]   = " Installation de MKD -- Appuyer sur une touche ... ";
-char step1Msg[]   = " D┌finition des Drives source et destination ";
-char step2Msg[]   = " Cr┌ation des r┌pertoires MKD ... ";
+char step1Msg[]   = " DО©╫finition des Drives source et destination ";
+char step2Msg[]   = " CrО©╫ation des rО©╫pertoires MKD ... ";
 char step3Msg[]   = " Copie des fichiers ... ";
 char step40Msg[]  = " Mise en place du profile standard ";
-char stepfMsg[]   = " Installation termin┌e Normalement - appuyer sur une touche ";
+char stepfMsg[]   = " Installation terminО©╫e Normalement - appuyer sur une touche ";
 char stepfErrMsg[]= " Fin anormale de l'installation ... ";
 char chgOpt[]     = " Pressez return pour valider l'option ";
 char defMsg1[]    = " Source ........ ";
 char defMsg2[]    = " Destination ... ";
-char creaDir[]    = " Cr┌ation r┌pertoire    ";
-char impCreaDir[] = " Impossible de cr┌er ce r┌pertoire ... ";
-char impCopy[]    = " Echec - Ajouter le chemin d'acc┌s aux commandes DOS dans PATH ";
-char badLabelStr[]= " Label incorrect - ins┌rer la disquette ";
-char insDiskStr[] = " Ins┌rer la disquette : ";
+char creaDir[]    = " CrО©╫ation rО©╫pertoire    ";
+char impCreaDir[] = " Impossible de crО©╫er ce rО©╫pertoire ... ";
+char impCopy[]    = " Echec - Ajouter le chemin d'accО©╫s aux commandes DOS dans PATH ";
+char badLabelStr[]= " Label incorrect - insО©╫rer la disquette ";
+char insDiskStr[] = " InsО©╫rer la disquette : ";
 char work[80];
 ****************/
 /* version anglaise */
 char razline[]    = "                                           ";
-char step0Msg[]   = " TURBIX installation - Press any key ... ";
+char step0Msg[]   = " DUNIX installation - Press any key ... ";
 char step1Msg[]   = " Source and Target drive ";
-char step2Msg[]   = " TURBIX Directories creation ... ";
+char step2Msg[]   = " DUNIX Directories creation ... ";
 char step3Msg[]   = " Files transfer ... ";
 char step40Msg[]  = " Standard profile creation ";
 char stepfMsg[]   = " Installation normally completed - Press any key ";
@@ -282,7 +282,7 @@ step0() /* banniere */
 {
    ntarDrv = getNlogicalDrv() - 2;
    hide_cursor();
-   _clrwin(0, 0, 79, 24, F_LYELLOW|B_BLUE, '╟');
+   _clrwin(0, 0, 79, 24, F_LYELLOW|B_BLUE, 'О©╫');
    pushPop_mess(step0Msg, 10, NMXMSG);
 }
 
@@ -329,7 +329,7 @@ step1() /* definir drive source et destination */
  * STEP2
  *---------------
  */
-step2() /* cr┌er les directories MKD */
+step2() /* crО©╫er les directories MKD */
 {
         char w[3];
         struct OBJ ob, ob2, *wp, *wp2;
@@ -496,7 +496,7 @@ step_final()
 #define FALSE            0
 
 unsigned char debZone[8] = {168, 01, 172, 174, 149, 143, 239, 139};
-/*                           ╗        ╛    ╝    ∙    ▐    О    ▀   */
+/*                           О©╫        О©╫    О©╫    О©╫    О©╫    О©╫    О©╫   */
 /*                          A8   01   AC   AE   95   8F   EF   8B  */
 
 int size; /* taille du buffer de lecture */
@@ -748,9 +748,9 @@ char *str, *titre;         /* message a ecrire et titre */
 }
 
 
-/*ддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд
+/*О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫
  * winPopUp - ouvrir / fermer une fenetre
- *ддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд
+ *О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫
  */
 winPopUp(wp, mode, borderType)
 struct OBJ *wp;
@@ -775,9 +775,9 @@ struct OBJ *wp;
         }
     }
 }
-/*ддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд
- * clrwin д clear window
- *ддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд
+/*О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫
+ * clrwin О©╫ clear window
+ *О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫
  */
 FUNCTION clrwin(wp, Ch)
 struct OBJ *wp;
@@ -792,9 +792,9 @@ unsigned char Ch;
                   Ch);
 }
 
-/*дддддддддддддддддддддддддддддддддддд
+/*О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫
  * write_ombrage - dessiner l'ombrage
- *дддддддддддддддддддддддддддддддддддд
+ *О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫
  */
 write_ombrage(x,y,l,h)
 {
@@ -813,20 +813,20 @@ write_ombrage(x,y,l,h)
 
 }
 
-/*ддддддддддддддддддддддддддддддддддддддддддддддд
+/*О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫
  * write_mbox - dessiner le contour d'un menu
- *ддддддддддддддддддддддддддддддддддддддддддддддд
+ *О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫
  */
 FUNCTION write_mbox(mp)
 struct OBJ *mp;
 {
-  /* type 'д' */
+  /* type 'О©╫' */
   write_box(mp->title, mp->ul_x, mp->ul_y, mp->ncol, mp->nline, mp->border, 0);
 }
 
-/*ддддддддддддддддддддддддддддддддддддддддддддддд
+/*О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫
  * write_box - dessiner le contour d'une BOXE
- *ддддддддддддддддддддддддддддддддддддддддддддддд
+ *О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫
  */
 FUNCTION write_box(title,x,y,l,h,att,typ)
 char *title;
@@ -874,9 +874,9 @@ unsigned char att;
         _wstringDB(x + l + 1, i, 1, NEWATT, att, &Vchar);
    }
 }
-/*ддддддддддддддддддддддддддддддддддддддддддддддд
+/*О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫
  * write_wbox - dessiner le contour de la fenetre
- *ддддддддддддддддддддддддддддддддддддддддддддддд
+ *О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫
  */
 FUNCTION write_wbox(wp, type)
 struct OBJ *wp;
@@ -884,10 +884,10 @@ struct OBJ *wp;
       write_box(wp->title, wp->ul_x, wp->ul_y, wp->ncol, wp->nline, wp->border, type);
 }
 
-/*дддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд
- * restoreScreen - RESTITUER la partie de l'ecran ecras┌ par le SOUS MENU
+/*О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫
+ * restoreScreen - RESTITUER la partie de l'ecran ecrasО©╫ par le SOUS MENU
  *                 ou la WINDOW
- *дддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд
+ *О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫
  */
 restoreScreen(mp)
 struct OBJ *mp;
@@ -902,9 +902,9 @@ struct OBJ *mp;
                   mp->save);
 
 }
-/*ддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд
+/*О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫
  * restoreFromMenu- ecriture PHYSIQUE d'un tampon sur l'ecran
- *ддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд
+ *О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫
  */
 restoreFromMenu(mp,buf)
 struct OBJ *mp;
@@ -922,10 +922,10 @@ int            *buf;
                   mp->ncol,
                   buf);
 }
-/*дддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд
+/*О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫
  * saveScreen - SAUVEGARDER la partie de l'ecran correspondant au SOUS MENU
  *              ou a la WINDOW
- *дддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд
+ *О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫
  */
 saveScreen(mp)
 struct OBJ *mp;
@@ -954,9 +954,9 @@ struct OBJ *mp;
         write_ombrage(mp->ul_x, mp->ul_y, mp->ncol, mp->nline);
 }
 
-/*дддддддддддддддддддддддддддддддддддд
+/*О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫
  * initWin : initialiser une fenetre
- *дддддддддддддддддддддддддддддддддддд
+ *О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫
  */
 FUNCTION initWin(wp,title,ul_x,ul_y,ncols,nlines,ombrage,bar,ink,paper,border,batt)
 struct OBJ *wp;
@@ -980,9 +980,9 @@ char *title;
 
 }
 
-/*дддддддд
+/*О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫
  * pushPop_MESS
- *дддддддд
+ *О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫
  */
 pushPop_MESS(str, y, msgtyp)
 char *str;
@@ -995,10 +995,10 @@ char *str;
    winPopUp(messwin, W_CLOSE);
 }
 
-/*ддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд
+/*О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫
  * print_at - ecrire la string str aux coordonnees x, y, dans
  *            la window wp
- *ддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд
+ *О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫
  */
 print_at(wp, x, y, str, isnewatt, att)
 struct OBJ *wp;
@@ -1011,10 +1011,10 @@ char *str;
 }
 
 
-/*ддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд
+/*О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫
  * print_at_nb - ecrire nb carac aux coordonnees x, y, dans
  *               la window wp
- *ддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд
+ *О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫
  */
 print_nb_at(wp, x, y, str, nb, isnewatt, att)
 struct OBJ *wp;
@@ -1040,11 +1040,11 @@ getkey()
    unsigned key, main, auxiliary;
 
    /* Saisir soit un caractere du clavier, soit un caractere issu
-    * de l'automate d'┌mulation clavier de la souris
+    * de l'automate d'О©╫mulation clavier de la souris
     */
    for (;;) {
         /* examiner le status du clavier */
-        if (_look_kbd()) { /* caractere tap┌ au clavier */
+        if (_look_kbd()) { /* caractere tapО©╫ au clavier */
              key = _read_kbd();
              break;
          }
@@ -1071,7 +1071,7 @@ getkey()
                (auxiliary == CTRL_PGUP))
                 return(CTRLNUMPAD | auxiliary);
           return(ALT | auxiliary);  /* REMARQUE : Shift TAB
-                                     * est conditionn┌ en ALT TAB
+                                     * est conditionnО©╫ en ALT TAB
                                      */
        }
        else  /* command Key */

@@ -12,7 +12,7 @@
         - install.exe (installation program).
 
         - \TX\KERNEL directory which contains
-          TURBIX kernel libraries.
+          DUNIX kernel libraries.
 
         - \TX\TI directory which contains
           executable and overlay development
@@ -46,7 +46,7 @@
         - TXWIN:   Windows library
 
 
-  Installing TURBIX is easy:
+  Installing DUNIX is easy:
 
   1)    Insert the diskette in any floppy and type
         "INSTALL.EXE"; this program creates the
@@ -72,12 +72,12 @@
         - C Libraries path          -> C:\TC\LIB
         - C Include path            -> C:\TC\INCLUDE
         - User path                 -> C:\TX\USR
-        - TURBIX header files path  -> C:\TX\USR
-        - TURBIX kernel             -> C:\TX\KERNEL
+        - DUNIX header files path  -> C:\TX\USR
+        - DUNIX kernel             -> C:\TX\KERNEL
         - Help files path           -> C:\TI\TI\HELP
 
 
-  Now, TURBIX is ready to be used. Enjoy this product, and if you
+  Now, DUNIX is ready to be used. Enjoy this product, and if you
   want more, don't forget to register...
 
 

@@ -1,4 +1,4 @@
-/*  TURBIX Error Codes */
+/*  DUNIX Error Codes */
 
 
 #define EZERO    0              /* Error 0                      */

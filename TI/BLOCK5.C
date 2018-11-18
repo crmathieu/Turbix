@@ -5,7 +5,7 @@
 #include <fcntl.h>
 
 /*
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *--------------------------------------------
  * ctrlkb - mark block begin
  * ctrlkk - mark block end
  * ctrlkc - copy defined block
@@ -14,7 +14,7 @@
  * ctrlky - delete defined block
  * ctrlkr - read block from paste file        +
  * ctrlkw - copy defined block to paste file  +
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *---------------------------------------------
  */
 
 /*--------------------------------------------------------
@@ -69,7 +69,7 @@ struct OBJ *wp;
       bottomBlock = current + lastCh;
 
       fflag        &= ~FF_BLOCKDEF;
-      if (topBlock  != NIL_LN ) { /* on a deja marqu‚ un debut bloc */
+      if (topBlock  != NIL_LN ) { /* on a deja marqu- un debut bloc */
           if (topBlock <= bottomBlock)
               fflag |= FF_BLOCKDEF;
 
@@ -119,7 +119,7 @@ struct OBJ *wp;
         fflag |= FF_LINE_UPDATE;
         formatt_line(linebuf, bigbuf, current, lnlen(wp,current), EOS, nb_car_per_line * 2);
         /* combler par des blancs */
-        fillCh = off - plen;  /* memoriser nb de blancs rajout‚s */
+        fillCh = off - plen;  /* memoriser nb de blancs rajout-s */
         while (plen < off)
                linebuf[plen++] = BLANK;
    }
@@ -190,7 +190,7 @@ struct OBJ *wp;
             formatt_line(linebuf, bigbuf, current, lnlen(wp,current), EOS, nb_car_per_line * 2);
 
             /* combler par des blancs */
-            fillCh = off - plen;  /* memoriser nb de blancs rajout‚s */
+            fillCh = off - plen;  /* memoriser nb de blancs rajout-s */
             while (plen < off)
                    linebuf[plen++] = BLANK;
         }
@@ -213,7 +213,7 @@ struct OBJ *wp;
         copy_block(wp,MOVE_BLOCK);
         finaltopB = topBlock;
         finalbotB = bottomBlock;
-        /* ajuster les marques si block supprim‚ avant block final */
+        /* ajuster les marques si block supprim- avant block final */
         if (topB < finaltopB) {
             finaltopB -= size;
             finalbotB -= size;
@@ -256,7 +256,7 @@ struct OBJ *wp;
         fflag |= FF_LINE_UPDATE;
         formatt_line(linebuf, bigbuf, current, lnlen(wp,current), EOS, nb_car_per_line * 2);
         /* combler par des blancs */
-        fillCh = off - plen;  /* memoriser nb de blancs rajout‚s */
+        fillCh = off - plen;  /* memoriser nb de blancs rajout-s */
         while (plen < off)
                linebuf[plen++] = BLANK;
    }
@@ -335,12 +335,12 @@ struct OBJ *wp;
     bottomBlock = topBlock + logicLen;
     fflag |= FF_BLOCKDEF;
 
-    /* verifier si la 1ere ligne du bloc copi‚ n'est pas trop longue */
+    /* verifier si la 1ere ligne du bloc copi- n'est pas trop longue */
     if ((h =lnlen(wp,current)) > nb_car_per_line - 1) {
         line_too_big(wp);
         zebeb = 1;
         current = lnprev(wp,current);
-        /* augmenter la taille du bloc si ce dernier est coup‚ en deux */
+        /* augmenter la taille du bloc si ce dernier est coup- en deux */
         if ((current + h >= topBlock) &&
             (current + h <= bottomBlock))
              bottomBlock++;

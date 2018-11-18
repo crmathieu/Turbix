@@ -128,9 +128,9 @@ struct Menu *mp;
 
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄ
- * creatTURBOC - creer le fichier TURBOC.CFG utilis‚ par TCC
- *ÄÄÄÄÄÄÄÄÄÄ
+/*
+ * creatTURBOC - creer le fichier TURBOC.CFG utilis- par TCC
+ *
  */
 creatTURBOC()
 {
@@ -175,9 +175,9 @@ creatTURBOC()
    close(fdconf);
    return(0);
 }
-/*ÄÄÄÄÄÄÄÄÄÄ
+/*----------
  * doRun
- *ÄÄÄÄÄÄÄÄÄÄ
+ *----------
  */
 doRun(mp, num)
 struct Menu *mp;
@@ -186,9 +186,9 @@ struct Menu *mp;
     return(doBuild(mp, num));
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄ
+/*----------
  * doCheck
- *ÄÄÄÄÄÄÄÄÄÄ
+ *----------
  */
 doCheck(mp, num)
 struct Menu *mp;
@@ -200,9 +200,9 @@ struct Menu *mp;
     return(doBuild(mp, num));
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄ
+/*----------
  * doMake
- *ÄÄÄÄÄÄÄÄÄÄ
+ *----------
  */
 doMake(mp, num)
 struct Menu *mp;
@@ -213,9 +213,9 @@ struct Menu *mp;
     return(doBuild(mp, num));
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄ
+/*----------
  * doBrowse
- *ÄÄÄÄÄÄÄÄÄÄ
+ *----------
  */
 doBrowse(mp, num)
 struct Menu *mp;
@@ -224,9 +224,9 @@ struct Menu *mp;
     return(doBuild(mp, num));
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄ
+/*----------
  * doCompile
- *ÄÄÄÄÄÄÄÄÄÄ
+ *----------
  */
 doCompile(mp, num)
 struct Menu *mp;
@@ -237,9 +237,9 @@ struct Menu *mp;
     return(doBuild(mp, num));
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄ
+/*----------
  * doAssemble
- *ÄÄÄÄÄÄÄÄÄÄ
+ *----------
  */
 doAssemble(mp, num)
 struct Menu *mp;
@@ -248,9 +248,9 @@ struct Menu *mp;
     return(doBuild(mp, num));
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄ
+/*----------
  * doLink
- *ÄÄÄÄÄÄÄÄÄÄ
+ *----------
  */
 doLink(mp, num)
 struct Menu *mp;
@@ -261,9 +261,9 @@ struct Menu *mp;
     vl->operation = LNK;
     return(doBuild(mp, num));
 }
-/*ÄÄÄÄÄÄÄÄÄÄ
+/*----------
  * doShell
- *ÄÄÄÄÄÄÄÄÄÄ
+ *----------
  */
 doShell(mp,num)
 struct OBJ *mp;
@@ -276,9 +276,9 @@ struct OBJ *mp;
 
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄ
+/*----------
  * doPreScan
- *ÄÄÄÄÄÄÄÄÄÄ
+ *----------
  */
 doPreScan(mp, num)
 struct Menu *mp;
