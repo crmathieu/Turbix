@@ -17,28 +17,28 @@ int _user_end(), _system_end(), _umain_end();
 extern int SigMask[];
 
 /*----------------------------------------------------------------------------
- * _makeProcess - construire le decripteur d'une tache
+ * _makeProcess - build a task descriptor
  *----------------------------------------------------------------------------
  */
 _makeProcess(procaddr,tasktyp,ssize, priority, name, nargs, args)
-int   (* procaddr)();/* adresse de demarrage du process                    */
-int    tasktyp;      /* tache noyau ou non                                 */
-ushort ssize;        /* taille de la pile                                  */
-int    priority;     /* priorite du process                                */
-char  *name;         /* nom du process                                     */
-int    nargs;        /* taille total des arguments ( en WORD )             */
+int   (* procaddr)();/* task starting address                              */
+int    tasktyp;      /* user / system                                      */
+ushort ssize;        /* stack size                                         */
+int    priority;     /* task priority                                      */
+char  *name;         /* task name                                          */
+int    nargs;        /* total size of task parameters (in WORD)            */
                      /* CHAR = INT = SHORT = 1                             */
                      /* LONG = FLOAT = & = 2                               */
-int  args ;          /* debut zone arguments                               */
+int  args ;          /* start parameters location                          */
 {
      int ps;
-     int fils,pere;
-     struct taskslot *tp,*tpere;
+     int child,parent;
+     struct taskslot *tp,*tparent;
      int i;
      int  *stack, *argtask, *argp;
 
         ps = _itDis();
-        if ( ssize < 48 || (fils = _getnewpid()) == RERR || priority < 1 ||
+        if ( ssize < 48 || (child = _getnewpid()) == RERR || priority < 1 ||
            ( stack = _stackAlloc(ssize)) == (int *)NULL ) {
                  _itRes(ps);
                  return(RERR);
@@ -46,44 +46,43 @@ int  args ;          /* debut zone arguments                               */
         if (priority > MAXPRIO)
             priority = MAXPRIO;
 
-        numproc++;                 /* un process de plus dans le systeme */
-        tpere = &Tasktab[pere = RUNpid];
-        tp = &Tasktab[fils];
+        numproc++;                 /* add number of tasks in system */
+        tparent = &Tasktab[parent = RUNpid];
+        tp = &Tasktab[child];
 
-        /* initialiser le descripteur */
+        /* initialize descriptor */
         tp->tstate = SLEEP;
-        tp->tevent = EV_SUSP;    /* etat initial = suspendu            */
+        tp->tevent = EV_SUSP;    /* initial state = SUSPENDED            */
 
-        /* initialiser le type de process */
+        /* initialize task type */
         tp->ttyp   = tasktyp;
 
-        /* recuperer drive et directory courante du pere */
-        tp->tcurrdev = tpere->tcurrdev;
+        /* retrieve parent's drive and and directory */
+        tp->tcurrdev = tparent->tcurrdev;
         memset(tp->tcurrdir, 0, 64);
-        fastcpy(tp->tcurrdir, tpere->tcurrdir, strlen(tpere->tcurrdir));
+        fastcpy(tp->tcurrdir, tparent->tcurrdir, strlen(tparent->tcurrdir));
 
-        /* recopie le nom du process */
+        /* copy task's name */
         for (i = 0; i < TNMLEN ; i++)
                 if ((tp->tname[i] = name[i]) == 0)
                         break;
 
         /*
-         *  initialiser la pile USER et la pile KERNEL
-         *  ( les 2 piles sont dans le meme segment )
-         *  On demarre sur la pile USER
+         * Initialize USER and SYSTEM stacks
+         * (both stacks are in the same segment)
+         * We start on the USER stack
          */
 
         tp->tprio          = priority;
         tp->tKstkbase      = stack;
         tp->tUstkbase      = stack;
 
-        /* ajuster USER base a la moitie de la pile totale */
-        FP_OFF(tp->tUstkbase) -= ssize/2;  /* LOUCHE */
+        /* adjust USER stack to half the total stack size */
+        FP_OFF(tp->tUstkbase) -= ssize/2;  
 
         tp->tstklen        = ssize;
-        /* BIG BUG trouv‚ : convertir la taille de la pile en nb integers
-         * (car ssize est la taille en bytes)
-         */
+        /* Convert stack size in # of integers
+         * (ssize is the size in bytes) */
         tp->tUstklen       = tp->tKstklen = ssize/(2*sizeof(int));
         tp->tUstklim       = stack;
         FP_OFF(tp->tUstklim) = 0;
@@ -102,47 +101,47 @@ int  args ;          /* debut zone arguments                               */
         tp->tITvalid       = TRUE;
 /*        tp->tdelay         = FALSE;*/
         tp->tpipe_nr       = -1;
-        tp->tuser          = tpere->tuser;
-        tp->tgrp           = tpere->tgrp;
-        tp->tkernel        = 0;      /* on demarre en mode USER */
+        tp->tuser          = tparent->tuser;
+        tp->tgrp           = tparent->tgrp;
+        tp->tkernel        = 0;      /* we start in user mode */
         tp->theadblk       = (struct hblk *)NULL;
         tp->ttailblk       = (struct hblk *)NULL;
 
-        /* initialiser les file descriptors */
+        /* init file descriptors */
         for ( i = 0 ; i  < NFD ; i++)   tp->tfd[i] = NULLSTREAM;
 
-        /* initialiser les Actions de signal a SIG_DFL */
+        /* init signal actions to SIG_DFL */
         for ( i = 0 ; i < SIGNR ; i++)  tp->tevfunc[i] = SIG_DFL;
 
-        /* adopter les E/S standards du pere */
-        _dupSys(pere,fils,stdin);
-        _dupSys(pere,fils,stdout);
-        _dupSys(pere,fils,stderr);
+        /* use standards IO from parent */
+        _dupSys(parent,child,stdin);
+        _dupSys(parent,child,stdout);
+        _dupSys(parent,child,stderr);
 
-        /* affilier le pere et le fils */
-        tp->tppid     = pere;
+        /* establish affiliation between parent and child tasks */
+        tp->tppid     = parent;
 
-        /* initialiser la pile USER */
+        /* initialize USER stack */
         stack          = tp->tUstkbase;
         argtask        = stack;
         tp->targc      = nargs;
 /*        *stack--       = MAGIC;*/
 
-        /* transferer les parametres de la tache sur sa pile */
+        /* transfer task parameters onto its stack */
         argtask = (&args) + (nargs - 1);
         for ( ; nargs > 0 ; nargs--)
                             *stack-- = *argtask--;
 
-        /* mettre en place l'adresse de fin de la tache :
-         * tester si adresse sur 32 bits
+        /* set the end task address:
+         * test if 32 bits address
          */
         if (sizeof(int (*)()) > 2)   stack--;
 
 
-        /* Mise en place adresse fin de tache */
+        /* set end task address */
         switch(tasktyp) {
         case SYS_TASK   : *(int (**)())stack   = _system_end;break;
-        case USER_TASK  : /* initialiser D of C valide */
+        case USER_TASK  : /* initialize D of C valid */
                           tp->tevsig = SigMask[SIGCLD];
                           *(int (**)())stack   = _user_end;break;
         case UMAIN_TASK : /* UMAIN */
@@ -151,41 +150,40 @@ int  args ;          /* debut zone arguments                               */
         }
         tp->retAddr = stack;
 
-        /* placer l'@ de debut de la tache ( elle est lancee par un RET ) */
+        /* place task's starting address (will be launched by a RET instruction) */
         stack -= sizeof(int (*)())/2;
         *(int (**)())(stack) = procaddr;
 
-        /*  mettre en place le contexte de
-         *  lancement de la tache : reserver 4 entiers
-         *  pour SI DI CR BP ,puis initialiser le CR
+        /*  set the task launch context: reserve 4 integers
+         *  for registers SI DI CR BP, then initialize CR
          */
         stack -= 4;
         tp->tstktop = stack;
         tp->tUSP           = FP_OFF(tp->tstktop);
         *stack             = ITVALID ;
         _itRes(ps);
-        return(fils);
+        return(child);
 }
 
 /*----------------------------------------------------------------------------
- * m_Execl - exec avec nombre de parametres connu … l'avance
- *         le dernier argument pass‚ doit etre obligatoirement (char *)0
+ * m_Execl - exec with known number of parameters. The last parameter must be
+ *           a null pointer (char *)0
  *----------------------------------------------------------------------------
  */
-SYSTEMCALL m_Execl(func,arg0)
+SYSTEMCALL m_Execl(func, arg0)
 int (* func)();
-/*char *arg0;        /* 1er argument pass‚ en parametre  */
+char *arg0;        /* 1st parameter passï¿½ en parametre  */
 {
      return(m_Exec(func, &arg0));
 }
 
 /*----------------------------------------------------------------------------
- * m_Exec - exec avec nombre de parametres non connu a l'avance
+ * m_Exec - exec with unknown number of parameters
  *----------------------------------------------------------------------------
  */
 SYSTEMCALL m_Exec(func,argv)
-int (*func)();     /* adresse de demarrage du process                     */
-char *argv[];      /* debut de la zone des arguments du process           */
+int (*func)();     /* task starting address                               */
+char *argv[];      /* begin of debut de la zone des arguments du process           */
                    /* argv[0] par convention pointe sur le nom du process */
 {
      int ps, i, *stack;
@@ -234,7 +232,7 @@ char *argv[];
      *                +  Somme strlen(argv[i])
      */
 
-    /* "topointerArea" pointe sur le buffer argument (ajust‚ sur octet paire)*/
+    /* "topointerArea" pointe sur le buffer argument (ajustï¿½ sur octet paire)*/
     (char *)topointerArea = &tp->targbuf[adjust = isodd(FP_OFF(tp->targbuf))];
 
     /* "tostringArea" pointe sur la zone des strings */
@@ -252,7 +250,7 @@ char *argv[];
 }
 
 /*----------------------------------------------------------------------------
- * stackexec - positionne le sommet de pile du process lanc‚ par exec
+ * stackexec - positionne le sommet de pile du process lancï¿½ par exec
  *----------------------------------------------------------------------------
  */
 _stackexec(func,ps,argv)
@@ -312,42 +310,42 @@ char *argv[];
 }
 
 /*----------------------------------------------------------------------------
- * m_Fork - creation d'un process fils heritant des memes fichiers que le pere
+ * m_Fork - creation d'un process child heritant des memes fichiers que le parent
  *----------------------------------------------------------------------------
  */
 SYSTEMCALL  m_Fork()
 {
-   int fils,pere,ps;
+   int child,parent,ps;
    int stackcopy();
    struct taskslot *tp;
 
    ps = _itDis();
-   tp = &Tasktab[pere = RUNpid];
+   tp = &Tasktab[parent = RUNpid];
    tp->terrno = 0;
 
-   /* creer le fils */
-   if ((fils = _makeProcess((int (*)())0, USER_TASK,tp->tstklen ,
+   /* creer le child */
+   if ((child = _makeProcess((int (*)())0, USER_TASK,tp->tstklen ,
                           USERPRIO , tp->tname, 0)) == RERR)
    {
         tp->terrno = EAGAIN;  /* too many processes */
         _itRes(ps);
         return(RERR);
    }
-   /* recopier le contexte du pere sur le fils */
+   /* recopier le contexte du parent sur le child */
     _kernelMode();
-    _heapcopy(pere,fils);
-    _stackcopy(pere,fils);
+    _heapcopy(parent,child);
+    _stackcopy(parent,child);
 
    /*  arrive a ce stade , le code est partage
-    *  a la fois par le pere et le fils
-    *  si on est dans le pere , se remettre en mode
-    *  USER et retourner le pid du fils
+    *  a la fois par le parent et le child
+    *  si on est dans le parent , se remettre en mode
+    *  USER et retourner le pid du child
     *  sinon retourner 0
     */
-   if (pere == RUNpid)  {
+   if (parent == RUNpid)  {
        _userMode();
        _itRes(ps);
-       return(fils);
+       return(child);
    }
    else  {
        _itRes(ps);
@@ -356,100 +354,100 @@ SYSTEMCALL  m_Fork()
 }
 
 /*----------------------------------------------------------------------------
- * stackcopy - recopie la pile USER du pere sur la pile USER du fils
+ * stackcopy - copy the parent's USER stack onto the child's USER stack
  *----------------------------------------------------------------------------
  */
-_stackcopy(pere,fils)
-int pere,fils;
+_stackcopy(parent,child)
+int parent,child;
 {
     int _user_end();
-    struct taskslot *tpere,*tfils;
-    int  *stkfils,*stkpere;
+    struct taskslot *tparent,*tchild;
+    int  *stkchild,*stkparent;
     long *aux;
     int i,ps,z;
 
-    tpere = &Tasktab[pere];
-    tfils = &Tasktab[fils];
+    tparent = &Tasktab[parent];
+    tchild = &Tasktab[child];
 
-    /* positionner le sommet de la USER stack du fils */
-    tfils->tstktop = tfils->tUstkbase;
-    FP_OFF(tfils->tstktop) -= (FP_OFF(tpere->tUstkbase) - tpere->tUSP);
+    /* position the child's USER stack top */
+    tchild->tstktop = tchild->tUstkbase;
+    FP_OFF(tchild->tstktop) -= (FP_OFF(tparent->tUstkbase) - tparent->tUSP);
 
-    /* recopie de la USER stack du pere sur celle du fils */
-    for ( i=0 , stkfils = tfils->tUstkbase , stkpere = tpere->tUstkbase;
-          i < tpere->tUstklen ; i++)
+    /* copy parent's USER stack onto child's */
+    for ( i=0 , stkchild = tchild->tUstkbase , stkparent = tparent->tUstkbase;
+          i < tparent->tUstklen ; i++)
 
-                *stkfils-- = *stkpere--;  /* stack to stack */
+                *stkchild-- = *stkparent--;  /* stack to stack */
 
-    /*  placer les arguments et l'@ retour de stackcopy (qui se trouve
-     *  sur la pile KERNEL du pere ) sur la pile USER du fils
+    /*  place _stackcopy return @ and arguments (which happen to be on 
+     *  parent's KERNEL stack) onto child's USER stack
      */
-     stkfils = tfils->tstktop;
-     stkpere = tpere->tKstkbase;
+     stkchild = tchild->tstktop;
+     stkparent = tparent->tKstkbase;
 
-     /* 3 = (pere,fils,bp) */
+     /* 3 = (parent, child, bp) */
      for (i = 0 ; i < 3 + (sizeof(int (*)())/2) ; i++)
-          *(--stkfils) = *(--stkpere);
+          *(--stkchild) = *(--stkparent);
 
-     /* forcer le type USER pour le fils, qqs le type du pere */
-     tfils->ttyp                 = USER_TASK;
-     *(int (**)())tfils->retAddr = _user_end;
+     /* force type USER for child, regardless of parent's type */
+     tchild->ttyp                 = USER_TASK;
+     *(int (**)())tchild->retAddr = _user_end;
 
-    /*  conditionner la pile USER du fils pour demarrage
-     *  par swapstk
+    /*  
+     * condition child's USER stack to start through swapstk 
      */
-    tfils->tstktop   = stkfils - 3;
-    tfils->tUSP      = FP_OFF(tfils->tstktop);
-    *tfils->tstktop  = ITVALID ;
+    tchild->tstktop   = stkchild - 3;
+    tchild->tUSP      = FP_OFF(tchild->tstktop);
+    *tchild->tstktop  = ITVALID ;
 /*    for (i=8;i>=0;i--)
-                       kprintf("%x\n",*(tfils->tstktop+i));*/
+                       kprintf("%x\n",*(tchild->tstktop+i));*/
 
-    /*  le fils partage les fichiers ouverts
-     *  par le pere
+    /*  
+     * The child shares the parent's open files
      */
     for (i=3;i < NFD ;i++)
-            _dupSys(pere,fils,i);
+            _dupSys(parent, child, i);
 
-    _launch(fils,DIFFERED); /* le fils demarre apres le pere */
+    _launch(child, DIFFERED); /* the child starts after parent resumes its execution */
 }
 
 /*----------------------------------------------------------------------------
- * heapcopy - recopie le tas du pere sur celui du fils
+ * heapcopy - copy the parent's heap onto the child's heap
  *----------------------------------------------------------------------------
  */
-_heapcopy(pere,fils)
-int pere,fils;
+_heapcopy(parent, child)
+int parent, child;
 {
-    struct taskslot *tpere;
-    uchar  *heapfils,*heapPere;
+    struct taskslot *tparent;
+    uchar  *heapfils, *heapPere;
     struct hblk *ph, *fh;
-    int i,ps;
+    int i, ps;
     int *f, *p;
 
-    tpere = &Tasktab[pere];
+    tparent = &Tasktab[parent];
 
-    for (ph = tpere->theadblk; ph != (struct hblk *)NULL; ph = ph->nextBlk) {
-           if ((f = _MXmalloc(fils, ph->blen - HBLK_SIZE, NORMALB)) == (int *)NULL)
+    for (ph = tparent->theadblk; ph != (struct hblk *)NULL; ph = ph->nextBlk) {
+           if ((f = _MXmalloc(child, ph->blen - HBLK_SIZE, NORMALB)) == (int *)NULL)
                 return(RERR);
 
-           /* copie du bloc */
+           /* copy block */
            p = (int *)ph;
            FP_SEG(p) += HBLK_SIZE;
            fastcpy(f, p, ph->blen - HBLK_SIZE);
            fh = (struct hblk *)f;
            FP_SEG(fh) -= HBLK_SIZE;
-           ph->dupb = fh;  /* pointer sur le header du bloc dupliqu‚ */
+           ph->dupb = fh;  /* points to header of duplicated block */
     }
 }
 /*----------------------------------------------------------------------------
- * _umain_end - stopper le main
+ * _umain_end - stops user main
  *----------------------------------------------------------------------------
  */
 SYSTEMCALL  _umain_end()
 {
     int fd;
 
-    /* fermer les fichiers encore ouverts */
+    /* close open files */
     for (fd = NFD-1 ;fd >= 0 ;fd--)
          if (Tasktab[RUNpid].tfd[fd] != NULLSTREAM)
              _closeSys(RUNpid,fd);
@@ -459,7 +457,7 @@ SYSTEMCALL  _umain_end()
 }
 
 /*----------------------------------------------------------------------------
- * m_Shutdown - stopper le systeme et revenir sous DOS
+ * m_Shutdown - shutdown dunix and return to dos
  *----------------------------------------------------------------------------
  */
 SYSTEMCALL  m_Shutdown()
@@ -468,7 +466,7 @@ SYSTEMCALL  m_Shutdown()
 }
 
 /*----------------------------------------------------------------------------
- * user_end - fin d'un programme utilisateur
+ * user_end - end of user task
  *----------------------------------------------------------------------------
  */
 _user_end()
@@ -477,7 +475,7 @@ _user_end()
 }
 
 /*----------------------------------------------------------------------------
- * system_end - fin d'un programme systeme
+ * system_end - end of system task.
  *----------------------------------------------------------------------------
  */
 _system_end()
@@ -486,8 +484,8 @@ _system_end()
 }
 
 /*----------------------------------------------------------------------------
- * getnewpid - recherche un slot libre ds la Qliste . qd c'est possible ,
- *          retourne l'offset du slot ds la Qliste ( c'est le pid du process )
+ * getnewpid - Looks for a free slot in Qliste. When possible, returns the 
+ *             slot offset in Qliste (the task pid)
  *----------------------------------------------------------------------------
  */
 LOCAL _getnewpid()
@@ -505,7 +503,7 @@ LOCAL _getnewpid()
 
 
 /*----------------------------------------------------------------------------
- * overwriteDescriptor - reinitialise le descripteur pour execl , execv
+ * overwriteDescriptor - reinitialize descriptor for execl , execv
  *----------------------------------------------------------------------------
  */
 _overwriteDescriptor()
@@ -522,10 +520,10 @@ _overwriteDescriptor()
     if (tp->tflag & F_DELAY)
         _stopdelay(pid);
 
-    /* liberer les blocs allou‚s */
+    /* free allocated blocks */
     for (hd = tp->theadblk; hd != (struct hblk *)NULL; ) {
          auxB = hd->nextBlk;
-         FP_SEG(hd) += HBLK_SIZE; /* s'aligner sur l'adresse USER du bloc */
+         FP_SEG(hd) += HBLK_SIZE; /* self align on block USER address */
          _xfree(hd, pid);
          hd = auxB;
     }
@@ -540,17 +538,17 @@ _overwriteDescriptor()
      tp->tevcatch       = 0;
      tp->tpipe_nr       = -1;
 
-     /* forcer le type USER */
+     /* force USER task type */
      tp->ttyp           = USER_TASK;
      *(int (**)())tp->retAddr = _user_end;
 
      tp->theadblk       = (struct hblk *)NULL;
      tp->ttailblk       = (struct hblk *)NULL;
 
-     /* initialiser les file descriptors , sauf les E/S standards */
+     /* initialize file descriptors, except standard IO */
      for ( i = 3 ; i  < NFD ; i++)   m_Close(i);
 
-     /* mettre a jour le numero d'utilisateur */
+     /* set up the user number */
      if  ((i = tp->tfd[0]->s_minor -(NVS-1)) > 0 )
            tp->tuser = i;
      else

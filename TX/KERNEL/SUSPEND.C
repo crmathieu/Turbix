@@ -4,7 +4,7 @@
 #include "q.h"
 
 /*----------------------------------------------------------------------------
- * suspend - place un process dans l'etat SUSP
+ * suspend - sets a task's state to SUSP
  *----------------------------------------------------------------------------
  */
 SYSTEMCALL suspend(pid)
@@ -28,9 +28,12 @@ int pid;
     }
     tp->tstate = SLEEP;
     tp->tevent |= EV_SUSP;
-    if ( tp->tstate == READY )     dequeue(SYSQ,pid);
-    else                           scheduler();
-
+    if ( tp->tstate == READY ) {
+        dequeue(SYSQ,pid);
+    } else {
+        scheduler();
+    }
+    
     prio = tp->tprio;
     _itRes(ps);
     return(prio);

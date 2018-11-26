@@ -3,14 +3,14 @@
 #include "sys.h"
 
 /*----------------------------------------------------------------------------
- * _launch - place un process de l'‚tat SUSP … l'‚tat READY
+ * _launch - updates a task's state from SUSP to READY
  *----------------------------------------------------------------------------
  */
-SYSTEMCALL _launch(pid,differed)
+SYSTEMCALL _launch(pid, differed)
 int pid , differed;
 {
     int ps;
-    struct taskslot *tptr;            /* pointe sur la table des descripteurs */
+    struct taskslot *tptr;            /* points to task descriptors table */
     int prio;
 
     ps = _itDis();
@@ -21,7 +21,7 @@ int pid , differed;
          return(RERR);
     }
     prio = tptr->tprio;
-    _setrdy( pid , differed );   /* lancer en differ‚ ou immediatement */
+    _setrdy( pid , differed );   /* set to READY and immediately (-or- differ its) schedule */
     _itRes(ps);
     return(prio);
 

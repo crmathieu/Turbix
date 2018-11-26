@@ -9,7 +9,7 @@
 int saveCurrTstate;
 
 /*----------------------------------------------------------------------------
- * swpProc - attribue le processeur  a la tache READY la plus prioritaire
+ * swpProc - Assigns the CPU to the READY task that have the highest priority
  *----------------------------------------------------------------------------
  */
 _swpProc()
@@ -17,9 +17,9 @@ _swpProc()
     struct taskslot *old,*new;
     int ps, Y, X;
 
-    /*  tester si la tache courante peut garder la CPU
-     *  en comparant sa priorite a celle de la tache
-     *  la plus prioritaire ( en tete de la file des READY )
+    /* check if current task can keep CPU by comparing its
+     * priority with the one of the highest priority task 
+     * (#1 in READY task list)
      */
 
     if ((old = &Tasktab[RUNpid])->tstate == RUNNING) {
@@ -27,10 +27,9 @@ _swpProc()
             return(ROK);
         }
         else {
-           /*  la tache en READY liste a une priorite
-            *  superieure ou egale a la tache courante :
-            *  placer la tache courante dans la file des
-            *  READY suivant son niveau de priorite
+           /* the task in READY list has a higher or eq priority
+            * than the current task: Insert current task in READY
+            * list based on its priority level
             */
 
            old->tstate = READY;
@@ -38,32 +37,31 @@ _swpProc()
        }
     }
 
-    /*  retirer la tache elue de la file des READY et
-     *  la placer dans l'etat RUNNING
-     */
+    /* remove elected task from READY list and its state to RUNNING */
 
     new           = &Tasktab[RUNpid = _getfirst(SYSQ,rdyhead)];
     new->tstate   = RUNNING;
 
-    /*  a cet instant , on est toujours sur la pile
-     *  de l'ancienne tache . commuter les piles de
-     *  l'ancienne et la nouvelle tache
+    /* At this point, we are still running on the previous task's stack. We need
+     * to swap the new and previous tasks' stacks
      */
+
 /*    X = tty[0].cursX;
     Y = tty[0].cursY;
     kprintf("\033[24;50H %8s is Running\033[%d;%dH",new->tname,Y,X);*/
 
-    /* swapstk se charge de replacer inhib
-     * a FALSE avant d'effectuer le RET
+    /* The assembler code swapstk is responsible to restore interruption 
+     * (inhib = FALSE) before executing the RET instruction
      */
     _swapstk( &old->tstktop , new->tstktop );
     return(ROK);
 }
 
 /*----------------------------------------------------------------------------
- * _swpProcC - attribue le processeur  a la tache CALLOUT
- *    BUG : si _swpProcC est appel‚ par l'IT clock alors que la tache courante
- *          vient de changer d'etat, schedulC la replace a l'etat READY
+ * _swpProcC - Assigns the CPU to the CALLOUT task. Note that if _swpProcC is
+ *             invoked by the clock interruption routine just as the current 
+ *             task just changed its state, schedulC will change it back to
+ *             READY
  *----------------------------------------------------------------------------
  */
 _swpProcC()
@@ -75,11 +73,11 @@ _swpProcC()
     old           = &Tasktab[pid = RUNpid];
 /*    old->tITvalid = itvalidee;*/
 
-    /* placer CALLOUT en etat running */
+    /* set CALLOUT as RUNNING */
     new           = &Tasktab[RUNpid = CALLOUT];
     new->tstate   = RUNNING;
 
-    /*  placer la tache courante en TETE de la file des READY */
+    /* move current task at the head of the READY task list */
     if (old->tstate == RUNNING) {
         old->tstate = READY;
         _enlist_head(pid,rdyhead);
@@ -96,13 +94,13 @@ _swpProcC()
 
 
 /*----------------------------------------------------------------------------
- * setrdy - place un tache dans l'etat READY
+ * setrdy - set a task state as READY
  *----------------------------------------------------------------------------
  */
 _setrdy(pid, flag_schedul)
-int pid;                  /* pid du process … chainer ds la file des READY */
-int flag_schedul;         /* booleen indiquant si l'ordonnanceur doit etre */
-                          /* invoqu‚ apres l'insertion ou pas              */
+int pid;                  /* process id to use in the READY task linked list */
+int flag_schedul;         /* boolean specifying if the scheduler must be 
+                             invoked after insertion in READY tasks list or not */
 
 {
     int ps;
@@ -122,11 +120,11 @@ int flag_schedul;         /* booleen indiquant si l'ordonnanceur doit etre */
 }
 
 /*----------------------------------------------------------------------------
- * retourne la priorite d'un process donn‚
+ * m_GetPriority - returns the task priority given a process id
  *----------------------------------------------------------------------------
  */
 SYSTEMCALL m_GetPriority(pid)
-int pid;              /* pid de la tache dont on souhaite connaitre la prio */
+int pid;              /* task process id */
 {
     int ps;
     struct taskslot *tp;
@@ -143,7 +141,7 @@ int pid;              /* pid de la tache dont on souhaite connaitre la prio */
 }
 
 /*----------------------------------------------------------------------------
- * retourne le pid de la tache active
+ * m_Getpid - returns the RUNNING task's pid 
  *----------------------------------------------------------------------------
  */
 SYSTEMCALL m_Getpid()
@@ -151,9 +149,9 @@ SYSTEMCALL m_Getpid()
     return(RUNpid);
 }
 
-/*------------------------------------
- * retourne le nom de la tache active
- *------------------------------------
+/*------------------------------------------------
+ * m_GetProcName - returns the RUNNING task's name
+ *------------------------------------------------
  */
 char * SYSTEMCALL m_GetProcName(pid)
 int pid;
@@ -173,9 +171,9 @@ int pid;
     }
 }
 
-/*-------------------------
- * change le nom du process
- *-------------------------
+/*-----------------------------------
+ * m_SetProcName - sets a task's name
+ *-----------------------------------
  */
 SYSTEMCALL m_SetProcName(pid, name)
 int pid;
@@ -190,7 +188,7 @@ char *name;
                 return(RERR);
         }
 
-        /* recopie le nom du process */
+        /* copy task name */
         for (i = 0; i < TNMLEN ; i++)
                 if ((Tasktab[pid].tname[i] = name[i]) == 0)
                         break;
@@ -199,9 +197,8 @@ char *name;
         return(ROK);
 }
 
-
 /*----------------------------------------------------------------------------
- * retourne le pid de la tache parente
+ * m_Getppid - returns the RUNNING task's parent task id
  *----------------------------------------------------------------------------
  */
 SYSTEMCALL m_Getppid()
@@ -210,7 +207,7 @@ SYSTEMCALL m_Getppid()
 }
 
 /*----------------------------------------------------------------------------
- * nice - diminuer la priorite d'une tache
+ * m_Nice - lowers a task's priority
  *----------------------------------------------------------------------------
  */
 SYSTEMCALL m_Nice(increment)
@@ -232,10 +229,11 @@ int increment;
 }
 
 /*----------------------------------------------------------------------------
- * change la priorit‚ d'une tache et retourne l'ancienne priorit‚
+ * _setprio - sets a task's priority to "newprio" and returns the previous 
+ *            priority value
  *----------------------------------------------------------------------------
  */
-_setprio(pid,newprio)
+_setprio(pid, newprio)
 int pid;
 int newprio;                  /* newprio > 0 */
 {
@@ -261,26 +259,26 @@ int newprio;                  /* newprio > 0 */
 }
 
 /*----------------------------------------------------------------------------
- * _kernelMode - passer en mode KERNEL
+ * _kernelMode - switches to KERNEL mode
  *----------------------------------------------------------------------------
  */
 _kernelMode(forcePUSHBP)
 int forcePUSHBP;
 {
    if (Tasktab[RUNpid].tkernel++ <= 0)
-       /* sauvegarder SP USER   et  placer SP KERNEL */
+       /* Saves SP USER and sets SP KERNEL */
        _UtoK(&Tasktab[RUNpid].tUSP,Tasktab[RUNpid].tKSP);
 }
 
 /*----------------------------------------------------------------------------
- * userMode - passer en mode USER
+ * _userMode - switches to USER mode
  *----------------------------------------------------------------------------
  */
 _userMode(forcePUSHBP)
 int forcePUSHBP;
 {
    if (--Tasktab[RUNpid].tkernel <= 0)
-       /* replacer SP USER */
+       /* replaces SP USER */
        _KtoU(Tasktab[RUNpid].tUSP);
 }
 

@@ -11,7 +11,7 @@
 extern unsigned *deb1;
 
 /*----------------------------------------------------------------------------
- * _doZombi - tue une tache physiquement et la place dans l'etat ZOMBI
+ * _doZombi - kills physically a task and sets its state as ZOMBI
  *----------------------------------------------------------------------------
  */
 _doZombi(pid)
@@ -31,34 +31,33 @@ int pid;
           return(RERR);
     }
 
-       /* liberer les blocs allou‚s */
+       /* free allocated blocks */
        for (hd = tp->theadblk; hd != (struct hblk *)NULL; ) {
             auxB = hd->nextBlk;
 /*               m_Printf("BL=%lx TYP=%x NXT=%lx\n",hd,hd->sig,auxB);*/
-            FP_SEG(hd) += HBLK_SIZE; /* s'aligner sur l'adresse USER du bloc */
+            FP_SEG(hd) += HBLK_SIZE; /* self align on block USER address */
             _xfree(hd, pid);
             hd = auxB;
        }
-       /* fermer les fichiers encore ouverts */
+       /* close opened files */
        for (fd = NFD-1 ;fd >= 0 ;fd--)
             if (tp->tfd[fd] != NULLSTREAM)
                 _closeSys(pid,fd);
 
        if (tp->tflag & F_DELAY)   _stopdelay(pid);
-       tp->tevsig = 0;   /* RAZ signaux attendus */
+       tp->tevsig = 0;   /* erase set signals */
 
        switch(tp->tstate)
        {
           case RUNNING :
                break;
           case READY   :
-               _defect(SYSQ,pid) ;         /* retirer la T de sa file et */
+               _defect(SYSQ,pid) ;         /* remove task from its list */
                break;
           case SLEEP   :
                if (tp->tevent & EV_SEM) {
-                    Semtab[tp->tsem].semcnt++; /* eliminer la tache de la
-                                                  file du semaphore    */
-                    _defect(SYSQ,pid) ;         /* retirer la T de sa file et */
+                    Semtab[tp->tsem].semcnt++; /* remove task from semaphore list */
+                    _defect(SYSQ,pid) ;        /* and remove task from its list */
                }
                break;
           default      :
@@ -72,7 +71,7 @@ int pid;
 }
 
 /*----------------------------------------------------------------------------
- * _dokill - tuer completement une tache
+ * _dokill - kills a task
  *----------------------------------------------------------------------------
  */
 _dokill(pid)
@@ -86,7 +85,7 @@ int pid;
    numproc--;
    _doZombi(pid);
 
-   /* liberer la pile du process */
+   /* free task's stack */
 /*   kprintf("FREE STACK ...\n");*/
    _sfree(tp->tKstkbase,tp->tstklen, pid);
 
@@ -97,7 +96,7 @@ int pid;
 }
 
 /*----------------------------------------------------------------------------
- * doTerminate - finir de tuer une tache (uniquement pour les taches ZOMBI)
+ * doTerminate - ends a task previously in ZOMBI state
  *----------------------------------------------------------------------------
  */
 _doTerminate(pid)
@@ -110,7 +109,7 @@ int pid;
    tp = &Tasktab[pid];
 /*   kprintf("\nDOTERMINATE ...\n");*/
 
-   /* liberer la pile du process */
+   /* free task's stack */
 /*   kprintf("FREE STACK ...\n");*/
    _sfree(tp->tKstkbase,tp->tstklen, pid);
 

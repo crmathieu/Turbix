@@ -8,7 +8,7 @@
 #include <stdio.h>
 #include <sys\stat.h>
 
-/* <<<<<<<<<<<<<<<<<<<<<  VARIABLES D'IMPORTATION >>>>>>>>>>>>>>>>>>>>>> */
+/* <<<<<<<<<<<<<<<<<<<<<  Imported VARS >>>>>>>>>>>>>>>>>>>>>> */
 #include "xed.h"
 #include "emsg.h"
 
@@ -36,10 +36,6 @@ int adapter;
 
 struct configuration conf;
 
-/*  zone de reecriture des commandes si le fichier
- *  de configuration existe
- */
-
 struct stat entry;
 
 struct OBJ *wm, wmake;
@@ -53,7 +49,7 @@ unsigned char boxtype[6][11] = {{'�','�','�','�','�','�','�','�'
 
 
 
-/* <<<<<<<<<<<<  Partie propre a l'installation >>>>>>>>>>>>>> */
+/* <<<<<<<<<<<<  Install section >>>>>>>>>>>>>> */
 
 char *sourceLabel[] = {"a:","b:",
                        "c:","d:","e:","f:","g:",
@@ -90,9 +86,9 @@ char  *yesNoStr[] = {"[Y]", "[N]"};
 
 
 /*
- *  Pour le transfer des fichiers (step3) , prendre une string sur 2
+ *  For file transfers step (3), we take one every other string
  */
-char *tarDir[]  =    {"tx",                /* directorie DUNIX */
+char *tarDir[]  =    {"tx",                /* DUNIX dir*/
                       "tx\\kernel",        /* directorie des librairies & include */
                       "tx\\ti",            /* directorie de l'editeur */
                       "tx\\ti\\help",      /* help editeur */
@@ -125,17 +121,17 @@ unsigned char int10Buffer[80];
 int M_in = 0;
 unsigned long DosInt10, DosInt61;
 
-/* <<<<<<<<<<<<<<<<   variables de transfer >>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
-/* structure stockant les fichiers par page */
+/* <<<<<<<<<<<<<<<<   Transfer variables >>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
+/* holds files per page */
 struct dir_lst dir_lst;
 
-/* liste chainee de tri des fichiers */
+/* sorted files linked list */
 struct file_lst file_lst;
 
 #define FILE_SIZE sizeof(struct file_lst)
 
-int dir_lst_nfiles,  /* # de fichiers selectionn�s dans la directory */
-    dir_lst_npages;  /* # de pages de directory */
+int dir_lst_nfiles,  /* # selected files in folder */
+    dir_lst_npages;  /* # pages in folder */
 
 char  file_name[80], fpath[80], work[80];
 struct file_lst head, tail;

@@ -3,9 +3,9 @@
 #include "xed.h"
 #include "ext_var.h"
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
- * newline - ajouter EOS dans le bigbuf
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*--------------------------------------------
+ * newline - Adds EOS in bigbuf
+ *--------------------------------------------
  */
 FUNCTION newline(wp,curpos)
 struct OBJ *wp;
@@ -39,9 +39,9 @@ struct OBJ *wp;
     current_line_no++;
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
- * line_too_big - gestion troncature de ligne trop grande
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*-------------------------------------------------------
+ * line_too_big - takes care of truncating oversized line
+ *-------------------------------------------------------
  */
 FUNCTION line_too_big(wp)
 struct OBJ *wp;
@@ -53,10 +53,10 @@ struct OBJ *wp;
     newline(wp,nb_car_per_line - 1);
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
- * deleteline - supprimer la ligne courante dans le big buffer
- *              (on ne tient pas compte du tampon ligne)
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*-----------------------------------------------------------------
+ * deleteline - deletes current line in big buffer
+ *              (without taking into account line buffer)
+ *-----------------------------------------------------------------
  */
 FUNCTION deleteline(wp)
 struct OBJ *wp;
@@ -78,10 +78,10 @@ struct OBJ *wp;
     fflag &= ~FF_LINE_UPDATE;
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
- * concat(wp) - concatainer la ligne courante avec la ligne precedente
- *              dans le big buffer
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*---------------------------------------------------------------------
+ * concat(wp) - concatainates current line with previous line in
+ *              big buffer
+ *---------------------------------------------------------------------
  */
 FUNCTION concat(wp,prev)
 struct OBJ *wp;
@@ -109,10 +109,10 @@ unsigned prev;
 }
 
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
- * insert_lnbuf - tente d'inserer les caracteres du tampon ligne
- *                dans le big buffer
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*---------------------------------------------------------------
+ * insert_lnbuf - Attempts to insert data from line buffer
+ *                in big buffer
+ *---------------------------------------------------------------
  */
 FUNCTION insert_lnbuf(wp,blank)
 struct OBJ *wp;
@@ -123,11 +123,11 @@ struct OBJ *wp;
     Plen = lnlen(wp,current) + 1;
     Blen = _lnlen(linebuf) + 1;
 
-    /* supprimer les blancs en fin de ligne */
+    /* erase trailing space */
     if (blank == ERASE)  Nlen = erase_trailing_blank(wp) + 1;
     else                 Nlen = _lnlen(linebuf) + 1;
 
-    /* GESTION BLOCK */
+    /* block management */
     if ((fflag & FF_BLOCKDEF) && (blank == ERASE)) {
         if ((val = Blen - Nlen))  { /* > 0) {*/
             if (((pos = current + wp->curX + wp->leftCh) > topBlock) &&
@@ -146,7 +146,7 @@ struct OBJ *wp;
     fflag &= ~FF_LINE_UPDATE;
 
     if ((diff = Nlen - Plen) == 0) {
-        /* la ligne a la meme taille : copier sans decaler */
+        /* line has same size: copy without shifting */
         copy_lnbuf_to_bigbuf(wp,Plen);
         return;
     }
@@ -166,10 +166,10 @@ struct OBJ *wp;
         bottom += diff;
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*---------------------------------------------------------------------
  * copy_lnbuf_to_bigbuf - copier le buffer ligne a la place de la ligne
  *                        courante dans bigbuf
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *---------------------------------------------------------------------
  */
 FUNCTION copy_lnbuf_to_bigbuf(wp,size)
 struct OBJ *wp;
@@ -184,10 +184,10 @@ struct OBJ *wp;
           *(--pos) = EOFM;
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*---------------------------------------------------------------
  * copy_block -  copier le block defini a partir de la position
  *               courante dans le big buffer
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *---------------------------------------------------------------
  */
 FUNCTION copy_block(wp,operation)
 struct OBJ *wp;
@@ -240,12 +240,12 @@ struct OBJ *wp;
     topBlock = current + firstCh;
     bottomBlock = topBlock + blklen;
 
-    /* verifier si la 1ere ligne du bloc copi‚ n'est pas trop longue */
+    /* verifier si la 1ere ligne du bloc copi- n'est pas trop longue */
     if ((h =lnlen(wp,current)) > nb_car_per_line - 1) {
         line_too_big(wp);
         zebeb = 1;
         current = lnprev(wp,current);
-        /* augmenter la taille du bloc si ce dernier est coup‚ en deux */
+        /* augmenter la taille du bloc si ce dernier est coup- en deux */
         if ((current + h >= topBlock) &&
             (current + h <= bottomBlock))
              bottomBlock++;
@@ -270,9 +270,9 @@ struct OBJ *wp;
 }
 
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*-------------------------------------------
  * delete_block -  supprimer le block defini
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *-------------------------------------------
  */
 FUNCTION delete_block(wp,operation)
 struct OBJ *wp;
@@ -310,9 +310,9 @@ struct OBJ *wp;
         bottom -= blklen;
     }
     if (operation == DELETE_BLOCK) {
-        /*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ*
+        /*----------------------------*
          *       DELETE_BLOCK         *
-         *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ*/
+         *----------------------------*/
         current = deb;
 
 /*        if (current <= deb)
@@ -348,9 +348,9 @@ struct OBJ *wp;
                 fsize - (pos + blklen));
 
     }
-    else { /*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ*
+    else { /*--------------------------*
             *       MOVE_BLOCK         *
-            *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ*/
+            *--------------------------*/
         /* tester position du block / a la page courante */
         if ((current >= bottomBlock) || (current == getdebln(wp,bottomBlock))) {
             if (topPage < bottomBlock) {
@@ -404,7 +404,7 @@ struct OBJ *wp;
     topBlock = bottomBlock = NIL_LN;
     fsize -= blklen;
 
-    /* verifier si la 1ere ligne du bloc copi‚ n'est pas trop longue */
+    /* verifier si la 1ere ligne du bloc copi- n'est pas trop longue */
     if (lnlen(wp,pos) > nb_car_per_line - 1) {
         line_too_big(wp);
         current = lnprev(wp,current);

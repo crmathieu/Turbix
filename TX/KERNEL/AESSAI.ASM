@@ -1,6 +1,6 @@
 ;****************************************************************************
 ;*   IT_DOS.ASM                                                             *
-;*   Autres modules ASSEMBLEUR :                                            *
+;*   other modules:                                                         *
 ;*                  VIDEO.ASM , GR.ASM , IT_HARD.ASM , CXTSWP.ASM           *
 ;*                                                                          *
 ;****************************************************************************
@@ -57,7 +57,7 @@ __ioopen PROC FAR
 
      mov ah,3Dh
 
-     int 21h                    ; appel routine BIOS
+     int 21h                    ; calls BIOS routine
      jc  open_err
      jmp open_end
 
@@ -92,7 +92,7 @@ __iocreat PROC FAR
 
      mov ah,3Ch
 
-     int 21h                    ; appel routine BIOS
+     int 21h                    ; calls BIOS routine
      jc  creat_err
      jmp creat_end
 
@@ -129,7 +129,7 @@ __ioread PROC FAR
 
      mov ah,3Fh
 
-     int 21h                    ; appel routine BIOS
+     int 21h                    ; calls BIOS routine
      jc  read_err
      jmp read_end
 
@@ -166,7 +166,7 @@ __iowrite PROC FAR
 
      mov ah,40h
 
-     int 21h                    ; appel routine BIOS
+     int 21h                    ; calls BIOS routine
      jc  write_err
      jmp write_end
 
@@ -199,7 +199,7 @@ __ioclose PROC FAR
 
      mov ah,3Eh
 
-     int 21h                    ; appel routine BIOS
+     int 21h                    ; calls BIOS routine
      jc  close_err
      jmp close_end
 
@@ -237,7 +237,7 @@ __iomove PROC FAR
 
      mov ah,42h
 
-     int 21h                    ; appel routine BIOS
+     int 21h                    ; calls BIOS routine
      jc  move_err
      jmp move_end
 

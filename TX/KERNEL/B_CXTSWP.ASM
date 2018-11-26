@@ -33,9 +33,9 @@ _TEXT SEGMENT
 
 
 ;*
-;*  SWAPSTK( @ descripteur ancienne pile , valeur nouvelle pile  )
-;*                 bp+6 , bp+8                bp+10 , bp+12
-;*        mise a jour de la pile active
+;*  SWAPSTK( @ current stack descriptor, new stack value)
+;*                 bp+6 , bp+8            bp+10 , bp+12
+;*        updates stack
 ;*
 __swapstk PROC FAR
      push bp
@@ -45,16 +45,16 @@ __swapstk PROC FAR
      push di
      pushf
      les bx,[bp+6]              ; es = seg desc  bx = offset desc
-     mov es:[bx],sp             ; svgarder l'offset pile ancienne tache
-     mov es:[bx+2],ss           ;    "     le seg    "      "       "
+     mov es:[bx],sp             ; save current task stack offset
+     mov es:[bx+2],ss           ; save current task stack seg
 
 ; Nouvelle pile
 
-     mov ax,[bp+10]             ; bx = offset  pile nelle tache
-     mov dx,[bp+12]             ; ss = segment   "    "     "
+     mov ax,[bp+10]             ; bx = new task stack offset
+     mov dx,[bp+12]             ; ss = new task stack segment
      mov sp,ax
      mov ss,dx
-;     mov ax,DGROUP    ; a supprimer : remplacer ca par (push ds/pop ds)
+;     mov ax,DGROUP    ; to be removed: replace ca with (push ds/pop ds)
 ;     mov ds,ax        ;
 
      popf
@@ -69,7 +69,7 @@ __swapstk ENDP
 
 
 ;*
-;*  SETJMP( @ structure de sauvegarde du contexte de la pile)
+;*  SETJMP( @ stack context backup structure)
 ;*
 _mkdSetjmp PROC FAR
      push bp
@@ -78,7 +78,7 @@ _mkdSetjmp PROC FAR
 
      les bx,[bp+6]              ; es = seg structure  bx = offset
      pushf
-     pop ax                     ; recuperer flag
+     pop ax                     ; get flag
      mov es:[bx],ax
      mov es:[bx+2],sp
      mov es:[bx+4],ss
@@ -87,10 +87,9 @@ _mkdSetjmp PROC FAR
      mov es:[bx+10],di
      mov es:[bx+12],ds
      mov es:[bx+14],cx   ; es
-     mov ax,0            ; valeur retour de setjmp
+     mov ax,0            ; setjmp returned value
 
-     ; placer l'adresse retour de SETJUMP
-     ; (IP) dans la structure
+     ; set SETJUMP return value (IP) in structure
 
      mov dx,[bp+2]
      mov es:[bx+16],dx   ; ip
@@ -106,7 +105,7 @@ _mkdSetjmp ENDP
 
 
 ;*
-;*  LONGJMP( @ structure , valeur retour a la sortie de SETJMP)
+;*  LONGJMP( @ structure , SETJMP returned value)
 ;*
 _mkdLongjmp PROC FAR
      push bp
@@ -114,8 +113,8 @@ _mkdLongjmp PROC FAR
 
      les bx,[bp+6]              ; es = seg structure  bx = offset
      push es:[bx]
-     popf                       ; recuperation flag
-     mov ax,[bp+10]              ; recuperer valeur retour
+     popf                       ; get flag
+     mov ax,[bp+10]             ; read returned value
      mov sp,es:[bx+2]
      mov ss,es:[bx+4]
      mov bp,es:[bx+6]
@@ -126,8 +125,11 @@ _mkdLongjmp PROC FAR
      ; placer le contenu de structure.IP at .CS sur la pile
      ; et le transferer dans IP et CS
 
-     push es:[bx+18]    ; recuperer CS
-     push es:[bx+16]    ; recuperer IP
+     ; place structure.IP at .CS on stack 
+     ; and transfer it in IP and CS
+
+     push es:[bx+18]    ; get CS
+     push es:[bx+16]    ; get IP
      mov cx,es:[bx+14]
      mov es,cx
      pop dx
@@ -135,16 +137,14 @@ _mkdLongjmp PROC FAR
      pop dx
      mov [bp+4],dx
 
-     add sp,2           ; skip bp (empile dans SETJMP)
+     add sp,2           ; skip bp (embedded in SETJMP)
      ret
 _mkdLongjmp ENDP
 
 
 
 
-;*************** Description de la pile au moment de    ******************
-;
-;                     l'appel de KERNELMODE
+;*************** Stack Description when calling KERNELMODE ******************
 ;
 ;
 ;               USER                                         KERNEL
@@ -156,29 +156,29 @@ _mkdLongjmp ENDP
 ;       |       arg1          |
 ;       |_____________________|                       _____________________
 ;       |                     |                      |                     |
-;       |__  @ retour dans  __|   CALL  primitive    |__  @ retour dans  __|
-;       |   tache appelante   |              =======>|    primitive        |
+;       |__     return @    __|   CALL  primitive    |__     return @    __|
+;       |   in calling task   |              =======>|    in system call   |
 ;       |_____________________|             |        |_____________________|
 ;       |        bp           |             |        |        bp           |
 ;       |_____________________|             |        |_____________________|
 ;       |                     |             |        |                     |
-;       |   Variables locales |             |_______________________
-;       |   de la primitive   |                                     |
-;   +18 |_____________________|<----- valeur a sauvegarder    _     |
-;       |                     |       dans USP                 |    |
-;   +16 |__  @ retour dans  __|   CALL kernelMode              |    |
-;       |     primitive       |                                |____|
+;       |   System call       |             |_______________________
+;       |   local variables   |                                     |
+;   +18 |_____________________|<----- @ to save to USP        _     |
+;       |                     |                                |    |
+;   +16 |__  return @ in    __|   CALL kernelMode              |    |
+;       |     system call     |                                |____|
 ;   +14 |_____________________|                                |
-;       |        bp           |<----- valeur a placer          |
-;   +12 |_____________________|       sur la pile systeme     _|
-;       |  valeur KSP         |
+;       |        bp           |<----- @ to save on             |
+;   +12 |_____________________|       system stack            _|
+;       |     KSP value       |
 ;   +10 |_____________________|
 ;       |                     |
-;    +8 |__   @ sauvegarde  __|
-;       |        USP          |
+;    +8 |__   @ USP backup  __|
+;       |                     |
 ;    +6 |_____________________|
 ;       |                     |
-;       |__  @ retour dans  __|   CALL  UtoK
+;       |__  return @ in    __|   CALL  UtoK
 ;       |     kernelmode      |
 ;       |_____________________|
 ;       |        bp           |
@@ -187,7 +187,7 @@ _mkdLongjmp ENDP
 
 
 ;*
-;*  UtoK( @ USP , valeur KSP)
+;*  UtoK( @ USP , KSP value)
 ;*
 __UtoK PROC FAR
      push bp
@@ -197,38 +197,36 @@ __UtoK PROC FAR
      les bx,[bp+6]              ; es = seg  bx = offset
      mov dx,bp
      add dx,18
-     mov es:[bx],dx             ; svgarder dans USP le contexte de pile
-                                ; qui suit les variables locales
+     mov es:[bx],dx             ; backup stack context in USP
+                                ; (holds local variables)
 
-     ; se placer sur la pile systeme
-     mov sp,[bp+10]             ; recuperer valeur KSP
+     ; switch to system stack 
+     mov sp,[bp+10]             ; get KSP value
 
-     ; On travail maintenant sur la pile systeme
-     push [bp+16]               ; placer @ retour  dans primitive
-     push [bp+14]               ; sur pile systeme + pointeur parametres
-     push [bp+12]               ; de la primitive invoquant kernelMode()
+     ; we are now on the system stack
+     push [bp+16]               ; place system call return @ on system stack 
+     push [bp+14]               ; + parameters pointers of system call
+     push [bp+12]               ; invoking kernelMode()
      mov es,cx
      pop bp
-     ret                        ; on est a la base de la pile KERNEL
+     ret                        ; we are now at the base of the system stack
 __UtoK ENDP
 
 
 
-;*************** Description de la pile au moment de    ******************
-;
-;                     l'appel de USERMODE
+;*************** Stack description when calling USERMODE  ******************
 ;
 ;
 ;               KERNEL                                        USER
 ;   +    _____________________                __
 ;       |                     |                 |    |_____________________|
-;       |__   @ retour dans __|  CALL userMode  |_   |  variables locales  |
-;       |     primitive       |                 | |  |  de la primitive    |
+;       |__   return @ in   __|  CALL userMode  |_   |  system call        |
+;       |     system call     |                 | |  |  local variables    |
 ;   +10 |_____________________|                _| |  |_____________________|
-;       |        bp           |<-- valeur BP      |  |                     |
-;    +8 |_____________________|    pointant sur   |_ |__   @ retour dans __|
-;       |    valeur  USP      |    les parametres    |     la primitive    |
-;    +6 |_____________________|    ( a restituer )   |_____________________|
+;       |        bp           |<-- BP value       |  |                     |
+;    +8 |_____________________|    pointing to    |_ |__   return @ in   __|
+;       |    valeur  USP      |    parameters        |    system call      |
+;    +6 |_____________________| (to be restituted )  |_____________________|
 ;       |                     |                      |         bp          |
 ;       |__  @ retour dans  __|   CALL  KtoU         |_____________________|
 ;       |     userMode        |
@@ -238,16 +236,16 @@ __UtoK ENDP
 
 
 ;*
-;*  KtoU( valeur USP )
+;*  KtoU( USP value )
 ;*
 __KtoU PROC FAR
      push bp
      mov bp,sp
 
-     ; se remettre sur la pile utilisateur
+     ; switch to user stack
      mov sp,[bp+6]
 
-     ; placer l'@ retour dans la primitive sur la pile USER
+     ; place system call return @ on user stack
      push [bp+12]
      push [bp+10]
      push [bp+8]      ; bp

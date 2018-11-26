@@ -5,25 +5,25 @@
 #include "q.h"
 
 /*
- * REM :  le systeme de message est impossible avec le process null,
- *        car le pid 0  est considere comme invalide !
+ * Note : Signaling is not possible with the null task as 
+ *        its pid (0) is considered invalid
  */
 
 
 /*----------------------------------------------------------------------------
- * m_Signal - armer le mecanisme de signalisation avec l'action a appliquer
- *          lorsque l'evenement apparaitra - retourne la precedante action
+ * m_Signal - sets a signal event type and bind a signal event handler that
+ *            will be called when the event occurs. Returns the previous action
  *----------------------------------------------------------------------------
  */
-SYSTEMCALL int (* m_Signal(signum,action))()
-int signum;                      /* numero de l'evenement       */
-int (*action)();                 /* fonction gerant l'evenement */
+SYSTEMCALL int (* m_Signal(signum, action))()
+int signum;                      /* event number */
+int (*action)();                 /* event handler */
 {
     int ps;
     struct taskslot *tp;
     int (* prevAction)();
 
-    /*  si Action = SIG_IGN  mettre bit a 0 dans evt attendu
+    /*  if action = SIG_IGN, set  mettre bit a 0 dans evt attendu
      *  (ne pas modifier le contenu du champ action correspondant)
      */
 
@@ -94,7 +94,7 @@ int childpid;   /*  status et childpid sont utilises uniquement
     }
     else {
          /* verifier que l'evenement n'est pas ignore, sauf si on a
-          * invoqu‚ PAUSE()
+          * invoquï¿½ PAUSE()
           */
          if (tp->tstate == SLEEP && (tp->tevent & EV_PAUSE))
                 ;
@@ -125,7 +125,7 @@ int childpid;   /*  status et childpid sont utilises uniquement
 /*          m_printf("\nDFL fonction pour %s\n",Tasktab[targetpid].tname);*/
          }
 
-         /*  enrichir le contexte empil‚ avec la fonction
+         /*  enrichir le contexte empilï¿½ avec la fonction
           *  a executer - verifier si la tache cible n'est pas
           *  la tache courante (cas des signaux envoyes sous it
           *  a la tache courante)
@@ -195,7 +195,7 @@ int pid,pere,status;
 /*         m_printf("\nDEBUT DOC\n");*/
            for (i = 0 ; i < NTASK ; i++) {
                 if ((any = &Tasktab[i])->tstate != UNUSED  &&
-                     any->tppid == pid) {  /* fils detect‚ */
+                     any->tppid == pid) {  /* fils detectï¿½ */
                      /* eliminer les zombi */
 /*                               m_Printf("Fils DETECTE ...\n");*/
                                    if ((any->tstate == SLEEP) && (any->tevent & EV_ZOM)) {
