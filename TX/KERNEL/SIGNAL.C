@@ -50,16 +50,14 @@ int (*action)();                 /* event handler */
 
 
 /*----------------------------------------------------------------------------
- * _sendsig - envoyer un signal a un process
+ * _sendsig - sends a signal to a task
  *----------------------------------------------------------------------------
  */
 _sendsig(targetpid,signum,status,childpid)
-int targetpid;      /*  pid de la tache a qui l'evenement est destine */
+int targetpid;      /*  pid of recipient task */
 int signum;
-int status;
-int childpid;   /*  status et childpid sont utilises uniquement
-                 *  pour l'evenement SIGCLD
-                 */
+int status;         /* status and ... */
+int childpid;       /* ... childpid are used for the SIGCLD event only */
 {
 
     struct taskslot *tp;
@@ -70,32 +68,27 @@ int childpid;   /*  status et childpid sont utilises uniquement
 
     if (((tp = &Tasktab[targetpid])->tstate == UNUSED) ||
          (targetpid == BADPID) || isbadsig(signum)) {
-/*       m_printf("\nSENDSIG : pid = %d  state = %d  signum = %d\n",targetpid,tp->tstate,signum);
-         m_printf("\npere = %s\n",tp->tname);*/
          Tasktab[RUNpid].terrno = EINVAL;
          _itRes(ps);
          return(RERR);
     }
     Tasktab[RUNpid].terrno = 0;
     if (signum == SIGCLD) {
-        /*  accomplir DEATH OF CHILD si l'action du
-         *  pere est SIG_DFL ou si le pere est la
-         *  tache IDLE (qui ignore tous les signaux)
+
+        /*  perform DEATH OF CHILD if the parent task's event is
+         *  SIG_DFL -or- if parent is IDLE task (which ignores all events)
          */
 
          if ((tp->tevfunc[SIGCLD] == SIG_DFL) || (targetpid == TASK0))
              _death_of_child(childpid,targetpid,status);
          else {
-/*            m_printf("\nAVANT PUTACTION\n");*/
               _putAction(targetpid,SIGCLD,tp->tevfunc[SIGCLD]);
          }
          _itRes(ps);
          return(ROK);
     }
     else {
-         /* verifier que l'evenement n'est pas ignore, sauf si on a
-          * invoqu� PAUSE()
-          */
+         /* make sure event isn't ignore unless Pause() was invoked */
          if (tp->tstate == SLEEP && (tp->tevent & EV_PAUSE))
                 ;
         /* {

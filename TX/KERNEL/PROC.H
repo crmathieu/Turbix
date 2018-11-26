@@ -1,163 +1,150 @@
 /* proc.h */
 
-/*
- * definitions des etats d'un process
- *
- */
-#define RUNNING    1  /* process possedant la CPU                           */
-#define UNUSED     2  /* process non cr‚e                                   */
-#define READY      3  /* process en competition pour la CPU                 */
-#define SLEEP      4  /* process en attente d'evenement                     */
+/* tasks possible states */
+#define RUNNING    1  /* task owns the CPU */
+#define UNUSED     2  /* task not created yet */
+#define READY      3  /* task competes to own the CPU */
+#define SLEEP      4  /* task waits for an event to occur */
 
-
-/* TYPES d'‚venements si tache en SLEEP */
-#define  EV_SEM     1  /* bloquee sur semaphore           */
+/* possible events for a task in SLEEP state */
+#define  EV_SEM     1  /* blocked on semaphore */
 #define  EV_ZOM     2  /* attente prise en compte du pere */
-#define  EV_MESS    4  /* attente reception message       */
-#define  EV_TMESS   8  /* attente message avec tempo      */
-#define  EV_PAUSE  16  /* attente signal                  */
-#define  EV_CLOCK  32  /* attente fin de delais           */
-#define  EV_SUSP   64  /* attente d'introduction          */
-#define  EV_PIPE  128  /* attente sur pipe plein ou vide  */
-#define  EV_WAIT  256  /* attente exit du fils            */
-#define  EV_LOCK  512  /* attente sur file locking        */
+#define  EV_MESS    4  /* wait on message to receive */
+#define  EV_TMESS   8  /* wait on message to receive with tempo */
+#define  EV_PAUSE  16  /* wait for a signal */
+#define  EV_CLOCK  32  /* wait for end of delay */
+#define  EV_SUSP   64  /* wait on jumpstart */
+#define  EV_PIPE  128  /* wait on empty pipe or pipe full */
+#define  EV_WAIT  256  /* wait on child task to exit */
+#define  EV_LOCK  512  /* wait on file locking */
 
-/* flags de controle des etats transitoires */
-#define  F_ALRM     1  /* delais de type watchdog en cours               */
-#define  F_TIMOUT   2  /* indique si time-out tomb‚                      */
-#define  F_DELAY    4  /* un delais cours sur cette tache                */
-#define  F_WAIT     8  /* le pere attend le fils                         */
-#define  F_WAITED  16  /* le pere attendait le fils (mais n'attend plus) */
-#define  F_LOCK    32  /* la tache a lock‚ un fichier                    */
+/* Transitory states flag control */
+#define  F_ALRM     1  /* watchdog delay is occuring */
+#define  F_TIMOUT   2  /* a timeout occured */
+#define  F_DELAY    4  /* a delay is currently set on this task */
+#define  F_WAIT     8  /* parent task is waiting for child task */
+#define  F_WAITED  16  /* parent task was waiting for child task but is not anymore */
+#define  F_LOCK    32  /* task has a lock on a file */
 
-/*
- * Definitions diverses
- *
- */
+/* miscellaneous definitions */
 
-#define NTASK     50      /* nb max de taches                 */
-#define TNMLEN     8      /* longueur d'un "nom" de process   */
-#define ARGLEN   160      /* longueur du buffer argument      */
+#define NTASK     50      /* max number of tasks in the system */
+#define TNMLEN     8      /* max task name length */
+#define ARGLEN   160      /* argument buffer length */
 
-/* pid des taches systemes */
+/* system tasks pid */
 
-#define TASK0      0             /* id de la tache racine             */
+#define TASK0      0             /* id of initial task */
 #define SCHEDULER  TASK0+1
-#define CALLOUT    SCHEDULER+1       /* id tache gestion des delais       */
-#define TIME       CALLOUT+1     /* id tache gestion du temps         */
-#define E_S        TIME+1        /* id tache d'entree / sortie disque */
-#define SHTDWN     E_S+1        /* id tache retour vers DOS          */
-#define VIO        SHTDWN+1      /* id tache lecture du clavier       */
-#define MOU_TASK   VIO+1         /* id demon session erreur           */
-#define NSYSTASK   VIO+1    /* nb de taches systemes             */
+#define CALLOUT    SCHEDULER+1   /* id delay handler task */
+#define TIME       CALLOUT+1     /* id time handler task */
+#define E_S        TIME+1        /* id diskio handler task */
+#define SHTDWN     E_S+1         /* id system shutdown task */
+#define VIO        SHTDWN+1      /* id keyboard handler task */
+#define MOU_TASK   VIO+1         /* id session error handler task */
+#define NSYSTASK   VIO+1         /* number of system tasks */
 
-#define BADPID    -1      /* numero de process ID incorrect   */
-#define NFD       20      /* nb de file descriptors           */
-#define SIGNR     16      /* nb de signaux (13 reels)         */
-#define MAXMESS    8      /* nb de messages NMX possibles     */
+/* system constants */
+#define BADPID    -1      /* pid is incorrect */
+#define NFD       20      /* number of file descriptors */
+#define SIGNR     16      /* number of signals (13 real) */
+#define MAXMESS    8      /* number of possible NMX messages */
 
 
-/*
- *      entree dans la table des process
- *
- */
+/* Tasks table */
 
 struct   taskslot  {
-        char          tname[TNMLEN];  /* nom du process                     */
-        int           tuser;          /* numero d'utilisateur               */
-        int           tgrp;           /* numero d'ecran attach‚ a cette T   */
-        int           targc;          /* nb d'arguments au depart           */
-        char          targbuf[ARGLEN];/* pointeurs sur arg + strings        */
-        stream_entry *tfd[NFD];       /* tableau de pointeurs sur Streamtab */
-        int           taddr;          /* adresse de demarrage du process    */
-        int           tppid;          /* contient le pid du pere            */
-        char          tstate;         /* RUNNING, READY, SLEEP, UNUSED      */
-        unsigned      tevent;         /* si SLEEP: ev bloquant la tache     */
-        uchar         tflag;          /* flags gestion etats transitoires   */
-        int           tprio;          /* priorite du process                */
-        int           tkernel;        /* nb d'appels KernelMode emboites    */
+        char          tname[TNMLEN];  /* task name */
+        int           tuser;          /* user number */
+        int           tgrp;           /* terminal id attached to task */
+        int           targc;          /* tasks initial number of arguments */
+        char          targbuf[ARGLEN];/* Arguments pointers table */
+        stream_entry *tfd[NFD];       /* Streamtab pointers table */
+        int           taddr;          /* tasks starting address */
+        int           tppid;          /* parent task pid */
+        char          tstate;         /* tasks state: RUNNING, READY, SLEEP, UNUSED */
+        unsigned      tevent;         /* blocking event when state = SLEEP */
+        uchar         tflag;          /* transitory states management flags */
+        int           tprio;          /* task priority */
+        int           tkernel;        /* number of nested KernelMode calls */
         int           tupid;          /* user pid                           */
-        int           tITvalid;       /* IT valides  pour cette tache ?     */
-        int           ttyp;           /* UMAIN, SYS, USER                   */
+        int           tITvalid;       /* Interruptions valid for this task? */
+        int           ttyp;           /* task type: UMAIN, SYS, USER */
 
-        /* gestion des devices */
-        int           tcurrdev;       /* device courant pour ce process     */
-        char          tcurrdir[64];   /* pt directory courante pour ce process */
+        /* devices management */
+        int           tcurrdev;       /* current device for this task */
+        char          tcurrdir[64];   /* pointer to current directory for this task */
 
-        /* gestion des erreurs */
-        int           terrno;         /* num‚ro de la derniŠre erreur       */
+        /* errors management */
+        int           terrno;         /* last error number */
 
-        /* zone gerant les signaux */
-        unsigned      tevsig;         /* bitmap des evenements attendus     */
-        unsigned      tevcatch;       /* bitmap des evenements recus        */
-        int         (*tevfunc[SIGNR])(); /* pointeurs des fonctions SIGNAL  */
-        int           texitstatus;    /* status retourn‚ par le process     */
+        /* signals magagement */
+        unsigned      tevsig;             /* awaiting events bitmap */
+        unsigned      tevcatch;           /* received events bitmap */
+        int         (*tevfunc[SIGNR])();  /* SIGNAL functions pointers table */
+        int           texitstatus;        /* task return status */
 
-        /* attente sur semaphore */
-        int           tsem;           /* semaphore si process ds l'etat WAIT */
+        /* wait on semaphore */
+        int           tsem;           /* index of semaphore in semaphore table (if task state = WAIT) */
 
         /* messages */
-        uchar          tmsg[MAXMESS],         /* zone de reception message(s) */
-                       tmsgnr,        /* nombre de messages sous IT en attente */
-                       tmsgIn,        /* index d'entree */
-                       tmsgOut;       /* index de sortie */
-        int            tnextT;        /* chainage des tƒches bloqu‚es en REC */
-/*      struct hblk   *theadMsg;      /* tete de file des messages */
-/*      struct hblk   *ttailMsg;      /* queue de file des messages */
-/*      unsigned       tmsgFlag;      /* flag de Synchro */
+        uchar          tmsg[MAXMESS], /* messages buffer */
+                       tmsgnr,        /* number of awaiting message (under IT) */
+                       tmsgIn,        /* input index */
+                       tmsgOut;       /* output index */
+        int            tnextT;        /* link tasks blocked in REC */
+/*      struct hblk   *theadMsg;      /* messages list head pointer */
+/*      struct hblk   *ttailMsg;      /* messages list tail */
+/*      unsigned       tmsgFlag;      /* synchronization flag */
 
-        /* gestion des pipes */
-        int           tpipe_nr;       /*  numero du pipe sur lequel la tache
-                                       *  est suspendue (  si elle l'est )
-                                       */
-        int           tpipe_op;       /* suspension sur READ ou WRITE       */
+        /* pipes management */
+        int           tpipe_nr;       /*  pipe number of pipe on which task is suspended (if any) */
+        int           tpipe_op;       /* suspension type (on READ or WRITE) */
 
         /* gestion de la pile */
-        int far      *tstktop;        /* sommet de la pile d'execution      */
-        int           tstklen;        /* longueur Ustack + Kstack           */
-        int          *retAddr;        /* fonction fin de tache */
+        int far      *tstktop;        /* top of current stack */
+        int           tstklen;        /* stack length: Ustack length + Kstack length */
+        int          *retAddr;        /* end task fonction pointer */
 
-        /*-- PILE mode USER --*/
-        int far      *tUstkbase;       /* svg @ Haute Ustack pour FREE (a.dyn)*/
-                                       /* *pbase = MAGIC                      */
-        int           tUstklen;        /* longueur Ustack                     */
-        int far      *tUstklim;        /* @ basse de Ustack ( overflow )      */
-        unsigned      tUSP;            /* svg offset Ustack */
+        /* USER mode stack */
+        int far      *tUstkbase;       /* Ustack high @ backup for FREE (a.dyn) */
+                                       /* *pbase = MAGIC */
+        int           tUstklen;        /* Ustack length */
+        int far      *tUstklim;        /* Ustack low @ ( overflow ) */
+        unsigned      tUSP;            /* Ustack offset backup */
 
-        /*-- PILE mode KERNEL --*/
-        int far      *tKstkbase;       /* svg @ Haute Kstack pour FREE (a.dyn)*/
-                                       /* *pbase = MAGIC                      */
-        int           tKstklen;        /* longueur Kstack                     */
-        int far      *tKstklim;        /* @ basse de Kstack ( overflow )      */
-        unsigned      tKSP;            /* svg offset Kstack */
+        /* KERNEL mode stack */
+        int far *tKstkbase;            /* Kstack high @ backup for FREE (a.dyn) */
+                                       /* *pbase = MAGIC */
+        int           tKstklen;        /* Kstack length */
+        int far      *tKstklim;        /* Kstack low @ ( overflow ) */
+        unsigned      tKSP;            /* Kstack offset backup */
 
-        /* gestion m‚moire */
-        struct hblk  *theadblk;        /* tete de la liste des blocs
-                                        * allou‚s dynamiquement
-                                        */
-        struct hblk  *ttailblk;        /* Queue de liste */
+        /* memory management */
+        struct hblk  *theadblk;        /* head of dynamically allocated blocks list */
+        struct hblk  *ttailblk;        /* list tail */
 
 };
 
-/* description de la pile :
+/* stack description:
 
-Memoire basse                                 Memoire haute
+Lower Memory                                  Higher Memory
    _________________________________________________
   |                        |                        |
   |    Ustack (1/2)        |    Kstack (1/2)        |
   |________________________|________________________|
   ^                        ^                        ^
-  lim (c'est aussi Ulim)   Ubase                    base ( c'est aussi Kbase)
+lim (Ulim)               Ubase                   base (Kbase)
 */
 
 #define  isbadpid(x)      ( x <= 0   || x >= NTASK)
 #define  isbadpid2(x)     ( x <= 1   || x >= NTASK)
 
 extern struct taskslot Tasktab[];
-extern int      numproc ;         /* numero du process courant              */
-extern unsigned nextproc;         /* prochain numero attribu‚ a un process  */
-extern int      RUNpid;           /* currently executiv process             */
-extern int      nextslot;         /* prochain free slot                     */
-extern ushort   glowdir;          /* working directory prise par defaut     */
-extern ushort   glowdev;          /* working device pris par defaut         */
-extern char    *errStr[];         /* libell‚ des messages d'erreur          */
+extern int      numproc ;         /* number of task (in READY state) */
+extern unsigned nextproc;         /* next task in line for CPU assignment */
+extern int      RUNpid;           /* current task id */
+extern int      nextslot;         /* next free slot in Tasktab */
+extern ushort   glowdir;          /* default working directory */
+extern ushort   glowdev;          /* default working device */
+extern char    *errStr[];         /* Error messages */
