@@ -28,7 +28,7 @@ long cxtswitch = 0;
 
 
 /*-----------------------------------------------
- * c_copy  -  recopier un fichier  dans un autre
+ * c_copy  -  file copy
  *-----------------------------------------------
  */
 c_copy( argc, argv)
@@ -62,7 +62,7 @@ char *argv[];
 
 
 /*-----------------------------------------
- * c_type - lister le contenu d'un fichier
+ * c_type - show file content
  *-----------------------------------------
  */
 c_type( argc, argv)
@@ -74,8 +74,7 @@ char *argv[];
      int fd;
      int voirexit();
 
-     if (argc != 2)
-     {
+     if (argc != 2) {
          m_Printf("\nuse : voir [file_name]\n");
          return;
      }
@@ -85,15 +84,9 @@ char *argv[];
           m_Perror("type");
           m_Exit(-1);
      }
-/* m_Lock(fd); */
-     while ((n = m_Read(fd,buff,512)) > 0)
+     while ((n = m_Read(fd,buff,512)) > 0) {
         m_Write(1, buff, n);
-/*           for(i=0;i<n;)
-           {
-                putchar(buff[i]);
-                buff[i++] = 0;
-           }*/
-/*     m_Unlock(fd);*/
+     }
      m_Close(fd);
 }
 voirexit()
@@ -104,13 +97,13 @@ voirexit()
 
 
 /*---------------------------------------------
- * utilisation des signaux et des redirections
+ * use of signals and redirections
  *---------------------------------------------
  */
 chrono()
 {
     int fd,i,n,ps;
-    int horl();
+    int disptime();
     long tloc;
    static int hours = 0;
    static int  minu  = 0;
@@ -153,7 +146,7 @@ chrono()
     };
 }
 
-horl()
+disptime()
 {
    int ps;
    static int hours = 0;
@@ -166,7 +159,6 @@ horl()
            if (++hours >= 24) hours = 0;
        }
    }
-/*   m_Gotoxy(40,10);*/
    ps = m_Disable();
    m_Printf("\033[10;60H%02d:%02d:%02d",hours,minu,sec);
    m_Restore(ps);
@@ -657,7 +649,7 @@ mouOn()
                    /* utiliser uniquement le bouton GAUCHE */
 /*                   m_EventMaskMou(M_MOVE|M_LEFT_PRESS|M_LEFT_RELEASE);
 
-                   /* Lire les evŠnements associ‚s au bouton GAUCHE */
+                   /* Lire les evï¿½nements associï¿½s au bouton GAUCHE */
 /*                   while (1) {
                         if (m_ReadEventMou(&Mou, TRUE) < 0) {
                                 continue;

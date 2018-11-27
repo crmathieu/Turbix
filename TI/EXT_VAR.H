@@ -125,7 +125,7 @@ extern struct ctab Ctab[];
 
 
 /* lorsque la rubrique ne comporte pas de sous menu, la fonction
- * appliqu‚e est terminale.
+ * appliqu-e est terminale.
  */
 
 /* MASTER MENU */
@@ -227,7 +227,7 @@ extern struct dir_lst dir_lst;
 extern struct file_lst file_lst;
 
 
-extern int dir_lst_nfiles,  /* # de fichiers selectionn‚s dans la directory */
+extern int dir_lst_nfiles,  /* # de fichiers selectionn-s dans la directory */
     dir_lst_npages;  /* # de pages de directory */
 
 extern char  file_name[], fpath[], work[];
@@ -305,9 +305,9 @@ extern char lineTooLongStr[];
 
 /* etats d'un fichier */
 
-#define   FF_DIRTY          1   /* fichier modifi‚ */
+#define   FF_DIRTY          1   /* fichier modifi- */
 #define   FF_INSERT         2   /* mode INSERT / OVERWRITE */
-#define   FF_FLOADED        4   /* un fichier est deja charg‚ */
+#define   FF_FLOADED        4   /* un fichier est deja charg- */
 #define   FF_EDACTIF        8   /* Editeur Actif */
 #define   FF_BLOCKDEF      16   /* block defined */
 #define   FF_LINE_UPDATE   32   /* ligne courante en cours de modification */
@@ -408,7 +408,7 @@ extern unsigned  char   WINink,         /* avant plan fenetre */
                  WINDIRink,
                  WINDIRpaper,
                  MENUborder,     /* cadre menu */
-                 MENUselected,   /* article selectionn‚ */
+                 MENUselected,   /* article selectionn- */
                  MENUlcom,       /* lettre de commande */
                  MENUink,        /* avant plan menu */
                  MENUpaper,      /* arriere plan menu */
@@ -417,7 +417,7 @@ extern unsigned  char   WINink,         /* avant plan fenetre */
 
 
 /* VARIABLES de travail de l'editeur */
-extern int        fdcurr;     /* file descriptor du fichier charg‚        */
+extern int        fdcurr;     /* file descriptor du fichier charg-        */
 extern char      *linebuf;    /* tampon ligne             */
 extern char  far *bigbuf;     /* buffer de reception du fichier           */
 extern unsigned   fsize,      /* taille actuelle du fichier en memoire    */
@@ -426,7 +426,7 @@ extern unsigned   fsize,      /* taille actuelle du fichier en memoire    */
            topPage,    /* offset ligne en sommet de fenetre        */
            topBlock,   /* offset ligne de debut bloc               */
            bottomBlock;/* offset ligne de fin de block             */
-extern int fillCh,     /* # Blancs ajout‚s apres une fin de ligne  */
+extern int fillCh,     /* # Blancs ajout-s apres une fin de ligne  */
            fflag,      /* gestion etat du fichier dans l'editeur   */
            blockatt,   /* attribut block defini                    */
            current_line_no, /* no de la ligne courante             */
@@ -597,7 +597,7 @@ extern char builtStr[];
   ITURBO
  **********/
 /* interface entre compilateurs microsoft et Borland :
- * Adaptation des fonctions du turbo … la syntaxe
+ * Adaptation des fonctions du turbo - la syntaxe
  * Microsoft
  */
 

@@ -28,18 +28,18 @@ int Hext, Hmod, Hdec;
 
 char dBaseSaisie[80];
 
-/*ÄÄÄÄÄÄÄÄÄÄ
+/*----------
  * dummyFunc
- *ÄÄÄÄÄÄÄÄÄÄ
+ *----------
  */
 dummyFunc()
 {
         return(FUNC|F6);
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄ
+/*----------
  * doBuildDB
- *ÄÄÄÄÄÄÄÄÄÄ
+ *----------
  */
 doBuildDB(mp,num)
 struct OBJ *mp;
@@ -48,9 +48,9 @@ struct OBJ *mp;
         vl->Bfunc = dummyFunc;
         doBrowse(mp);
 }
-/*ÄÄÄÄÄÄÄÄÄÄ
+/*----------
  * doGotoDef
- *ÄÄÄÄÄÄÄÄÄÄ
+ *----------
  */
 doGotoDef(mp,num)
 struct OBJ *mp;
@@ -131,9 +131,9 @@ char *str;
    return(FUNC|F6);
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄ
+/*----------
  * doDispRef
- *ÄÄÄÄÄÄÄÄÄÄ
+ *----------
  */
 doDispRef(mp,num)
 struct OBJ *mp;
@@ -234,9 +234,9 @@ char *str;
    return(FUNC|F6);
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*-------------
  * findFuncFromDB
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *-------------
  */
 findFuncFromDB(fname, aux, pos)
 char *fname, *aux;
@@ -260,7 +260,7 @@ unsigned  *pos;
                         continue;
                 else  {
                         if (status == 0) {
-                                /* trouv‚ : recuperer le nom
+                                /* trouv- : recuperer le nom
                                  * du module et la position
                                  */
                                 lseek(Hmod, (long)(def.module * sizeof(struct module)), SEEK_SET);
@@ -279,9 +279,9 @@ unsigned  *pos;
         closeDB();
         return(status);
 }
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*-------------
  * findExtFromDB
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *-------------
  */
 findExtFromDB(fname, path)
 char *fname, *path;
@@ -306,7 +306,7 @@ char *fname, *path;
                 if ((status = strcmp(fname, def.function)) > 0)
                         continue;
                 else  {
-                        if (status == 0) { /* trouv‚ */
+                        if (status == 0) { /* trouv- */
                                 /* recuperer tous les numeros de
                                  * module ou cette fonction est appelee
                                  */
@@ -378,9 +378,9 @@ char *fname, *path;
 }
 
 
-/*ÄÄÄÄÄÄÄÄÄÄ
+/*----------
  * openDB
- *ÄÄÄÄÄÄÄÄÄÄ
+ *----------
  */
 openDB()
 {
@@ -402,9 +402,9 @@ openDB()
         return(0);
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄ
+/*----------
  * openDBfile
- *ÄÄÄÄÄÄÄÄÄÄ
+ *----------
  */
 openDBfile(fname)
 char *fname;
@@ -423,10 +423,10 @@ closeDB()
         close(Hmod);
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*--------------------------------------
  * put_ext_lst : recuperer les references
  *              externes
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *--------------------------------------
  */
 put_ext_lst(dl)
 struct dir_lst *dl;

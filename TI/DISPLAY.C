@@ -56,9 +56,9 @@ struct OBJ *wp;
     }
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*--------------------------------------------------------------------------
  * fill_line - remplir tout ou partie du buffer ligne avec Ch
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *--------------------------------------------------------------------------
  */
 fill_line(line,nb,Ch)
 char *line;
@@ -69,10 +69,10 @@ char Ch;
 }
 
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*---------------------------------------------------------------------------
  * erase_trailing_blank - supprimer d'eventuels caracteres ' 'en fin de ligne
  *                        retourne la nouvelle taille
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *---------------------------------------------------------------------------
  */
 erase_trailing_blank(wp)
 struct OBJ *wp;
@@ -85,10 +85,10 @@ struct OBJ *wp;
 }
 
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*--------------------------------------------------------------------------
  * getnextline - retourne la position de la N ieme ligne apres offline
  *               ou bien la position de la derniere ligne
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *--------------------------------------------------------------------------
  */
 unsigned getnextline(wp,offline,n)
 struct OBJ *wp;
@@ -101,10 +101,10 @@ unsigned offline;
 }
 
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*--------------------------------------------------------------------------
  * getprevline - retourne la position de la N ieme ligne avant offline
  *               ou bien la position de la premiere ligne
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *--------------------------------------------------------------------------
  */
 unsigned getprevline(wp,offline,n)
 struct OBJ *wp;
@@ -120,9 +120,9 @@ int n;
     return(Y);
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*---------------------------------------------
  * set_win - rafraichir la fenetre entierement
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *---------------------------------------------
  */
 FUNCTION set_win(wp,debug)
 struct OBJ *wp;
@@ -145,7 +145,7 @@ unsigned debug;
                      wp->ncol,
                      OLDATT,
                      att,
-                     lineTab + wp->leftCh);  /* sauter les Ch cach‚s */
+                     lineTab + wp->leftCh);  /* sauter les Ch cach-s */
 
          /* gestion marquage Block */
           put_att_BP(wp,pt,lig,len);
@@ -161,9 +161,9 @@ unsigned debug;
                      fillstr);
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*---------------------------------------------------------------------
  * formatt_line - formatter une ligne avec les caracteres de Tabulation
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *---------------------------------------------------------------------
  */
 formatt_line(dest, src, pt, len, fillCh, ninit)
 char *dest, *src; /* "dest" doit etre lineTab */
@@ -217,10 +217,10 @@ int ninit;        /* # de caracteres a initialiser avant le formattage */
     return(i-1); /* retourner le nb de caracteres reels */
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*---------------------------------------------
  * compute_Tab - calcule le nb de caracteres
- *              en expans‚s
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *              en expans-s
+ *---------------------------------------------
  */
 compute_tab(wp, pt)
 struct OBJ *wp;
@@ -242,9 +242,9 @@ unsigned pt;
 
 
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*---------------------------------------------
  * linelen - calcul la taille d'une ligne
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *---------------------------------------------
  */
 linelen(wp)
 struct OBJ *wp;
@@ -254,9 +254,9 @@ struct OBJ *wp;
    _lnlen(linebuf);
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*----------------------------------------------------
  * lnlen - calcul la taille d'une ligne du big buffer
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *----------------------------------------------------
  */
 lnlen(wp,offline)
 struct OBJ *wp;
@@ -273,9 +273,9 @@ unsigned offline;
        return(_lnlen(&bigbuf[offline]));
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*------------------------------------------------
  * lnbuflen - calcul la taille de la ligne tampon
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *------------------------------------------------
  */
 lnbuflen2(wp)
 struct OBJ *wp;
@@ -287,9 +287,9 @@ struct OBJ *wp;
    return(_lnlen(linebuf));
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*----------------------------------------------------------------------
  * lncpy - copier la ligne courante ds le tampon ligne (delimiteur = EOS = '\n')
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *----------------------------------------------------------------------
  */
 lncpy(wp)
 struct OBJ *wp;
@@ -304,9 +304,9 @@ struct OBJ *wp;
    linebuf[i] = EOS;
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄfÄÄÄÄ
+/*-----------------------------------------------f----
  * lnprev - retourne l'offset de la ligne precedente
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *---------------------------------------------------
  */
 unsigned lnprev(wp,offline,debug)
 struct OBJ *wp;
@@ -327,9 +327,9 @@ unsigned offline;   /* offset ligne de reference */
    return(0); /* offset de debut fichier */
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*---------------------------------------------------
  * getlast_ln - retourne l'offset de la derniere ligne (A  TERMINER)
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *---------------------------------------------------
  */
 unsigned getlast_ln(wp)
 struct OBJ *wp;
@@ -342,9 +342,9 @@ struct OBJ *wp;
 
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*----------------------------------------------------------------
  * get_line_no - retourne le nb de lignes correspondant a l'offset
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *----------------------------------------------------------------
  */
 get_line_no(offset)
 unsigned offset;
@@ -365,9 +365,9 @@ unsigned offset;
    i = _cpt_EOS(&bigbuf[0], offset); /*offset+1);*/
    return(i+1);
 }
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*----------------------------------------------------
  * getnln - retourne le nb de lignes entre deux lignes
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *----------------------------------------------------
  */
 getnln(wp,first,last)
 struct OBJ *wp;
@@ -382,9 +382,9 @@ unsigned first,last;
    return(i);
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*---------------------------------------------------
  * lnnext - retourne l'offset de la ligne suivante
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *---------------------------------------------------
  */
 unsigned lnnext(wp,offline)
 struct OBJ *wp;
@@ -396,9 +396,9 @@ unsigned offline;   /* offset ligne de reference */
    return(offline + X);
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*------------------------------------
  * initWin : initialiser une fenetre
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *------------------------------------
  */
 FUNCTION initWin(wp,m_key, title,ul_x,ul_y,ncols,nlines,btyp, ombrage,bar,arrow,ink,paper,border,batt)
 unsigned m_key;
@@ -439,9 +439,9 @@ char *title;
 
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*-----------------------------------------------------------
  * winPopUp - ouvrir / fermer une fenetre
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *-----------------------------------------------------------
  */
 winPopUp(wp, mode, chainage, borderType)
 struct OBJ *wp;
@@ -458,7 +458,7 @@ struct OBJ *wp;
 
         wp->pushed = TRUE;
 
-        /* chainer … l'objet precedent
+        /* chainer - l'objet precedent
          * et MAJ objet courant
          */
         if (chainage) {
@@ -495,9 +495,9 @@ struct OBJ *wp;
 }
 
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
- * clrwin Ä clear window
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*-----------------------------------------------------------
+ * clrwin - clear window
+ *-----------------------------------------------------------
  */
 FUNCTION clrwin(wp, Ch)
 struct OBJ *wp;
@@ -512,9 +512,9 @@ unsigned char Ch;
                   Ch);
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
- * scrollwinUP Ä scrolling window UP
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*-----------------------------------------------------------
+ * scrollwinUP - scrolling window UP
+ *-----------------------------------------------------------
  */
 FUNCTION scrollwinUP(wp)
 struct OBJ *wp;
@@ -526,9 +526,9 @@ struct OBJ *wp;
                   wp->ink|wp->paper);
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
- * scrollwinDWN Ä scrolling window DOWN
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*-----------------------------------------------------------
+ * scrollwinDWN - scrolling window DOWN
+ *-----------------------------------------------------------
  */
 FUNCTION scrollwinDWN(wp)
 struct OBJ *wp;
@@ -541,9 +541,9 @@ struct OBJ *wp;
 }
 
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*-----------------------------------------------
  * write_wbox - dessiner le contour de la fenetre
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *-----------------------------------------------
  */
 FUNCTION write_wbox(wp, type)
 struct OBJ *wp;
@@ -553,9 +553,9 @@ struct OBJ *wp;
 }
 
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*-----------------------------------------------
  * arrow_up - ED arrow UP
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *-----------------------------------------------
  */
 FUNCTION arrow_up(wp)
 struct OBJ *wp;
@@ -585,9 +585,9 @@ struct OBJ *wp;
    return(0);
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*-----------------------------------------------
  * arrow_down - ED arrow DWN
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *-----------------------------------------------
  */
 FUNCTION arrow_down(wp)
 struct OBJ *wp;
@@ -617,9 +617,9 @@ struct OBJ *wp;
    return(0);
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*-----------------------------------------------
  * arrow_right - ED arrow RIGHT
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *-----------------------------------------------
  */
 FUNCTION arrow_right(wp)
 struct OBJ *wp;
@@ -640,9 +640,9 @@ struct OBJ *wp;
 }
 
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*-----------------------------------------------
  * arrow_left - ED arrow LEFT
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *-----------------------------------------------
  */
 FUNCTION arrow_left(wp)
 struct OBJ *wp;
@@ -661,9 +661,9 @@ struct OBJ *wp;
    return(1);
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*-----------------------------------------------
  * page_up - ED Page UP
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *-----------------------------------------------
  */
 FUNCTION page_up(wp)
 struct OBJ *wp;
@@ -706,9 +706,9 @@ struct OBJ *wp;
    set_win(wp);
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*-----------------------------------------------
  * page_down - ED Page DWN
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *-----------------------------------------------
  */
 FUNCTION page_down(wp)
 struct OBJ *wp;
@@ -748,9 +748,9 @@ struct OBJ *wp;
    set_win(wp);
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*-----------------------------------------------
  * line_end - ED line END
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *-----------------------------------------------
  */
 FUNCTION line_end(wp)
 struct OBJ *wp;
@@ -790,9 +790,9 @@ struct OBJ *wp;
   }
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*-----------------------------------------------
  * line_home - ED line HOME
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *-----------------------------------------------
  */
 FUNCTION line_home(wp)
 struct OBJ *wp;
@@ -813,10 +813,10 @@ struct OBJ *wp;
 /*  printf("cur = %d   bot = %d ",current_line_no,bottom_line_no);*/
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
- * wmgotoxy Ä se positionner dans la page avec mise a
+/*--------------------------------------------------------------------------
+ * wmgotoxy - se positionner dans la page avec mise a
  *            jour de la ligne courante en memoire
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *--------------------------------------------------------------------------
  */
 FUNCTION wmgotoxy(wp,x,y)
 struct OBJ *wp;
@@ -837,10 +837,10 @@ struct OBJ *wp;
    gotoxy(wp->ul_x+x+1,wp->ul_y+y+1);
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
- * wgotoxy Ä se positionner dans la page sans mise a
+/*--------------------------------------------------------------------------
+ * wgotoxy - se positionner dans la page sans mise a
  *           jour de la ligne courante en memoire
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *--------------------------------------------------------------------------
  */
 FUNCTION wgotoxy(wp,x,y)
 struct OBJ *wp;
@@ -858,9 +858,9 @@ struct OBJ *wp;
 }
 
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*---------------------------------------------------------------------
  * wcurrln - ecrire la ligne courante
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *---------------------------------------------------------------------
  */
 FUNCTION wcurrln(wp)
 struct OBJ *wp;
@@ -874,15 +874,15 @@ struct OBJ *wp;
                 wp->ncol,
                 OLDATT,
                 att,
-                lineTab + wp->leftCh);  /* sauter les Ch cach‚s */
+                lineTab + wp->leftCh);  /* sauter les Ch cach-s */
 
     /* gestion marquage Block */
     put_att_BP(wp,current,wp->curY,len);
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*---------------------------------------------------------------------
  * wprintln - ecrire une ligne  (ou une partie) dans la fenetre
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *---------------------------------------------------------------------
  */
 FUNCTION wprintln(wp, pt)
 struct OBJ *wp;
@@ -897,7 +897,7 @@ unsigned pt;
                 wp->ncol,
                 OLDATT,
                 att,
-                lineTab + wp->leftCh);  /* sauter les Ch cach‚s */
+                lineTab + wp->leftCh);  /* sauter les Ch cach-s */
 
     /* gestion marquage Block */
     put_att_BP(wp,pt,wp->curY,len);
@@ -1061,7 +1061,7 @@ struct OBJ *wp;
 {
     int i,j;
 
-    /* tester si buffer ligne deja charg‚ */
+    /* tester si buffer ligne deja charg- */
 /*    if (!(fflag & FF_LINE_UPDATE)) {
          fill_line(linebuf,(nb_car_per_line -  1) * 2,EOS);
          lncpy(wp);
@@ -1192,7 +1192,7 @@ struct OBJ *wp;
 }
 
 /*-------------------------------------------------------------
- * indent - calcule la position du 1er Char de la ligne donn‚e
+ * indent - calcule la position du 1er Char de la ligne donn-e
  *-------------------------------------------------------------
  */
 indent(wp,offline)
@@ -1363,7 +1363,7 @@ struct OBJ *wp;
          return;
     }
     else {      /* cas general */
-         /* tester si buffer ligne deja charg‚ */
+         /* tester si buffer ligne deja charg- */
 /*         if (!(fflag & FF_LINE_UPDATE)) {
              fill_line(linebuf,(nb_car_per_line -  1) * 2,EOS);
              lncpy(wp);

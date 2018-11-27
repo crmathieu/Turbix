@@ -1,8 +1,4 @@
-/* Dos Internal Structures - D.I.S. */
-
-/***************************************************************************
- DOC DOC DOC DOC DOC DOC DOC DOC DOC DOC DOC DOC DOC DOC DOC DOC DOC DOC DOC
- ***************************************************************************
+/* Dos Internal Structures - D.I.S. 
 
 INT 21 - DOS 2+ internal - GET LIST OF LISTS
 	AH = 52h
@@ -162,46 +158,46 @@ Offset	Size	Description
  06h	WORD	ptr to word at top of stack (new value for SP). The word at the
 		top of the stack is preset to point back to this control block.
 
- ***************************************************************************
- DOC DOC DOC DOC DOC DOC DOC DOC DOC DOC DOC DOC DOC DOC DOC DOC DOC DOC DOC
- ***************************************************************************/
+*/
 
-/* macros de gestion memoire */
+/* memory management macros */
 #define FP2_SEG(fp) (*((unsigned *)&(fp) + 1))
 #define FP2_OFF(fp) (*((unsigned *)&(fp)))
 
-struct			ExecStateInfo {
+struct	ExecStateInfo {
     unsigned int	Reserved;		/*  00h 		*/
     unsigned int	Flags;			/*  02h 		*/
     unsigned int	NameOff;		/*  04h 		*/
     unsigned int	NameSeg;		/*  06h 		*/
     unsigned int	psp;			/*  08h 		*/
-    char		 *Start;		/*  0Ah 		*/
+    char		    *Start;		    /*  0Ah 		*/
     unsigned long	Size;			/*  0Eh 		*/
-    };						/*  12h 		*/
+};						/*  12h 		*/
 
-struct			LoadInfo {
-    unsigned int	Environement;		/*  00h 		*/
-    char		 *CommandTail;	/*  02h 		*/
-    char		 *Fcb1;		/*  06h 		*/
-    char		 *Fcb2;		/*  0Ah 		*/
-    char		 *Stack;		/*  0Eh 		*/
-    char		 *Start;		/*  12h 		*/
-    };						/*  16h 		*/
+struct	LoadInfo {
+    unsigned int Environement;		/*  00h 		*/
+    char		 *CommandTail;	    /*  02h 		*/
+    char		 *Fcb1;		        /*  06h 		*/
+    char		 *Fcb2;		        /*  0Ah 		*/
+    char		 *Stack;		    /*  0Eh 		*/
+    char		 *Start;		    /*  12h 		*/
+};						/*  16h 		*/
 
-struct			LoadExecInfo {
-    unsigned int	Environement;		/*  00h 		*/
-    char		 *CommandTail;	/*  02h 		*/
-    char		 *Fcb1;		/*  06h 		*/
-    char		 *Fcb2;		/*  0Ah 		*/
-    };						/*  0Eh 		*/
+struct	LoadExecInfo {
+    unsigned int Environement;		/*  00h 		*/
+    char		 *CommandTail;	    /*  02h 		*/
+    char		 *Fcb1;		        /*  06h 		*/
+    char		 *Fcb2;		        /*  0Ah 		*/
+};						/*  0Eh 		*/
+
 struct	arena {
     unsigned char	signature;		/*  00h 		*/
     unsigned int	owner;			/*  01h 		*/
     unsigned int	size;			/*  03h 		*/
-    unsigned char	reserved[3];		/*  05h 		*/
+    unsigned char	reserved[3];	/*  05h 		*/
     unsigned char	name[8];		/*  08h 		*/
-    };						/*  10h 		*/
+};						/*  10h 		*/
+
 struct ExeHeader {
     unsigned int	Signature;		/*  00h 		*/
     unsigned int	ExtraByte;		/*  02h 		*/
@@ -217,136 +213,143 @@ struct ExeHeader {
     unsigned int	InitCS; 		/*  16h 		*/
     unsigned int	RelocTable;		/*  18h 		*/
     unsigned int	Overlay;		/*  1Ah 		*/
-    };						/*  1Ch 		*/
+};						/*  1Ch 		*/
+
 struct DPBStruct {
-    unsigned char	DriveNb;		/*  00h 		*/
-    unsigned char	UnitNb; 		/*  01h 		*/
+    unsigned char	DriveNb;		    /*  00h 		*/
+    unsigned char	UnitNb; 		    /*  01h 		*/
     unsigned int	BytePerSector;		/*  02h 		*/
     unsigned char	MaxSectPerClust;	/*  04h 		*/
     unsigned char	ClusterSize;		/*  05h 		*/
     unsigned int	NbResSector;		/*  06h 		*/
-    unsigned char	NbOfFat;		/*  08h 		*/
+    unsigned char	NbOfFat;		    /*  08h 		*/
     unsigned int	NbRootEntry;		/*  09h 		*/
     unsigned int	FirstDataSector;	/*  0Bh 		*/
     unsigned int	ClusterMaxi;		/*  0Dh 		*/
     unsigned int	SectorPerFat;		/*  0Fh 		*/
     unsigned int	FirstRootSector;	/*  11h 		*/
-    unsigned char	 *DriverPtr;	/*  13h 		*/
-    unsigned char	MediaDescr;		/*  17h 		*/
+    unsigned char	 *DriverPtr;	    /*  13h 		*/
+    unsigned char	MediaDescr;		    /*  17h 		*/
     unsigned char	BlockStatus;		/*  18h 		*/
-    unsigned char	 *NxtDriverPtr;	/*  19h 		*/
+    unsigned char	 *NxtDriverPtr;	    /*  19h 		*/
     unsigned int	FirstFreeCluster;	/*  1Dh 		*/
     unsigned int	FreeClusterNb;		/*  1Fh 		*/
-    };						/*  21h 		*/
+};						/*  21h 		*/
+
 struct InternalFile {
     unsigned int	NbHandle;		/*  00h 		*/
     unsigned int	OpenMode;		/*  02h 		*/
     unsigned char	Attributes;		/*  04h 		*/
     unsigned int	DevInfo;		/*  05h 		*/
     unsigned char	 *DriverPtr;	/*  07h 		*/
-    unsigned int	StartCluster;		/*  0Bh 		*/
+    unsigned int	StartCluster;	/*  0Bh 		*/
     unsigned int	Time;			/*  0Dh 		*/
     unsigned int	Date;			/*  0Fh 		*/
     unsigned long	size;			/*  11h 		*/
     unsigned long	offset; 		/*  15h 		*/
     unsigned int	RelCluster;		/*  19h 		*/
-    unsigned long	DirEntrySec;		/*  1Bh 		*/
+    unsigned long	DirEntrySec;	/*  1Bh 		*/
     unsigned char	DirEntryNb;		/*  1Fh 		*/
     unsigned char	 * RedirIfsRec;	/*  19h 		*/
-    unsigned char	Reseved [3];		/*  1Dh 		*/
-    unsigned char	FileName [11];		/*  20h 		*/
+    unsigned char	Reseved [3];	/*  1Dh 		*/
+    unsigned char	FileName [11];	/*  20h 		*/
     unsigned char	 * SFTNamePtr;	/*  2Bh 		*/
-    unsigned int	NetMachineNb;		/*  2Fh 		*/
+    unsigned int	NetMachineNb;	/*  2Fh 		*/
     unsigned int	PspOwner;		/*  31h 		*/
     unsigned int	ShareOff;		/*  33h 		*/
-    unsigned int	LastCluster;		/*  35h 		*/
+    unsigned int	LastCluster;	/*  35h 		*/
     unsigned char	 * IFSDriver;	/*  37h 		*/
-    };						/*  3Bh 		*/
+};						/*  3Bh 		*/
+
 struct FileTable {
-    struct FileTable	 *NextFileTable;	/*  00h 		*/
-    unsigned int	NbFiles;		/*  04h 		*/
+    struct FileTable *NextFileTable;    /*  00h 		*/
+    unsigned int	 NbFiles;		    /*  04h 		*/
     struct InternalFile file[1];		/*  06h 		*/
-    };						/*  ??			*/
+};						/*  ??			*/
+
 struct StackDArray {
     unsigned int	status; 		/*  00h 		*/
     unsigned int	PreviousSP;		/*  02h 		*/
     unsigned int	PreviousSS;		/*  04h 		*/
     unsigned int	NewSP;			/*  06h 		*/
-    };						/*  08h 		*/
+};						/*  08h 		*/
+
 struct StacksInfo {
-    unsigned int	Reserved;		/*  00h 		*/
-    unsigned int	NbOfStacks;		/*  02h 		*/
-    unsigned int	DArraySize;		/*  04h 		*/
-    unsigned int	StacksSize;		/*  06h 		*/
+    unsigned int	Reserved;		    /*  00h 		*/
+    unsigned int	NbOfStacks;		    /*  02h 		*/
+    unsigned int	DArraySize;		    /*  04h 		*/
+    unsigned int	StacksSize;		    /*  06h 		*/
     struct StackDArray	 * DArrayPtr;	/*  08h 		*/
     unsigned int	FirstDArrayOff; 	/*  0Ch 		*/
     unsigned int	LastDArrayOff;		/*  0Eh 		*/
     unsigned int	NextDArrayOff;		/*  10h 		*/
-    };						/*  12h 		*/
+};						/*  12h 		*/
+
 struct DirStruct {
     char		CurPath[67];		/*  00h 		*/
     unsigned char	dummy1; 		/*  44h 		*/
     unsigned char	type1;			/*  45h 		*/
-    struct DPBStruct	 *DPBPtr;		/*  46h 		*/
-    unsigned int	StartCluster;		/*  4Ah 		*/
+    struct DPBStruct *DPBPtr;	    /*  46h 		*/
+    unsigned int	StartCluster;	/*  4Ah 		*/
     unsigned long	dummy2; 		/*  4Ch 		*/
     unsigned int	basic;			/*  50h 		*/
-    char		dummy3[7];		/*  54h 		*/
-    };						/*  5Bh 		*/
+    char		dummy3[7];		    /*  54h 		*/
+};						/*  5Bh 		*/
 
 struct DiskBuffer {
-    unsigned int	FwdLRUBuffer;		/*  00h 		*/
+    unsigned int	FwdLRUBuffer;	/*  00h 		*/
     unsigned int	BwdBuffer;		/*  02h 		*/
     unsigned char	drive;			/*  04h 		*/
     unsigned char	flags;			/*  05h 		*/
     unsigned long	LogSector;		/*  06h 		*/
     unsigned char	NbCopy; 		/*  0Ah 		*/
-    unsigned int	SectorOffset;		/*  0Bh 		*/
+    unsigned int	SectorOffset;	/*  0Bh 		*/
     unsigned char	 *DosBPB;		/*  0Dh 		*/
-    unsigned int	BufferUseCnt;		/*  11h 		*/
+    unsigned int	BufferUseCnt;	/*  11h 		*/
     unsigned char	reserved;		/*  13h 		*/
     unsigned char	FirstData;		/*  14h 		*/
-    };						/*  ??h 		*/
+};						/*  ??h 		*/
 
 /* List Of List */
 struct LOL {
-    unsigned int	FirstArenaSeg;		/*  00h  -02h		*/
-    struct DPBStruct	 *FirstDPBPtr;	/*  02h   00h		*/
-    struct FileTable	 *FileTablePtr;	/*  06h   04h		*/
-    char		 *ClockDriver;	/*  0Ah   08h		*/
-    char		 *ConDriver;	/*  0Eh   0Ch		*/
-    unsigned int	MaxBlockSize;		/*  12h   10h		*/
-    struct DiskBuffer	 *DiskBufferPtr;	/*  14h   12h		*/
-    struct DirStruct	 *DirStructPtr;	/*  18h   16h		*/
-    char		 *FCBTablePtr;	/*  1Ch   1Ah		*/
-    unsigned int	NbProtFCB;		/*  20h   1Eh		*/
-    unsigned char	NbBlkDev;		/*  22h   20h		*/
-    unsigned char	LastDrive;		/*  23h   21h		*/
-    unsigned char	NulDriver[18];		/*  24h   22h		*/
-    unsigned char	NbJoinDrive;		/*  36h   34h		*/
-    };						/*  37h 		*/
-struct			PSP {
-	unsigned int		Int20;		/* 00h		*/
-	unsigned int		MemSize;	/* 02h		*/
-	unsigned char		dummy1; 	/* 04h		*/
-	unsigned char		cpm[5]; 	/* 05h		*/
+    unsigned int      FirstArenaSeg;	/*  00h  -02h		*/
+    struct DPBStruct  *FirstDPBPtr;	    /*  02h   00h		*/
+    struct FileTable  *FileTablePtr;	/*  06h   04h		*/
+    char		      *ClockDriver;	    /*  0Ah   08h		*/
+    char		      *ConDriver;	    /*  0Eh   0Ch		*/
+    unsigned int	  MaxBlockSize;		/*  12h   10h		*/
+    struct DiskBuffer *DiskBufferPtr;	/*  14h   12h		*/
+    struct DirStruct  *DirStructPtr;	/*  18h   16h		*/
+    char		      *FCBTablePtr;	    /*  1Ch   1Ah		*/
+    unsigned int	  NbProtFCB;		/*  20h   1Eh		*/
+    unsigned char	  NbBlkDev;		    /*  22h   20h		*/
+    unsigned char	  LastDrive;		/*  23h   21h		*/
+    unsigned char	  NulDriver[18];	/*  24h   22h		*/
+    unsigned char	  NbJoinDrive;		/*  36h   34h		*/
+};						/*  37h 		*/
+
+struct	PSP {
+	unsigned int	Int20;		    /* 00h		*/
+	unsigned int	MemSize;	    /* 02h		*/
+	unsigned char	dummy1; 	    /* 04h		*/
+	unsigned char	cpm[5]; 	    /* 05h		*/
 	char 			*TerminateAdr;	/* 0Ah		*/
-	char 			*BreakAdr;	/* 0Eh		*/
-	char 			*CriticAdr;	/* 12h		*/
-	unsigned int		ParentPspSeg;	/* 16h		*/
-	unsigned char		FileOpen[20];	/* 18h		*/
-	unsigned int		EnvSeg; 	/* 2Ch		*/
-	unsigned long		SSSP;		/* 2Eh		*/
-	unsigned int		MaxOpenFile;	/* 32h		*/
+	char 			*BreakAdr;	    /* 0Eh		*/
+	char 			*CriticAdr;	    /* 12h		*/
+	unsigned int	ParentPspSeg;	/* 16h		*/
+	unsigned char	FileOpen[20];	/* 18h		*/
+	unsigned int	EnvSeg; 	    /* 2Ch		*/
+	unsigned long	SSSP;		    /* 2Eh		*/
+	unsigned int	MaxOpenFile;	/* 32h		*/
 	char 			*OpenFileTable; /* 34h		*/
 	char 			*PreviousPsp;	/* 38h		*/
-	char			dummy2[20];	/* 3Ch		*/
+	char			dummy2[20];	    /* 3Ch		*/
 	char			dispatcher[3];	/* 50h		*/
-	char			dummy3[9];	/* 53h		*/
-	char			Fcb1[36];	/* 5Ch		*/
-	char			Fcb2[20];	/* 6Ch		*/
+	char			dummy3[9];	    /* 53h		*/
+	char			Fcb1[36];	    /* 5Ch		*/
+	char			Fcb2[20];	    /* 6Ch		*/
 	char			CmdTail[127];	/* 80h		*/
-	};
+};
 
 /* Memory Control Block Header */
 struct ARENA {
@@ -371,24 +374,24 @@ struct ARENA {
 };
 
 
-/* Commentaires:
+/* Notes:
 
-	On recupere le DIB en se servant de la fonction 52h de l'int 21h
-	l'adresse du dib est recup‚r‚e dans ES:(BX - 4);
+    we obtain the DIB using the function 52h of INT 21h. Th DIB address
+    is read as ES:(BX-4)
+    
+    2 ways to obtain the DPB:
+     - from the DIB and following the DPB linked list
+     - by using function 1Fh and 32h. these 2 functions provide a DPB
+     address in DS:BX
 
-	On recupere les DPB, soit en passant par le DIB, puis en suivant
-	la liste chainee des DPB
-			     soit enutilisant les fonctions 1Fh et 32h.
-	Ces 2 fonctions founissent dans DS:BX l'adresse d'un DPB.
+		1Fh provides the DPB of the current unit
+		32h provides the DPB of the unit specified in the AL register, 
+        with the following convention:
+		    AL = 0  --> current unit
+            AL = 1  --> A, etc ...
 
-		1Fh founit toujours le DPB de l'unit‚ courante
-		32h fournit le DPB du perif demand‚ (dans AL), avec
-		la convention 0 pour l'unit‚ courante, 1 pour A, etc ...
-
-	Il est pr‚f‚rable d'utiliser la fonction 32h pour recuperer les
-	differents DPB car cette interruption force le systeme a faire
-	des acces disque; on est donc sur que tous les champs sont
-	correctement initialis‚s (ce qui n'est pas garanti si on se sert
-	du chainage … travers le DIB)
+    it is advised to use function 32h to retrieve various DPB because this
+    interrupt will force a disk access, hence we ensure that all fields will
+    be properly initialized (not guaranteed when using the linked list from the DIB)
 */
 

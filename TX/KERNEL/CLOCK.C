@@ -5,7 +5,6 @@
 #include "signal.h"
 #include "sem.h"
 
-/******************/
 struct WORDREGS {
         unsigned int    ax, bx, cx, dx, si, di, cflag, flags;
 };
@@ -30,8 +29,6 @@ struct  REGPACK {
         unsigned        r_ax, r_bx, r_cx, r_dx;
         unsigned        r_bp, r_si, r_di, r_ds, r_es, r_flags;
 };
-/****************/
-
 
 int    DelayList;       /* index de la file des process en SLEEP          */
                         /* dans la table systeme Clkq                     */
@@ -69,7 +66,7 @@ _scheduler()
 
 
 /*----------------------------------------------------------------------------
- * clock - gestion des delais et du partage de la CPU
+ * clock - delay and CPU sharing management
  *----------------------------------------------------------------------------
  */
 _clock()
@@ -78,7 +75,7 @@ _clock()
 }
 
 /*----------------------------------------------------------------------------
- * sdelay - place une tache dans l'etat SLEEP pendant n 1/(18/QUANTUM) sec
+ * sdelay - sets a task's state as SLEEP during  n * 1/(18/QUANTUM) sec
  *----------------------------------------------------------------------------
  */
 BIBLIO m_Gsleep(n)
@@ -100,8 +97,9 @@ int n;
         return(ROK);
     }
 
-    if ((tp = &Tasktab[RUNpid])->tflag & F_DELAY)
+    if ((tp = &Tasktab[RUNpid])->tflag & F_DELAY) {
          _stopdelay(RUNpid);
+    }
 
     _delayIn( RUNpid , DelayList , n );
     isDelay     = TRUE;
@@ -115,7 +113,7 @@ int n;
 }
 
 /*----------------------------------------------------------------------------
- * m_Sleep - place la tache appelante dans l'etat  SLEEP pendant n secondes
+ * m_Sleep - set the calling task's state to SLEEP during n seconds
  *----------------------------------------------------------------------------
  */
 SYSTEMCALL m_Sleep(n)
@@ -124,9 +122,9 @@ unsigned n;
    return(m_Gsleep(n * (18 / QUANTUM)));
 }
 
-/*----------------------------------------------------------------------------
- * m_Alarm - armer une TEMPO - lorsque la tempo tombe , SIGALRM est genere
- *----------------------------------------------------------------------------
+/*----------------------------------------------------------------------------------
+ * m_Alarm - arms a timeout - when timeout expires, a SIGALRM signal is generated
+ *----------------------------------------------------------------------------------
  */
 SYSTEMCALL m_Alarm(n)
 unsigned n;
@@ -142,21 +140,20 @@ unsigned n;
          return(RERR);
     }
     if (n == 0) {
-         /* ignorer l'‚venement */
+         /* ignore event */
          Tasktab[RUNpid].tevsig &= (~SigMask[SIGALRM]);
 
-         /* stopper delais */
+         /* stop delay */
          _stopdelay(RUNpid);
          _swpProc();
          _itRes(ps);
          return(ROK);
     }
-    /*  si la tache est deja en file de delais
-     *  retirer l'ancien delais non termine
-     */
 
-    if ((tp = &Tasktab[RUNpid])->tflag & F_DELAY)
+    /*  if task is already in delay list, remove previous unterminated delay */
+    if ((tp = &Tasktab[RUNpid])->tflag & F_DELAY) {
          _stopdelay(RUNpid);
+    }
 
     _delayIn( RUNpid , DelayList , (18 / QUANTUM) * n);
     tp->tflag |= F_ALRM;
@@ -167,17 +164,18 @@ unsigned n;
 }
 
 /*----------------------------------------------------------------------------
- * _timout - lance un delais et indique s'il a ete a son terme
+ * _timeout - lance un delais et indique s'il a ete a son terme
  *----------------------------------------------------------------------------
  */
-_timout(pid, n)
+_timeout(pid, n)
 unsigned n;
 {
     int ps,status;
     struct taskslot *tp;
 
-    if (n == 0)
-        return(TRUE);    /* timout immediat */
+    if (n == 0) {
+        return(TRUE);    /* immediat timeout */
+    }
 
     ps = _itDis();
     tp = &Tasktab[pid];
@@ -193,7 +191,7 @@ unsigned n;
     status = (tp->tflag & F_TIMOUT ? TRUE : FALSE);
     tp->tflag  &= ~F_TIMOUT;
     _itRes(ps);
-    return(status);   /* retourner VRAI si tempo … son terme */
+    return(status);   /* retourner VRAI si tempo ï¿½ son terme */
 }
 
 

@@ -11,9 +11,9 @@
 
 long cxtswitching = 0L;
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*------------------------------------------------------
  * cxtswitch - number of process switching per second
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *------------------------------------------------------
  */
 cxtswitch()
 {
@@ -57,9 +57,9 @@ cxtswitch()
 #define S_UP         4
 #define S_DWN        8
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*--------------
  * creatWindow
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *--------------
  */
 struct window *creatWindow(name,ink,paper,x,y,maxx,maxy)
 char *name;
@@ -68,15 +68,15 @@ char *name;
    int i,ps;
    pwin = m_newwin(maxy,maxx,y,x,ink,paper,name);
 
-   m_box(pwin,'º','Í');
+   m_box(pwin,'-','-');
    m_wpush(pwin);
    m_touchwin(pwin);
    return(pwin);
 }
 
-/*ÄÄÄÄÄÄÄ
+/*-----------
  * wdemo
- *ÄÄÄÄÄÄÄ
+ *-----------
  */
 wdemo()
 {
@@ -235,9 +235,9 @@ struct window *pwin, *stdscr;
 
 }
 
-/*ÄÄÄÄÄÄÄ
+/*----------
  * wSpy
- *ÄÄÄÄÄÄÄ
+ *----------
  */
 wSpy()
 {
@@ -250,9 +250,9 @@ wSpy()
 }
 
 
-/*ÄÄÄÄÄÄÄ
+/*-------
  * hanoi
- *ÄÄÄÄÄÄÄ
+ *-------
  */
 hanoi(pwin,n,a,b,c)
 struct window *pwin;
@@ -265,9 +265,9 @@ int *a,*b,*c;
    }
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄ
+/*-----------
  * moveP
- *ÄÄÄÄÄÄÄÄÄÄ
+ *-----------
  */
 moveP(pwin,polS,polT,size)
 struct window *pwin;
@@ -280,9 +280,9 @@ int *polS,*polT; /* source & target pole */
     polT[POLE_HIGHT]++;
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄ
+/*------------
  * starthanoi
- *ÄÄÄÄÄÄÄÄÄÄÄÄ
+ *------------
  */
 starthanoi(pwin)
 struct window *pwin;
@@ -314,9 +314,9 @@ struct window *pwin;
    hanoi(pwin, Nplates, &pol[1], &pol[3], &pol[2]);
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄÄ
+/*-----------
  * move_vert
- *ÄÄÄÄÄÄÄÄÄÄÄ
+ *-----------
  */
 move_vert(pwin,pol,direction,size)
 struct window *pwin;
@@ -341,9 +341,9 @@ int           *pol;
        }
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*--------------
  * move_horizon
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *--------------
  */
 move_horizon(pwin,polS,polT,size)
 struct window *pwin;
@@ -370,9 +370,9 @@ int           *polS,*polT;
        }
 }
 
-/*ÄÄÄÄÄÄÄ
+/*-------
  * drawp
- *ÄÄÄÄÄÄÄ
+ *-------
  */
 drawp(pwin,x,y,size,visible)
 struct window *pwin;
@@ -390,9 +390,9 @@ struct window *pwin;
    m_wrefresh(pwin);
 }
 
-/*ÄÄÄÄÄÄ
+/*------
  * loop
- *ÄÄÄÄÄÄ
+ *------
  */
 loop(pwin)
 struct window *pwin;

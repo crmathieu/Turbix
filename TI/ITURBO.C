@@ -1,7 +1,7 @@
 #include "xed.h"
 
 /* interface entre compilateurs microsoft et Borland :
- * Adaptation des fonctions du turbo … la syntaxe
+ * Adaptation des fonctions du turbo - la syntaxe
  * Microsoft
  */
 
@@ -45,10 +45,10 @@ int drive, *cdrive;
 }
 #endif
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*---------------------------------------------------------------------
  * chk_devspace - verifie si le device peut recevoir un nouveau fichier
  *                (toujours sur le drive courant)
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *---------------------------------------------------------------------
  */
 chk_devspace(file, reset)
 char *file;

@@ -1,7 +1,7 @@
 #include "xed.h"
 #include "ext_var.h"
 
-/* fonctions a utiliser si le driver souris est install‚ */
+/* fonctions a utiliser si le driver souris est install- */
 
 mmain()
 {
@@ -74,7 +74,7 @@ hideMouse2()
  *                        le bit 0 represente celui de droite
  *                        le bit 1 represente celui de gauche
  *                        Pour Chacun des 2 bits :
- *                        si … 1 -> enfonc‚,   0 -> relach‚
+ *                        si - 1 -> enfonc-,   0 -> relach-
  *--------------------------------------------------------------
  */
 m_getPosAndButtonStatus(posX, posY, buttonStatus)
@@ -109,8 +109,8 @@ m_setCursorPos(newPosX, newPosY)
  * m_getButtonPressInfo - retourne la position a la derniere pression,
  *                        le nombre de pressions et le status:
  *                        STATUS:
- *                        si … 1 -> enfonc‚,   0 -> relach‚
- *                        NB DE PRESSIONS: de 0 … 32767; remis … 0
+ *                        si - 1 -> enfonc-,   0 -> relach-
+ *                        NB DE PRESSIONS: de 0 - 32767; remis - 0
  *                        apres l'appel.
  *--------------------------------------------------------------
  */
@@ -133,8 +133,8 @@ unsigned *buttonStatus, *count;
  * m_getButtonReleaseInfo - retourne la position au dernier relachement,
  *                        le nombre de relachements et le status:
  *                        STATUS:
- *                        si … 1 -> enfonc‚,   0 -> relach‚
- *                        NB DE RELACHEMENTS: de 0 … 32767; remis … 0
+ *                        si - 1 -> enfonc-,   0 -> relach-
+ *                        NB DE RELACHEMENTS: de 0 - 32767; remis - 0
  *                        apres l'appel.
  *--------------------------------------------------------------
  */
@@ -182,14 +182,14 @@ m_setMinMaxVerCursorPos(MinPos, MaxPos)
 }
 
 /*--------------------------------------------------------------
- * m_callMaskAndAddress - chaine … l'IT souris, le traitement
+ * m_callMaskAndAddress - chaine - l'IT souris, le traitement
  *                       utilisateur a appeler si les conditions
- *                       exprim‚es dans le masque sont reunies:
+ *                       exprim-es dans le masque sont reunies:
  *                              - bit 0 : changement de position
- *                              - bit 1 : bouton Gauche press‚
- *                              - bit 2 : bouton Gauche relach‚
- *                              - bit 3 : bouton Droit press‚
- *                              - bit 4 : bouton Droit relach‚
+ *                              - bit 1 : bouton Gauche press-
+ *                              - bit 2 : bouton Gauche relach-
+ *                              - bit 3 : bouton Droit press-
+ *                              - bit 4 : bouton Droit relach-
  *--------------------------------------------------------------
  */
 m_callMaskAndAddress(callMask, subroutine)
@@ -321,7 +321,7 @@ read_kbd()
 
 /*--------------------------------------------------------------
  * getSelectedItemByMouse - Retourne le numero de l'article
- *                          selectionn‚ par la souris sinon -1
+ *                          selectionn- par la souris sinon -1
  *--------------------------------------------------------------
  */
 getSelectedItemByMouse(mp)

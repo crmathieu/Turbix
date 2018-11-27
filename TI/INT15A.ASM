@@ -69,7 +69,7 @@ __int13 ENDP
 ;*          90h (device wait)  et 91h (device post)
 ;*
 __int15_2 PROC FAR
-;    sauvegarder les parametres pass‚s a l'INT 15h
+;    sauvegarder les parametres pass-s a l'INT 15h
      push ds
      push ax
      push bx
@@ -112,7 +112,7 @@ __int15_2 ENDP
 ;*          90h (device wait)  et 91h (device post)
 ;*
 __int15 PROC FAR
-;    sauvegarder les parametres pass‚s a l'INT 15h
+;    sauvegarder les parametres pass-s a l'INT 15h
      push ds
      push ax
      push bx

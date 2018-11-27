@@ -5,9 +5,9 @@
 #include <fcntl.h>
 
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*---------------------------------------------------
  * global_init : initialisation GENERALE et lancement
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *---------------------------------------------------
  */
 FUNCTION global_init(ffile, clearScreen)
 char *ffile;
@@ -49,14 +49,14 @@ char *ffile;
 
    /* GESTION SOURIS */
 /*--------------------------------------------------------------
- * m_callMaskAndAddress - chaine … l'IT souris, le traitement
+ * m_callMaskAndAddress - chaine - l'IT souris, le traitement
  *                       utilisateur a appeler si les conditions
- *                       exprim‚es dans le masque sont reunies:
+ *                       exprim-es dans le masque sont reunies:
  *                              - bit 0 : changement de position
- *                              - bit 1 : bouton Gauche press‚
- *                              - bit 2 : bouton Gauche relach‚
- *                              - bit 3 : bouton Droit press‚
- *                              - bit 4 : bouton Droit relach‚
+ *                              - bit 1 : bouton Gauche press-
+ *                              - bit 2 : bouton Gauche relach-
+ *                              - bit 3 : bouton Droit press-
+ *                              - bit 4 : bouton Droit relach-
  *--------------------------------------------------------------
 
    /* check mouse */
@@ -130,7 +130,7 @@ char *ffile;
        WINHLPborder   =  F_LWHITE|B_WHITE;
        WINHLPblock    =  F_WHITE|B_BLACK;
 
-       /* attributs communs … tous les menus */
+       /* attributs communs - tous les menus */
        MENUborder     =  F_BLACK|B_WHITE;
        MENUselected   =  F_WHITE|B_BLACK;
        MENUlcom       =  F_LWHITE|B_WHITE;
@@ -165,7 +165,7 @@ char *ffile;
        WINHLPborder   =  F_BLACK|B_WHITE;
        WINHLPblock    =  F_LWHITE|B_BLACK;
 
-       /* attributs communs … tous les menus */
+       /* attributs communs - tous les menus */
        MENUborder     =  F_WHITE|B_BLACK;
        MENUselected   =  F_BLACK|B_WHITE;
        MENUlcom       =  F_LWHITE|B_BLACK;
@@ -188,7 +188,7 @@ char *ffile;
    init_pick(ffile, confFlag);
    init_comp();
 
-/* ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ m_key -- TITLE ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ UX  UY ÄÄ ink ÄÄ paper ÄÄÄÄ border ÄÄ selected Item Ä command letter att ÄÄÄ flagLcom */
+/* ------------------- m_key -- TITLE ---------------------------------- UX  UY -- ink -- paper ---- border -- selected Item - command letter att --- flagLcom */
    initMenu(&mainMenu, FUNC|F10, "main",     NULL,      HOR, FIXM, NULL,    0,  0, MENUink, MENUpaper, MENUborder, MENUselected, MENUlcom, TRUE);
    initMenu(&fileMenu, ALT|ALT_F,nullstr,    &mainMenu, VER, FIXM, NULL,    4,  1, MENUink, MENUpaper, MENUborder, MENUselected, MENUlcom, TRUE);
    initMenu(&pickMenu, ALT|ALT_F3,picktitle, &fileMenu, VER, VARM, videoBuf,20, 5, MENUink, MENUpaper, MENUborder, MENUselected, MENUlcom, TRUE, NOLCOM_ATT);
@@ -201,7 +201,7 @@ char *ffile;
    initMenu(&helpMenu, ALT|ALT_H,nullstr,    &mainMenu, VER, FIXM, NULL,    50, 1, MENUink, MENUpaper, MENUborder, MENUselected, MENUlcom, TRUE);
    initMenu(&instMenu, ALT|ALT_I,nullstr,    &optMenu,  VER, FIXM, NULL,    34, 3, MENUink, MENUpaper, MENUborder, MENUselected, MENUlcom, TRUE);
 
-   /* ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ m_key       TITLE ÄÄÄ X  Y  L  H  BTYPE, OMBRAGE BARRE   ARROW INK       PAPER         WBORDER      BLOCK ATT ÄÄ */
+   /* ---------------- m_key       TITLE --- X  Y  L  H  BTYPE, OMBRAGE BARRE   ARROW INK       PAPER         WBORDER      BLOCK ATT -- */
    initWin(&edwin,     FUNC|F6,   absfname,  0, 1,78,21, TYP1,  FALSE,  TRUE,   TRUE, WINink,    WINpaper,    WINborder,    WINblock);
 
    /* placer press Bouton Droit et masque d'appel */
@@ -257,7 +257,7 @@ char *ffile;
    /* recuperer les drives disponibles */
    _initDriveTable();
 
-   /* initialiser … NULL le pointeur sur l'objet courant */
+   /* initialiser - NULL le pointeur sur l'objet courant */
    currObj = headObj = tailObj = (struct OBJ *)NULL;
 
 
@@ -302,9 +302,9 @@ LOGO()
       _wstringDB((80 - strlen(logoStr))/2, 12, strlen(logoStr), NEWATT, 0x07, logoStr);
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*------------------------------------
  * initMenu : initialiser un sous menu
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *------------------------------------
  */
 FUNCTION initMenu(ob, m_key, title, UPm, depl, typ, Badd, ul_x, ul_y, ink, paper,
                   border, blockAtt, lcom_att, ombrage, comLetterFlag)
@@ -337,9 +337,9 @@ unsigned *Badd;             /* buffer de sauvegarde (pour Menus Variables) */
                                  border, blockAtt);
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*---------------------------------------------------------------
  * xcoor - donne l'offset X de la rubrique (uniquement pour HOR)
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *---------------------------------------------------------------
  */
 xcoor(ob,rub)
 struct OBJ *ob;
@@ -353,9 +353,9 @@ struct OBJ *ob;
     return(cumul + ITEM(ob,rub)->ecart);
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*--------------------------------------------------------------
  * initMenuVER : initialiser un sous menu a deplacement VERTICAL
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *--------------------------------------------------------------
  */
 initMenuVER(ob, typ, Badd, ul_x, ul_y, ink, paper, border, blockAtt, ombrage, comLetterFlag )
 struct OBJ *ob;
@@ -390,14 +390,14 @@ unsigned *Badd;
 /*       if ((ob->save = malloc(2 * (ob->ncol+4) * (ob->nline+4))) == NULL)
             exit(0);
    }
-   else  /* menu de taille variable : donner le buffer pass‚ en parametre */
+   else  /* menu de taille variable : donner le buffer pass- en parametre */
 /*       ob->save = Badd;*/
 
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*----------------------------------------------------------------
  * initMenuHOR : initialiser un sous menu a deplacement HORIZONTAL
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *----------------------------------------------------------------
  */
 initMenuHOR(ob,ul_x,ul_y,ink,paper,border,blockAtt)
 struct OBJ *ob;
@@ -431,9 +431,9 @@ struct OBJ *ob;
 
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*-----------------------------------------------------
  * CharToInt - copier STRING dans BUFFER de type ECRAN
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *-----------------------------------------------------
  */
 CharToInt2(dest,src,att)
 int *dest;
@@ -444,9 +444,9 @@ char *src;
          *dest++ = att<<8|c;
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*---------------------------------------------
  * update_menu - mettre a jour un menu variable
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *---------------------------------------------
  */
 FUNCTION update_menu(ob)
 struct OBJ *ob;
@@ -481,9 +481,9 @@ struct OBJ *ob;
                         ob->lcom_att);
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*---------------------------------------------
  * pushSM - faire apparaitre un SOUS MENU
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *---------------------------------------------
  */
 FUNCTION pushSM(ob)
 struct OBJ *ob;
@@ -506,7 +506,7 @@ struct OBJ *ob;
          ob->pushed = 1;
      }
 
-     /* chainer … l'objet precedent
+     /* chainer - l'objet precedent
       * et MAJ objet courant
       */
       ob->prev      = tailObj;
@@ -535,7 +535,7 @@ struct OBJ *ob;
                         ob->ul_y + 1 + offy,
                         1,
                         ob->lcom_att);
-              if ((unsigned char)ITEM(ob,offy)->str[0] == 'Ä') {
+              if ((unsigned char)ITEM(ob,offy)->str[0] == '-') {
                 _wstringDB(ob->ul_x,
                            ob->ul_y + offy + 1,
                            1,
@@ -585,9 +585,9 @@ struct OBJ *ob;
      _brighten(offx, offy, len, ob->blockAtt);
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*---------------------------------------------
  * popSM - faire disparaitre un SOUS MENU
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *---------------------------------------------
  */
 FUNCTION popSM(ob)
 struct OBJ *ob;
@@ -612,10 +612,10 @@ struct OBJ *ob;
     ob->pushed = 0;
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*--------------------------------------------------------------------------
  * saveScreen - SAUVEGARDER la partie de l'ecran correspondant au SOUS MENU
  *              ou a la WINDOW
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *--------------------------------------------------------------------------
  */
 saveScreen(ob)
 struct OBJ *ob;
@@ -645,9 +645,9 @@ struct OBJ *ob;
 
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*------------------------------------
  * write_ombrage - dessiner l'ombrage
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *------------------------------------
  */
 write_ombrage(x,y,l,h)
 {
@@ -667,9 +667,9 @@ write_ombrage(x,y,l,h)
 }
 
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*------------------------------------
  * write_ombrage - dessiner l'ombrage
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *------------------------------------
  */
 write_bar(ob)
 struct OBJ *ob;
@@ -686,21 +686,21 @@ struct OBJ *ob;
 
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*-----------------------------------------------
  * write_mbox - dessiner le contour d'un menu
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *-----------------------------------------------
  */
 FUNCTION write_mbox(ob)
 struct OBJ *ob;
 {
-  /* type 'Ä' */
+  /* type '-' */
   write_box(ob->title, ob->ul_x, ob->ul_y, ob->ncol, ob->nline,
             ob->border, 0, 0, 0);
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*-----------------------------------------------
  * write_box - dessiner le contour d'une BOXE
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *-----------------------------------------------
  */
 FUNCTION write_box(title, x, y, l, h, att, bar, arrow, typ)
 char *title;
@@ -721,7 +721,7 @@ unsigned char att;
    Ch2   = boxtype[typ][6];
 
    if (bar) {
-        vBARchar = hBARchar = '°';
+        vBARchar = hBARchar = '-';
    }
    else {
         vBARchar = Vchar;
@@ -781,9 +781,9 @@ unsigned char att;
 
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*-------------------------------------------------------
  * arrowDWN - changer de rubrique courante en descendant
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *-------------------------------------------------------
  */
 FUNCTION arrowDWN(ob)
 struct OBJ *ob;
@@ -799,7 +799,7 @@ struct OBJ *ob;
      /* remettre precedente rubrique en attribut normal */
      currItemOFF(ob);
      ob->curY = (ob->curY + 1) % ob->nline;
-     if ((unsigned char)ITEM(ob,ob->curY)->str[0] == 'Ä')
+     if ((unsigned char)ITEM(ob,ob->curY)->str[0] == '-')
         return(arrowDWN(ob));
 
 
@@ -808,9 +808,9 @@ struct OBJ *ob;
 }
 
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*---------------------------------------------------
  * arrowUP - changer de rubrique courante en
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *---------------------------------------------------
  */
 FUNCTION arrowUP(ob)
 struct OBJ *ob;
@@ -827,7 +827,7 @@ struct OBJ *ob;
      if (--ob->curY < 0)
          ob->curY = ob->nline - 1;
 
-     if ((unsigned char)ITEM(ob,ob->curY)->str[0] == 'Ä')
+     if ((unsigned char)ITEM(ob,ob->curY)->str[0] == '-')
         return(arrowUP(ob));
 
      currItemON(ob);
@@ -842,16 +842,16 @@ struct OBJ *ob;
      /* mettre a jour l'ITEM courant */
      if (getCurrItem(ob, &item, ib.hCursor / 8, ib.vCursor / 8))
         /* verifier qu'on est pas sur une ligne de separation */
-        if ((unsigned char)ITEM(ob,item)->str[0] != 'Ä')
+        if ((unsigned char)ITEM(ob,item)->str[0] != '-')
                 ob->curY = item;
 
      if (!(push_first && ITEM(ob,ob->curY)->sm))
          CurrItemON(ob);
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*-----------------------------------------------------
  * arrowL - changer de rubrique courante sur la gauche
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *-----------------------------------------------------
  */
 FUNCTION arrowL(ob,push_first)
 struct OBJ *ob;
@@ -864,9 +864,9 @@ struct OBJ *ob;
          CurrItemON(ob);
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*-----------------------------------------------------
  * arrowR - changer de rubrique courante sur la droite
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *-----------------------------------------------------
  */
 FUNCTION arrowR(ob,push_first)
 struct OBJ *ob;
@@ -879,9 +879,9 @@ struct OBJ *ob;
          CurrItemON(ob);
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*-----------------------------------------------------------
  * restoreFromMenu- ecriture PHYSIQUE d'un tampon sur l'ecran
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *-----------------------------------------------------------
  */
 restoreFromMenu(ob,buf)
 struct OBJ *ob;
@@ -900,10 +900,10 @@ int        *buf;
                   buf);
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
- * restoreScreen - RESTITUER la partie de l'ecran ecras‚ par le SOUS MENU
+/*------------------------------------------------------------------------
+ * restoreScreen - RESTITUER la partie de l'ecran ecras- par le SOUS MENU
  *                 ou la WINDOW
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *------------------------------------------------------------------------
  */
 restoreScreen(ob)
 struct OBJ *ob;
@@ -1021,7 +1021,7 @@ char *fname;
 
 /*---------------------------------------------------------------------------
  *  pop_pick - poper un fichier de la PICK STACK (le nom du fichier a ete
- *             prealablement copi‚ dans "file_name")
+ *             prealablement copi- dans "file_name")
  *---------------------------------------------------------------------------
  */
 struct pick pop_pick(item_no)
@@ -1031,10 +1031,10 @@ struct pick pop_pick(item_no)
    int i;
 
 
-   /* copier l'element … retirer */
+   /* copier l'element - retirer */
    memmove(&pck, &picktab[item_no], PICKSIZE);
 
-   /* decaler tous les fichiers "sous" le fichier … retirer */
+   /* decaler tous les fichiers "sous" le fichier - retirer */
    for (ob = &pickMenu, i = item_no; i < ob->nline - 1; i++)
         memmove(&picktab[i], &picktab[i+1], PICKSIZE);
 
@@ -1072,7 +1072,7 @@ inhibe_screen()
 
    _dos_setvect(0x10, Dummy_interrupt);
    /* se placer dans la directory courante
-    * ( utilis‚ pour creer les objets dans la mˆme directory
+    * ( utilis- pour creer les objets dans la m-me directory
     * que les sources
     */
 /*   chdir(cdirname);*/

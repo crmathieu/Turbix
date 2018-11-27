@@ -5,14 +5,15 @@
 /* <<<<<<<<<<<<<<<<<<<<<<<<<<<< Messages LMX >>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
 
 /*--------------------------------------------------------------------------
- * REM :  le systeme de message est impossible avec la tache initiale
- *        car le pid 0  est considere comme invalide !
- * 2 types de messages : - les messages simples qui ne servent qu'a la
- *                         synchronisation entre taches :
+ * Note : Messaging won't work with the initial task because pid 0 is
+ *        considered as invalid!
+ * 
+ * 2 types of messages : - simple messages: they are used as mean of 
+ *                         synchronization between task:
  *                            -> msgsync, msgrdv, _msgsndI, msgclr
  *
- *                       - les messages d'echanges d'informations
- *                         entre taches :
+ *                       - information messages: they are used to exchange data
+ *                         between tasks:
  *                            -> msgsnd, msgrcv, tmsgrcv, getmsg
  *
  *--------------------------------------------------------------------------
@@ -20,30 +21,30 @@
 
 
 /*----------------------------------------------------------------------------
- * m_Msgwait(msg, tempo, status) - attendre un message de synchro avec tempo
- *                       si tempo < 0 : attendre indefiniment
- *                       si tempo = 0 : ne pas attendre
- *                       si tempo > 0 : attendre tempo secondes au maxi
+ * m_Msgwait(msg, timeout, status) - wait for message with timeout 
+ *                       si timeout < 0 : wait indefinitely
+ *                       si timeout = 0 : no wait
+ *                       si timeout > 0 : wait a maximum of timeout seconds
  *----------------------------------------------------------------------------
  */
-SYSTEMCALL m_Msgwait(msg, tempo, status)
-uchar *msg;     /* adresse du byte */
+SYSTEMCALL m_Msgwait(msg, timeout, status)
+uchar *msg;     /* byte address */
 int   tempo;
-int *status;    /* si retour = RERR : MSG_TIMEOUT, MSG_NOMESS */
+int *status;    /* contains error type when return = RERR. can be MSG_TIMEOUT or MSG_NOMESS */
 {
-    return(_msgwait(RUNpid, msg, tempo, status));
+    return(_msgwait(RUNpid, msg, timeout, status));
 }
 
 /*----------------------------------------------------------------------------
- * _msgwait(pid, msg, tempo, status) - mettre en attente un process donn‚
- *                       si tempo < 0 : attendre indefiniment
- *                       si tempo = 0 : ne pas attendre
- *                       si tempo > 0 : attendre tempo secondes au maxi
+ * _msgwait(pid, msg, tempo, status) -  wait for message with timeout 
+ *                       si timeout < 0 : wait indefinitely
+ *                       si timeout = 0 : no wait
+ *                       si timeout > 0 : wait a maximum of timeout seconds
  *----------------------------------------------------------------------------
  */
 _msgwait(pid, msg, tempo, status)
 int pid;
-uchar *msg;     /* adresse du byte */
+uchar *msg;     /* byte address */
 int   tempo;
 int *status;    /* si retour = RERR : MSG_TIMEOUT, MSG_NOMESS */
 {
@@ -52,19 +53,19 @@ int *status;    /* si retour = RERR : MSG_TIMEOUT, MSG_NOMESS */
 
    ps = _itDis();
    tp = &Tasktab[pid];
-   if (tp->tmsgnr == 0) {  /* attendre le message */
-        if (tempo < 0) {  /* attendre indefiniment */
+   if (tp->tmsgnr == 0) { /* wait for message */
+        if (tempo < 0) {  /* wait indefinitely */
                 tp->tstate = SLEEP;
                 tp->tevent = EV_MESS;
                 _swpProc();
         }
         else {
-                if (tempo == 0) { /* revenir imm‚diatement */
+                if (tempo == 0) { /* no delay */
                         _itRes(ps);
                         *status = MSG_NOMESS;
                         return(RERR);
                 }
-                if (_timout(pid, tempo)) { /* TIMEOUT tomb‚ */
+                if (_timeout(pid, tempo)) { /* TIMEOUT expired */
                         _itRes(ps);
                         *status = MSG_TIMEOUT;
                         return(RERR);
@@ -72,8 +73,8 @@ int *status;    /* si retour = RERR : MSG_TIMEOUT, MSG_NOMESS */
         }
    }
 
-   /*  il y a un message pour la tache
-    *  le prendre et  garder la CPU
+   /*  there is a message for the task:
+    *  take it and keep CPU
     */
    *msg = tp->tmsg[tp->tmsgOut];
    tp->tmsgOut = (tp->tmsgOut+1) % MAXMESS;
@@ -84,7 +85,7 @@ int *status;    /* si retour = RERR : MSG_TIMEOUT, MSG_NOMESS */
 }
 
 /*----------------------------------------------------------------------------
- * m_Msgsync - allez en rendez vous avec une autre tache
+ * m_Msgsync - synchronize with another task
  *----------------------------------------------------------------------------
  */
 SYSTEMCALL m_Msgsync(pid, msgbyte)
@@ -107,7 +108,7 @@ SYSTEMCALL m_Msgrdv()
 }
 
 /*----------------------------------------------------------------------------
- * m_Msgclr  - RAZ zone message
+ * m_Msgclr  - Clear message zone
  *----------------------------------------------------------------------------
  */
 SYSTEMCALL m_Msgclr()
@@ -117,14 +118,10 @@ SYSTEMCALL m_Msgclr()
 
    m_Msgwait(&null, 0, &stat);
    return(ROK);
-
-/*    ps = _itDis();
-    Tasktab[RUNpid].tmsgnr = 0;
-    _itRes(ps);*/
 }
 
 /*----------------------------------------------------------------------------
- * _msgsndI - message envoye sous IT (msg obligatoirement de type BYTE)
+ * _msgsndI - BYTE message sent with IT disabled
  *----------------------------------------------------------------------------
  */
 _msgsndI(pid,msg,flag)
@@ -141,14 +138,15 @@ uchar msg;
          _itRes(ps);
          return(RERR);
     }
-    /* deposer message */
+    /* deposit message */
     tp->tmsg[tp->tmsgIn] = msg;
     tp->tmsgIn = (tp->tmsgIn+1) % MAXMESS;
     tp->tmsgnr++;
 
-    /* activer le process cible */
-    if (tp->tstate == SLEEP && (tp->tevent & EV_MESS))
+    /* activate target task */
+    if (tp->tstate == SLEEP && (tp->tevent & EV_MESS)) {
             _setrdy(pid,(flag ? SCHEDUL : NOSCHEDUL));
+    }
 
     _itRes(ps);
     return(ROK);

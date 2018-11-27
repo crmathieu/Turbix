@@ -16,90 +16,75 @@
 #include "msg.h"
 #include "dis.h"
 
-/* lien dynamique avec le window managing */
+/* Dynamic linking with windows manager */
 int (* winfunc[NWINFUNC])();
 
-/*
- *  Table des descripteurs de tache
- */
-
+/* task descriptor table with its indexes */
 struct taskslot Tasktab[NTASK];
 int             nextslot;
 unsigned        nextproc;
 ushort          glowdir,
                 glowdev;
 
-/*
- * Table des Queues de Messages
- */
+/* Message linked lists table */
 struct msgqid_ds Qtable[NQID];
 
-/*
- *  Table des semaphores
- */
-
+/* Semaphores table */
 struct semslot Semtab[NSEM];
 int            nextsem;
 
-/*
- *  Tables de controle des files d'attente et des delais
- */
-
+/* Delays and waiting lists control table */
 struct node    Sysq[NSYS];
 struct node    Clkq[NCLK];
 int            nextqueue;
 
-/*
- *  Table des pipes
- */
-
+/* Pipes table */
 struct pipslot Piptab[NPIPE];
 int            piphead;
 int            piptail;
 
-/* Variables Systemes */
-int            numproc;            /* nombre de process en execution    */
-int            RUNpid;             /* PID du process actif              */
+/* System variables */
+int            numproc;            /* number of tasks in READY state  */
+int            RUNpid;             /* PID of active task (RUNNING state) */
 
-int            rdyhead;            /* tete de la READY list             */
-int            rdytail;            /* queue de la READY list            */
+int            rdyhead;            /* READY list head */
+int            rdytail;            /* READY list tail */
 
-int            lockhead;           /* tete de la LOCK list              */
-int            locktail;           /* queue de la LOCK list             */
+int            lockhead;           /* LOCK list head */
+int            locktail;           /* LOCK list tail */
 
-/* declaration des variables ttys */
+/* TTYS variables declaration */
+struct csr     Serialtab[NSERIAL]; /* one Serial entry per tty serie */
 
-struct csr     Serialtab[NSERIAL]; /* une entree Serial par tty serie   */
-
-struct session    SessionTab[NTTY];
+struct session SessionTab[NTTY];
 struct tty     tty[NTTY];          /* 1 tty + 10 Sessions */
 extern  int    currDrive;
 extern  char   currWD[];
 
-/* variable de configuration */
+/* configuration variables */
 unsigned         materialConf;
 extern unsigned *deb1;
 int              nflp_phy;
 struct LOL      *lolp, *getListOfList();
 
-/* Gestion des drives */
+/* Secondary storage management */
 struct DriveTable {
         char drive;
         char valide;
         char *path;
 };
 
-/* pointeur sur la table des drives (qui est allouee dynamiquement */
+/* pointer to table of drives (dynamically allocated) */
 struct DriveTable *pdt;
 
-/* nombre de drives possibles */
+/* possible number of drives */
 int lastdrive;
 
-/* handler d'erreur utilisateur */
+/* user error handler */
 int (*_uErrHandler)();
 
 /*----------------------------------------------------------------------------
- *  sysinit - initialisation de tout le systeme
+ *  sysinit - system initialization
  *----------------------------------------------------------------------------
  */
 _sysinit()
@@ -117,73 +102,72 @@ _sysinit()
 
 /*    lolp = getListOfList();*/
 
-    /* recuperer la configuration materielle */
+    /* read hardware configuration */
     materialConf = _getconf();
     nflp_phy     = ((materialConf & 0x00c0) >> 6) + 1;
 
 
-    /* init handler erreur utilisateur … NULLPTR */
+    /* init user error handler as NULLPTR */
     _uErrHandler = (int(* )())NULLPTR;
 
-    /* initialise la table des drives */
+    /* initialize drives table */
     _initDriveTable();
 
-    /* initialise table des utilisateurs */
+    /* initialize users table */
     currDrive = _GetCurrDrive() + 1;  /* A = 1, B = 2, C = 3 etc...*/
 
-    /* recuperer la directory courante */
-    _getcwdir(currWD, currDrive);      /* prendre directory courante */
+    /* obtain current directory */
+    _getcwdir(currWD, currDrive); 
 
-    glowdev = currDrive;         /* device courant au depart */
-    glowdir = 0;                 /* root par defaut */
+    glowdev = currDrive;         /* initial current device */
+    glowdir = 0;                 /* root as defaut */
 
-    /* initialiser la table des SESSIONS */
+    /* initialize SESSIONS table */
     for (u = 0;u < NTTY; u++) {
-         for (i = 0; i < NDISK ; i++) {
-              SessionTab[u].u_drive[i].cwd    = 0;
-              SessionTab[u].u_drive[i].deepth = 0;
-              for (j=0; j<MAX_PATH_DEEPTH ; j++)
-                   SessionTab[u].u_drive[i].pathstr[j][0] = '\0';
-         }
-         SessionTab[u].u_currDev = currDrive;
+        for (i = 0; i < NDISK ; i++) {
+            SessionTab[u].u_drive[i].cwd    = 0;
+            SessionTab[u].u_drive[i].deepth = 0;
+            for (j=0; j<MAX_PATH_DEEPTH ; j++) {
+                SessionTab[u].u_drive[i].pathstr[j][0] = '\0';
+            }
+        }
+        SessionTab[u].u_currDev = currDrive;
     }
 
+    /* initialize tasks table except for slot 0 (initial task) which we are by default running on */
+    for ( i = 1; i < NTASK; i++) {
+        Tasktab[i].tstate = UNUSED;
+    }
 
-
-    /* initialise la table des taches sauf la tache 0 ( elle l'est deja ) */
-    for ( i = 1; i < NTASK; i++)
-                            Tasktab[i].tstate = UNUSED;
-
-    /* initialisation de la file des taches pretes */
+    /* initialize READY list */
     rdytail = 1 + ( rdyhead = _makeList(TAIL_TO_HEAD) );
 
-    /* initialisation gestion des LOCKS */
+    /* initialize LOCKS management */
     locktail = 1 + ( lockhead = _makeList(HEAD_TO_TAIL));
 
-    /* initialisation gestion des PIPES */
+    /* initialize PIPES management */
     piptail = 1 + ( piphead = _makeList(HEAD_TO_TAIL));
     for (i = 0; i < NPIPE; i++) {
-         (pp = &Piptab[i])->invalid = FALSE;
-         pp->pipe_nr = i;
-         pp->pipzon  = NULLPTR;
+        (pp = &Piptab[i])->invalid = FALSE;
+        pp->pipe_nr = i;
+        pp->pipzon  = NULLPTR;
     }
 
-    /* initialise les semaphores */
+    /* initialize semaphores */
     for (i = 0; i < NSEM; i++) {
-         (sptr = &Semtab[i])->sstate = SFREE;
-         sptr->sqtail = 1 + (sptr->sqhead = _makeList(HEAD_TO_TAIL));
+        (sptr = &Semtab[i])->sstate = SFREE;
+        sptr->sqtail = 1 + (sptr->sqhead = _makeList(HEAD_TO_TAIL));
     }
 
-    /* initialisation des queues de messages */
+    /* initialize messages queues */
 /*    _init_msg();*/
 
 
-    /* initialiser les devices */
-    _clkInit();                   /* horloge                            */
+    /* initialize devices */
+    _clkInit();                   /* clock */
     _VIOinit();                   /* virtual screen 0, 1,.., 9,    TTY1 */
 
-
-    /* valider toutes les ITS             */
+    /* authorize All interrupts */
     outp(0x21, 0);
 }
 
@@ -226,7 +210,7 @@ int (far *addr)();
 }
 
 /*---------------------------------------------------------------------------
- *  getVector - recuperer le vecteur d'interruption d'une IT donnee
+ *  getVector - obtain the interrupt vector for a given interrupt number
  *---------------------------------------------------------------------------
  */
 int (far *_getvector(vec_nbr))()

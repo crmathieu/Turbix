@@ -1,5 +1,5 @@
 /* exterr.h : definitions des valeurs possibles de l'EXTENDED ERROR VALUE
- *            donn‚e par DOSEXTERR()
+ *            donn-e par DOSEXTERR()
  */
 
 #define    FCINV           0x01     /* function number invalid */

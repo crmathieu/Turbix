@@ -1,7 +1,7 @@
 /* proc.h */
 
 
-/* Process management API */
+/* task management API */
 int      cdecl            m_Exec(int (proc)(),char *argv[]);
 int      cdecl            m_Fork(void);
 int      cdecl            m_GetPriority(int pid);

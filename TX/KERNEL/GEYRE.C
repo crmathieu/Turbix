@@ -1,53 +1,49 @@
-#define  C8255    0x61               /* port B du 8255  */
+#define  C8255    0x61    /* 8255 port B */
 
 #define KEYBD             0x60
 #define PORT_B            0x61
 #define KBIT              0x80
-unsigned kbd_state;	  /* etat du clavier */
+unsigned kbd_state;	  	  /* keyboard state */
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ*
- * gestion du clavier : le controleur 8048 du kbd declenche                 *
- * une it quand une touche est enfoncee ET quand une touche                 *
- * est relachee .                                                           *
- *     Touche ENFONCEE : le controleur emet le code de la touche            *
- *     Touche RELACHEE : le controleur emet le meme code avec le            *
- *                       8eme BIT forc‚ … 1                                 *
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ*
+/*--------------------------------------------------------------------------*
+ * keyboard management: the 8048 kbd controller triggers an interrupt       *
+ * when a key is pressed or when a key is released                          *
+ *     key pressed : the controller sends the key code                      *
+ *     key released: the controller sends the same code with the 8th bit    *
+ *                   value forced to 1                                      *
+ *--------------------------------------------------------------------------*
  */
 INTERRUPT _keyboard()
 {
     int code,val;
 
-    code = inp(KEYBD);           /* lecture du code emis par le kbd     */
-    val  = inp(C8255);           /* lire le port de config du 8255      */
+    code = inp(KEYBD);           /* read code sent by keyboard */
+    val  = inp(C8255);           /* read 8255 config port */
 
-    outp( C8255,( val | 0x80));  /* envoyer ack au controleur du kbd    */
-    outp( C8255, val );          /* restaurer le port de config du 8255 */
+    outp( C8255,( val | 0x80));  /* send ACK to keyboard controller */
+	outp(C8255, val);			 /* restore 8255 config port */
 
-    if (code < 127) {  /* la touche est enfoncee */
-
-	 switch(kbd_state) {   /* suivant l'etat se brancher au traitement
-				* concern‚
-				*/
-	   case KBDCTRL   :
-	   case KBDCTRALT :
-	   case KBDALT    :
-	   case KBDALTCTRL:
-           case KBDSHIFT  :
-	   default        :
-         }
-    }
-    else {
-			       /* la touche est relachee */
-	 switch(kbd_state) {
-	   case KBD       :
-	   case KBDCTRL   :
-           case KBDALTCTRL:
-	   case KBDCTRALT :
-	   case KBDALT    :
-	   case KBDSHIFT  :
-	   default        :
-	 };
+	if (code < 127) {  
+		/* key is pressed: branch according to current state */
+		switch(kbd_state) {
+			case KBDCTRL   :
+			case KBDCTRALT :
+			case KBDALT    :
+			case KBDALTCTRL:
+			case KBDSHIFT  :
+			default        :
+		}
+    } else {
+		/* key is released */
+		switch(kbd_state) {
+			case KBD       :
+			case KBDCTRL   :
+			case KBDALTCTRL:
+			case KBDCTRALT :
+			case KBDALT    :
+			case KBDSHIFT  :
+			default        :
+		};
     }
 }
 

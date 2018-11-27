@@ -15,9 +15,9 @@ nullfunc()
 
 /*  >>>>>>>>>>>>>>>>>>>>>>> MASTER  MENU <<<<<<<<<<<<<<<<<<<<<<<<< */
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄ
+/*------------
  * doEdit -
- *ÄÄÄÄÄÄÄÄÄÄÄÄ
+ *------------
  */
 doEdit(mp)
 struct OBJ *mp;
@@ -39,9 +39,9 @@ struct OBJ *mp;
 /*   pushPop_MESS(" EDITEUR !!!! ", ERRMSG);*/
    return(ed(pedwin));
 }
-/*ÄÄÄÄÄÄÄÄÄÄÄÄ
+/*------------
  * doRunPrj -
- *ÄÄÄÄÄÄÄÄÄÄÄÄ
+ *------------
  */
 doRunPrj(mp)
 struct OBJ *mp;
@@ -54,9 +54,9 @@ struct OBJ *mp;
         strcpy(exename, vl->conf.projExe);
         doRun(mp);
 }
-/*ÄÄÄÄÄÄÄÄÄÄÄÄ
+/*------------
  * doRunExe -
- *ÄÄÄÄÄÄÄÄÄÄÄÄ
+ *------------
  */
 doRunExe(mp)
 struct OBJ *mp;
@@ -116,9 +116,9 @@ char *str, *ext;
 }
 
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄ
+/*------------
  * doQuit -
- *ÄÄÄÄÄÄÄÄÄÄÄÄ
+ *------------
  */
 doQuit(mp)
 struct OBJ *mp;
@@ -127,9 +127,9 @@ struct OBJ *mp;
    exit_txed(mp);
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄ
+/*------------
  * exit_txed -
- *ÄÄÄÄÄÄÄÄÄÄÄÄ
+ *------------
  */
 exit_txed(mp)
 struct OBJ *mp;
@@ -187,9 +187,9 @@ struct OBJ *mp;
 }
 
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄ
+/*------------
  * getYesNo - reponse  U.S. et FR.
- *ÄÄÄÄÄÄÄÄÄÄÄÄ
+ *------------
  */
 getYesNo(pob)
 struct OBJ *pob;
@@ -205,9 +205,9 @@ struct OBJ *pob;
         return((int)'n');
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄ
+/*------------
  * inhibe_mouse
- *ÄÄÄÄÄÄÄÄÄÄÄÄ
+ *------------
  */
 inhibe_mouse()
 {
@@ -222,9 +222,9 @@ inhibe_mouse()
 
 /*  >>>>>>>>>>>>>>>>>>>>>>> EDIT  MENU <<<<<<<<<<<<<<<<<<<<<<<<< */
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄ
+/*------------
  * doFindStr
- *ÄÄÄÄÄÄÄÄÄÄÄÄ
+ *------------
  */
 doFindstr(mp, num)
 struct OBJ *mp;
@@ -233,9 +233,9 @@ struct OBJ *mp;
    return(FUNC|F6);
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄ
+/*------------
  * doFindnext
- *ÄÄÄÄÄÄÄÄÄÄÄÄ
+ *------------
  */
 doFindnext(mp, num)
 struct OBJ *mp;
@@ -244,9 +244,9 @@ struct OBJ *mp;
    return(FUNC|F6);
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄ
+/*------------
  * doRepl
- *ÄÄÄÄÄÄÄÄÄÄÄÄ
+ *------------
  */
 doRepl(mp, num)
 struct OBJ *mp;
@@ -255,9 +255,9 @@ struct OBJ *mp;
    return(FUNC|F6);
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄ
+/*------------
  * doGoto
- *ÄÄÄÄÄÄÄÄÄÄÄÄ
+ *------------
  */
 doGoto(mp, num)
 struct OBJ *mp;
@@ -266,9 +266,9 @@ struct OBJ *mp;
    return(FUNC|F6);
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄ
+/*------------
  * doLineLength
- *ÄÄÄÄÄÄÄÄÄÄÄÄ
+ *------------
  */
 doLineLength(wp, num)
 struct OBJ *wp;
@@ -308,7 +308,7 @@ doCopyToPaste(wp)
 struct OBJ *wp;
 {
    ctrlkw(pedwin);
-   /* retourner au help ou … l'editeur */
+   /* retourner au help ou - l'editeur */
    return(FUNC|F6);
 }
 
@@ -320,7 +320,7 @@ doDuplicate(wp)
 struct OBJ *wp;
 {
    ctrlkc(pedwin);
-   /* retourner au help ou … l'editeur */
+   /* retourner au help ou - l'editeur */
    return(FUNC|F6);
 }
 
@@ -332,7 +332,7 @@ doDelete(wp)
 struct OBJ *wp;
 {
    ctrlky(pedwin);
-   /* retourner au help ou … l'editeur */
+   /* retourner au help ou - l'editeur */
    return(FUNC|F6);
 }
 
@@ -344,7 +344,7 @@ doMove(wp)
 struct OBJ *wp;
 {
    ctrlkv(pedwin);
-   /* retourner au help ou … l'editeur */
+   /* retourner au help ou - l'editeur */
    return(FUNC|F6);
 }
 
@@ -356,7 +356,7 @@ doReadFromPaste(wp)
 struct OBJ *wp;
 {
    ctrlkr(pedwin);
-   /* retourner au help ou … l'editeur */
+   /* retourner au help ou - l'editeur */
    return(FUNC|F6);
 }
 
@@ -365,9 +365,9 @@ struct OBJ *wp;
 
 /*  >>>>>>>>>>>>>>>>>>>>>>> ENV  MENU <<<<<<<<<<<<<<<<<<<<<<<<< */
 
-/*ÄÄÄÄÄÄÄÄÄÄ
+/*----------
  * doKbSpeed
- *ÄÄÄÄÄÄÄÄÄÄ
+ *----------
  */
 doKbSpeed(fast)
 {
@@ -389,9 +389,9 @@ doKbSpeed(fast)
 
 /*  >>>>>>>>>>>>>>>>>>>>>>> FILE MENU <<<<<<<<<<<<<<<<<<<<<<<<< */
 
-/*ÄÄÄÄÄÄÄÄÄÄ
+/*----------
  * doLoad
- *ÄÄÄÄÄÄÄÄÄÄ
+ *----------
  */
 doLoad(mp)
 struct OBJ *mp;
@@ -411,9 +411,9 @@ struct OBJ *mp;
    return(FUNC|F6);
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*-----------------------------------------
  * doLoadlast - charge le fichier precedent
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *-----------------------------------------
  */
 doLoadlast(mp)
 struct OBJ *mp;
@@ -428,7 +428,7 @@ struct OBJ *mp;
        strcpy(file_name, &picktab[0].str[1]); /* shunter le 1er blanc */
        file_name[strlen(file_name) - 1] = '\0';
    }
-   else  /* " Open...  " selectionn‚ */
+   else  /* " Open...  " selectionn- */
        return(FUNC|F3);
 
    if (loadFile(picktab[0].fflag, file_name, absfname, WINMSG, V_CREAT) < 0)
@@ -437,9 +437,9 @@ struct OBJ *mp;
    return(FUNC|F6);
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*-----------------------------------------
  * doSaveFile - sauvegarder le fichier courant
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *-----------------------------------------
  */
 doSaveFile(mp)
 struct OBJ *mp;
@@ -457,10 +457,10 @@ struct OBJ *mp;
    return(FUNC|F6);
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
- * loadFile - en entree, file_name contient le nom du fichier selectionn‚
- *            par "F3" et absfname contient le nom du fichier pr‚c‚dent
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*-------------------------------------------------------------------------
+ * loadFile - en entree, file_name contient le nom du fichier selectionn-
+ *            par "F3" et absfname contient le nom du fichier pr-c-dent
+ *-------------------------------------------------------------------------
  */
 loadFile(mode, nextf, prevf, msgflag, o_mode)
 char *nextf, *prevf;
@@ -484,7 +484,7 @@ char *nextf, *prevf;
     if (save_previous_file(prevf) < 0)
         return(-1);
 
-   /*  controler gestion unit‚s logiques */
+   /*  controler gestion unit-s logiques */
    vflopp(nextf);
 
    /* initialiser les valeurs de l'editeur en valeurs par defaut */
@@ -537,7 +537,7 @@ Newfile:
                  pushPop_MESS(errno_tab[errno],ERRMSG);
                  return(-1);
              }
-             /* est on autoris‚ … charger un nouveau fichier ? */
+             /* est on autoris- - charger un nouveau fichier ? */
              if (o_mode == V_CREAT) {
                 testfflag |= FF_NEWFILE;
                 pck = pckdefault;
@@ -551,7 +551,7 @@ Newfile:
              }
         }
         else {
-             /* l'utilisateur a tap‚ l'option ABORT
+             /* l'utilisateur a tap- l'option ABORT
               * si le fichier vient de la PICK TABLE, le reinserer
               */
              if (retcheck != -1)
@@ -609,7 +609,7 @@ FILE_TOO_BIG:
 
     fflag |= FF_FLOADED;
     if ((err == NOT_OPEN) && (exterr = dosexterr(NULL)) == INT24FAIL) {
-         /* l'utilisateur a tap‚ l'option ABORT
+         /* l'utilisateur a tap- l'option ABORT
           * si le fichier vient de la PICK TABLE, le reinserer
           */
          if (retcheck != -1)
@@ -632,9 +632,9 @@ FILE_TOO_BIG:
 
 /*  >>>>>>>>>>>>>>>>>>>>>>> PICK  MENU <<<<<<<<<<<<<<<<<<<<<<<<< */
 
-/*ÄÄÄÄÄÄÄÄÄÄ
+/*----------
  * doPick
- *ÄÄÄÄÄÄÄÄÄÄ
+ *----------
  */
 doPick(mp)
 struct OBJ *mp;
@@ -649,7 +649,7 @@ struct OBJ *mp;
        strcpy(file_name, &picktab[mp->curY].str[1]); /* shunter le 1er blanc */
        file_name[strlen(file_name) - 1] = '\0';
    }
-   else  /* " Open...  " selectionn‚ */
+   else  /* " Open...  " selectionn- */
        return(FUNC|F3);
 
    strcpy(sauve, file_name);
@@ -670,10 +670,10 @@ struct OBJ *mp;
    return(FUNC|F6);
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*-----------------------------------------------------------------------
  * init_ed_from_pick - initialiser les variables de travail de l'editeur
  *                     pour un fichier a creer
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *-----------------------------------------------------------------------
  */
 init_ed_from_pick(pck, size, pickflag)
 struct pick *pck;
@@ -726,9 +726,9 @@ unsigned size;
     bottom_line_no = get_line_no(fsize);  /* LONG !! */
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*-----------------------------------------------------------------------
  * save_previous_file - gestion sauvegarde d'un fichier
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *-----------------------------------------------------------------------
  */
 save_previous_file(prevf)
 char *prevf;
@@ -759,9 +759,9 @@ char *prevf;
    return(0);
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*-----------------------------------------------------------------------
  * doSave - sauvegarder un fichier (retourne 0 si tout est OK)
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *-----------------------------------------------------------------------
  */
 doSave(file)
 char *file;
@@ -834,9 +834,9 @@ char *file;
    return(0);
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*------------------------------------------
  * P_bak - creer le nom de fichier en ".BAK"
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *------------------------------------------
  */
 P_bak(dest, src)
 char *dest, *src;
@@ -852,18 +852,18 @@ char *dest, *src;
     strcat(dest, ".BAK");
 }
 
-/*ÄÄÄÄÄÄÄÄ
+/*--------
  * push_SL
- *ÄÄÄÄÄÄÄÄ
+ *--------
  */
 push_SL2(str)
 char *str;
 {
     _wstringDB( 0, 24, 80, NEWATT, MESS24att, str);
 }
-/*ÄÄÄÄÄÄÄÄ
+/*--------
  * pushPop_MESS
- *ÄÄÄÄÄÄÄÄ
+ *--------
  */
 pushPop_MESS(str, msgtyp)
 char *str;
@@ -877,9 +877,9 @@ char *str;
 }
 
 
-/*ÄÄÄÄÄÄÄÄ
+/*--------
  * push_MESS
- *ÄÄÄÄÄÄÄÄ
+ *--------
  */
 push_MESS(str, errwin)
 char *str;
@@ -889,18 +889,18 @@ struct OBJ *errwin;
    verify_window(errwin, work, nullstr, NO_REP_REQ, NMXMSG);
 }
 
-/*ÄÄÄÄÄÄÄÄ
+/*--------
  * pop_MESS
- *ÄÄÄÄÄÄÄÄ
+ *--------
  */
 pop_MESS()
 {
    winPopUp(messwin, W_CLOSE);
 }
 
-/*ÄÄÄÄÄÄÄÄ
+/*--------
  * pop_SL
- *ÄÄÄÄÄÄÄÄ
+ *--------
  */
 pop_SL2()
 {
@@ -908,9 +908,9 @@ pop_SL2()
     write_status(pedwin);
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄ
+/*----------
  * saveEdit - sauvegarde les parametres Globaux de positionnement
- *ÄÄÄÄÄÄÄÄÄÄ
+ *----------
  */
 saveEdit(psed)
 struct save_edit *psed;
@@ -938,9 +938,9 @@ struct save_edit *psed;
 
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*-------------
  * restoreEdit - restaure les parametres Globaux de positionnement
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *-------------
  */
 restoreEdit(psed)
 struct save_edit *psed;
@@ -963,9 +963,9 @@ struct save_edit *psed;
     formatt_line(linebuf, bigbuf, current, lnlen(pedwin,current), EOS, nb_car_per_line * 2);
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄ
+/*----------
  * doChgDir
- *ÄÄÄÄÄÄÄÄÄÄ
+ *----------
  */
 doChgDir(mp,num)
 struct OBJ *mp;
@@ -1018,9 +1018,9 @@ char *str;
    return(0);
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄ
+/*----------
  * doChgDrive
- *ÄÄÄÄÄÄÄÄÄÄ
+ *----------
  */
 doChdDrive(str)
 char *str;
@@ -1033,7 +1033,7 @@ char *str;
                 drive = str[0] - 'A';
                 sav_drive = _getdefaultD();
 
-                /* si floppy, controler gestion unit‚s logiques */
+                /* si floppy, controler gestion unit-s logiques */
                 if (drive <= 1) {
                         sav_floppy  = curr_floppy;
                         curr_floppy = drive;
@@ -1054,9 +1054,9 @@ char *str;
 
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄ
+/*----------
  * doSaveAs
- *ÄÄÄÄÄÄÄÄÄÄ
+ *----------
  */
 doSaveAs(mp,num)
 struct OBJ *mp;
@@ -1088,7 +1088,7 @@ struct OBJ *mp;
                 drive = work[0] - 'A';
                 sav_drive = _getdefaultD();
 
-                /* si floppy, controler gestion unit‚s logiques */
+                /* si floppy, controler gestion unit-s logiques */
                 if (drive <= 1) {
                         sav_floppy  = curr_floppy;
                         curr_floppy = drive;
@@ -1128,9 +1128,9 @@ struct OBJ *mp;
 }
 
 
-/*ÄÄÄÄÄÄÄÄÄÄ
+/*----------
  * doChgPaste
- *ÄÄÄÄÄÄÄÄÄÄ
+ *----------
  */
 doChgPaste(mp,num)
 struct OBJ *mp;
@@ -1148,45 +1148,45 @@ struct OBJ *mp;
 }
 
 /*  >>>>>>>>>>>>>>>>>>>>>>> TOOLS  MENU <<<<<<<<<<<<<<<<<<<<<<<<< */
-/*ÄÄÄÄÄÄÄÄÄÄ
+/*----------
  * doGetCoLnk
- *ÄÄÄÄÄÄÄÄÄÄ
+ *----------
  */
 doGetCoLnk(mp,num)
 struct OBJ *mp;
 {
    return(doGet(num, 0));
 }
-/*ÄÄÄÄÄÄÄÄÄÄ
+/*----------
  * doGetAss
- *ÄÄÄÄÄÄÄÄÄÄ
+ *----------
  */
 doGetAss(mp,num)
 struct OBJ *mp;
 {
    return(doGet(num, 1));
 }
-/*ÄÄÄÄÄÄÄÄÄÄ
+/*----------
  * doGetInc
- *ÄÄÄÄÄÄÄÄÄÄ
+ *----------
  */
 doGetInc(mp,num)
 struct OBJ *mp;
 {
    return(doGet(num, 2));
 }
-/*ÄÄÄÄÄÄÄÄÄÄ
+/*----------
  * doGetLib
- *ÄÄÄÄÄÄÄÄÄÄ
+ *----------
  */
 doGetLib(mp,num)
 struct OBJ *mp;
 {
    return(doGet(num, 3));
 }
-/*ÄÄÄÄÄÄÄÄÄÄ
+/*----------
  * doGetIncMkd
- *ÄÄÄÄÄÄÄÄÄÄ
+ *----------
  */
 doGetIncMkd(mp,num)
 struct OBJ *mp;
@@ -1194,9 +1194,9 @@ struct OBJ *mp;
    return(doGet(num, 4));
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄ
+/*----------
  * doGetUsr
- *ÄÄÄÄÄÄÄÄÄÄ
+ *----------
  */
 doGetUsr(mp,num)
 struct OBJ *mp;
@@ -1210,9 +1210,9 @@ struct OBJ *mp;
    return(ret);
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄ
+/*----------
  * doGetNmx
- *ÄÄÄÄÄÄÄÄÄÄ
+ *----------
  */
 doGetNmx(mp,num)
 struct OBJ *mp;
@@ -1223,9 +1223,9 @@ struct OBJ *mp;
 
 
 
-/*ÄÄÄÄÄÄÄÄÄÄ
+/*----------
  * doGet
- *ÄÄÄÄÄÄÄÄÄÄ
+ *----------
  */
 doGet(num, off)
 {
@@ -1242,9 +1242,9 @@ doGet(num, off)
    return(ALT|ALT_I);
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄ
+/*----------
  * doChgMkfile
- *ÄÄÄÄÄÄÄÄÄÄ
+ *----------
  */
 doChgMkfile(mp,num)
 struct OBJ *mp;
@@ -1278,9 +1278,9 @@ struct OBJ *mp;
    return(FUNC|F6);
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄ
+/*----------
  * doInstHelp
- *ÄÄÄÄÄÄÄÄÄÄ
+ *----------
  */
 doInstHelp(mp,num)
 struct OBJ *mp;
@@ -1299,9 +1299,9 @@ struct OBJ *mp;
    return(ALT|ALT_I);
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄ
+/*----------
  * doLineCom
- *ÄÄÄÄÄÄÄÄÄÄ
+ *----------
  */
 doLineCom(mp,num)
 struct OBJ *mp;
@@ -1315,9 +1315,9 @@ struct OBJ *mp;
    return(ALT|ALT_R);
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄ
+/*----------
  * doSconfig
- *ÄÄÄÄÄÄÄÄÄÄ
+ *----------
  */
 doSconfig(mp,num)
 struct OBJ *mp;
@@ -1336,9 +1336,9 @@ struct OBJ *mp;
 }
 
 
-/*ÄÄÄÄÄÄÄÄÄÄ
+/*----------
  * doEnter
- *ÄÄÄÄÄÄÄÄÄÄ
+ *----------
  */
 unsigned doEnter(strcomm, str, driveLetter)
 char *strcomm, *str;
@@ -1396,9 +1396,9 @@ char *strcomm, *str;
    return(Key);
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄ
+/*----------
  * doShowMess
- *ÄÄÄÄÄÄÄÄÄÄ
+ *----------
  */
 doShowMess(mp)
 struct OBJ *mp;
@@ -1421,9 +1421,9 @@ struct OBJ *mp;
    return(FUNC|F6); /*ed(pedwin));*/
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄ
+/*----------
  * readfile
- *ÄÄÄÄÄÄÄÄÄÄ
+ *----------
  */
 unsigned readfile(err, errflag)
 int *err;

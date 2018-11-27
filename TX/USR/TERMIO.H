@@ -26,12 +26,12 @@ struct termio {
 #define INLCR    0000100       /* input NEWLINE -> RETURN */
 #define IGNCR    0000200       /* ignore input RETURN */
 #define ICRNL    0000400       /* input RETURN -> NEWLINE */
-#define IUCLC    0001000       /* input MAJUSCULE -> MINUSCULE */
+#define IUCLC    0001000       /* input UPPER -> LOWER */
 #define IXON     0002000       /* enable stream control */
 #define IXANY    0004000       /* resume stream with character */
 
 /* output modes (c_oflag) */
-#define OLCUC    0000002       /* output MINUSCULE -> MAJUSCULE */
+#define OLCUC    0000002       /* output LOWER -> UPPER */
 #define ONLCR    0000004       /* output NEWLINE -> NEWLINE/RETURN */
 #define OCRNL    0000010       /* output RETURN -> NEWLINE */
 

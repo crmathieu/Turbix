@@ -9,14 +9,13 @@
 #define PRINTER_VECTOR     15
 #define SYS_VECTOR         32
 
-#define XENKBD              9     /* it clavier                  */
-#define XENCOM             12     /* it communication            */
-#define DOSCLOCK           27     /* it 1Bh geree par DOS        */
-/*#define XENCLOCK           28     /* it 1Ch appelee par DOSCLOCK */
+#define XENKBD              9     /* keyboard Int */
+#define XENCOM             12     /* Serial Int */
+#define DOSCLOCK           27     /* DOS generated Int 1Bh */
 #define XENCLOCK            8
-#define XENDIV0             0     /* it division par 0           */
-#define XENOVF              4     /* it overflow                 */
-#define XENILL              6     /* it illegale instruction     */
+#define XENDIV0             0     /* division by 0 Int */
+#define XENOVF              4     /* overflow Int */
+#define XENILL              6     /* illegal instruction Int */
 
 #define MAJOR               8
 #define MINOR               0
@@ -35,9 +34,8 @@
 #define DAY                 0
 #define COLUMNS             4
 #define SZBUF               20
-#define C8255               0x61       /* port B du 8255 */
-#define KEYBD               0x60       /* port de controle du 8048 */
-
+#define C8255               0x61   /* 8255 port B */
+#define KEYBD               0x60   /* 8048 control port */
 
 /* flag bits for i_mode in the inode */
 #define      EMPTY       -1
@@ -46,7 +44,7 @@
 #define      LOW16       0x0000ffff
 #define      HI16        0xffff0000
 
-/* MACRO couramment utilisees */
+/* handy MACROS */
 #define isbadfd(x)      (x<0 || x>=NFD ? TRUE : FALSE)
 #define isfileptr(x)    (x<&streamtab[NSTREAM] && x>=&streamtab[0] ? TRUE:FALSE)
 

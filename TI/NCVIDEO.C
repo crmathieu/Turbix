@@ -118,7 +118,7 @@ get_color()
  *-----------------------------------------------------------------
  */
 _window_up(nl,xg,yg,xd,yd,fill_att)
-int  nl,                 /* nb de ligne … scroller */
+int  nl,                 /* nb de ligne - scroller */
      xg,                 /* no colonne du plus haut coin gauche */
      yg,                 /* no ligne du plus haut coin gauche */
      xd,                 /* no colonne du plus bas coin droit */
@@ -181,11 +181,11 @@ getkey()
    int mouseEmulate = 0;
 
    /* Saisir soit un caractere du clavier, soit un caractere issu
-    * de l'automate d'‚mulation clavier de la souris
+    * de l'automate d'-mulation clavier de la souris
     */
    for (;;) {
         /* examiner le status du clavier */
-        if (look_kbd()) { /* caractere tap‚ au clavier */
+        if (look_kbd()) { /* caractere tap- au clavier */
              key = read_kbd();
              break;
          }
@@ -221,7 +221,7 @@ getkey()
                 return(CTRLNUMPAD | auxiliary);
           if (auxiliary == SHIFTTAB)
                 return(NORMAL|TAB); /* REMARQUE : Shift TAB
-                                     * est conditionn‚ en TAB
+                                     * est conditionn- en TAB
                                      */
           return(ALT | auxiliary);
        }
@@ -280,12 +280,12 @@ mouse_manager()
  *  le bit 0 represente le bouton de gauche
  *  le bit 1 represente le bouton de droite
  *  Pour Chacun des 2 bits :
- *  si … 1 -> enfonc‚,   0 -> relach‚
+ *  si - 1 -> enfonc-,   0 -> relach-
  */
     switch(mouse_state) {
     case M_REPOS :
                      if (buttonStatus & 1)
-                        /* bouton enfonc‚ */
+                        /* bouton enfonc- */
                         mouse_state = M_LEFT_PRESS;
                    break;
 
@@ -399,16 +399,16 @@ unsigned automate()
  *  le bit 0 represente le bouton de gauche
  *  le bit 1 represente le bouton de droite
  *  Pour Chacun des 2 bits :
- *  si … 1 -> enfonc‚,   0 -> relach‚
+ *  si - 1 -> enfonc-,   0 -> relach-
  */
     switch(mouse_state) {
     case M_REPOS :
                      if (buttonStatus & 1)
-                        /* bouton gauche enfonc‚ */
+                        /* bouton gauche enfonc- */
                         (* currObj->M_Gpr)();
                      else
                         if (buttonStatus & 2)
-                            /* bouton droit enfonc‚ */
+                            /* bouton droit enfonc- */
                             (* currObj->M_Dpr)();
 /*                      else
                             /* la souris a bouge */
@@ -417,18 +417,18 @@ unsigned automate()
 
     case M_RIGHT_PRESS:
                      if (buttonStatus & 2)
-                         /* bouton toujours enfonc‚ */
+                         /* bouton toujours enfonc- */
                          (* currObj->M_CDpr)();
                      else
-                         /* bouton relach‚ */
+                         /* bouton relach- */
                          (* currObj->M_Dre)();
                      break;
     case M_LEFT_PRESS :
                      if (buttonStatus & 1)
-                         /* bouton toujours enfonc‚ */
+                         /* bouton toujours enfonc- */
                          (* currObj->M_CGpr)();
                      else
-                         /* bouton relach‚ */
+                         /* bouton relach- */
                          (* currObj->M_Gre)();
                      break;
     default : break;
@@ -530,7 +530,7 @@ unsigned key;
              else
                         setMouseBuf(key);
         }
-        else { /* on a cliqu‚ sur un autre d'OBJET */
+        else { /* on a cliqu- sur un autre d'OBJET */
                if (ob != (struct OBJ *)NULL) {
                    currObj = ob;               /* c'est maintenant l'objet
                                                 * courant
@@ -627,7 +627,7 @@ struct OBJ *ob;
 
         if (getCurrItem(ob, &item))
                 /* verifier qu'on est pas sur une ligne de separation */
-                if ((unsigned char)ITEM(ob,item)->str[0] != 'Ä')
+                if ((unsigned char)ITEM(ob,item)->str[0] != '-')
                         ob->curY = item;
 }
 
@@ -667,7 +667,7 @@ int *item;
 }
 
 /*---------------------------------------------------------------------------
- *  setMouseBuf - place une cl‚ dans le buffer Souris
+ *  setMouseBuf - place une cl- dans le buffer Souris
  *---------------------------------------------------------------------------
  */
 setMouseBuf(val)
@@ -687,7 +687,7 @@ razMouseBuf()
 }
 
 /*---------------------------------------------------------------------------
- *  getMouseBuf - retire une cl‚ du buffer Souris
+ *  getMouseBuf - retire une cl- du buffer Souris
  *---------------------------------------------------------------------------
  */
 getMouseBuf(val)

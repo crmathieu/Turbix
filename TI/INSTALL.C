@@ -44,12 +44,12 @@ struct stat entry;
 
 struct OBJ *wm, wmake;
 /*char work[80];*/
-unsigned char boxtype[6][11] = {{'�','�','�','�','�','�','�','�','�','�','�'},   /* type 1 */
-                                {'�','�','�','�','�','�','�','�','�','�','�'},   /* type 2 */
-                                {'�','�','�','�','�','�','�','�','�','�','�'},   /* type 3 */
-                                {'�','�','�','�','�','�','�','�','�','�','�'},   /* type 4 */
-                                {'�','�','�','�','�','�','�','�','�','�','�'},   /* type 5 */
-                                {'�','�','�','�','�','�','�','�','�','�','�'}};  /* type 6 : STATUS */
+unsigned char boxtype[6][11] = {{'-','-','-','-','-','-','-','-','-','-','-'},   /* type 1 */
+                                {'-','-','-','-','-','-','-','-','-','-','-'},   /* type 2 */
+                                {'-','-','-','-','-','-','-','-','-','-','-'},   /* type 3 */
+                                {'-','-','-','-','-','-','-','-','-','-','-'},   /* type 4 */
+                                {'-','-','-','-','-','-','-','-','-','-','-'},   /* type 5 */
+                                {'-','-','-','-','-','-','-','-','-','-','-'}};  /* type 6 : STATUS */
 
 
 
@@ -140,20 +140,20 @@ char *disquettesLabel[] = {"KERNEL",
 /****************  FRANCAIS
 char razline[]    = "                                           ";
 char step0Msg[]   = " Installation de MKD -- Appuyer sur une touche ... ";
-char step1Msg[]   = " D�finition des Drives source et destination ";
-char step2Msg[]   = " Cr�ation des r�pertoires MKD ... ";
+char step1Msg[]   = " D-finition des Drives source et destination ";
+char step2Msg[]   = " Cr-ation des r-pertoires MKD ... ";
 char step3Msg[]   = " Copie des fichiers ... ";
 char step40Msg[]  = " Mise en place du profile standard ";
-char stepfMsg[]   = " Installation termin�e Normalement - appuyer sur une touche ";
+char stepfMsg[]   = " Installation termin-e Normalement - appuyer sur une touche ";
 char stepfErrMsg[]= " Fin anormale de l'installation ... ";
 char chgOpt[]     = " Pressez return pour valider l'option ";
 char defMsg1[]    = " Source ........ ";
 char defMsg2[]    = " Destination ... ";
-char creaDir[]    = " Cr�ation r�pertoire    ";
-char impCreaDir[] = " Impossible de cr�er ce r�pertoire ... ";
-char impCopy[]    = " Echec - Ajouter le chemin d'acc�s aux commandes DOS dans PATH ";
-char badLabelStr[]= " Label incorrect - ins�rer la disquette ";
-char insDiskStr[] = " Ins�rer la disquette : ";
+char creaDir[]    = " Cr-ation r-pertoire    ";
+char impCreaDir[] = " Impossible de cr-er ce r-pertoire ... ";
+char impCopy[]    = " Echec - Ajouter le chemin d'acc-s aux commandes DOS dans PATH ";
+char badLabelStr[]= " Label incorrect - ins-rer la disquette ";
+char insDiskStr[] = " Ins-rer la disquette : ";
 char work[80];
 ****************/
 /* version anglaise */
@@ -282,7 +282,7 @@ step0() /* banniere */
 {
    ntarDrv = getNlogicalDrv() - 2;
    hide_cursor();
-   _clrwin(0, 0, 79, 24, F_LYELLOW|B_BLUE, '�');
+   _clrwin(0, 0, 79, 24, F_LYELLOW|B_BLUE, '-');
    pushPop_mess(step0Msg, 10, NMXMSG);
 }
 
@@ -329,7 +329,7 @@ step1() /* definir drive source et destination */
  * STEP2
  *---------------
  */
-step2() /* cr�er les directories MKD */
+step2() /* cr-er les directories MKD */
 {
         char w[3];
         struct OBJ ob, ob2, *wp, *wp2;
@@ -496,7 +496,7 @@ step_final()
 #define FALSE            0
 
 unsigned char debZone[8] = {168, 01, 172, 174, 149, 143, 239, 139};
-/*                           �        �    �    �    �    �    �   */
+/*                           -        -    -    -    -    -    -   */
 /*                          A8   01   AC   AE   95   8F   EF   8B  */
 
 int size; /* taille du buffer de lecture */
@@ -748,9 +748,9 @@ char *str, *titre;         /* message a ecrire et titre */
 }
 
 
-/*�����������������������������������������������������������
+/*-----------------------------------------------------------
  * winPopUp - ouvrir / fermer une fenetre
- *�����������������������������������������������������������
+ *-----------------------------------------------------------
  */
 winPopUp(wp, mode, borderType)
 struct OBJ *wp;
@@ -775,9 +775,9 @@ struct OBJ *wp;
         }
     }
 }
-/*�����������������������������������������������������������
- * clrwin � clear window
- *�����������������������������������������������������������
+/*-----------------------------------------------------------
+ * clrwin - clear window
+ *-----------------------------------------------------------
  */
 FUNCTION clrwin(wp, Ch)
 struct OBJ *wp;
@@ -792,9 +792,9 @@ unsigned char Ch;
                   Ch);
 }
 
-/*������������������������������������
+/*------------------------------------
  * write_ombrage - dessiner l'ombrage
- *������������������������������������
+ *------------------------------------
  */
 write_ombrage(x,y,l,h)
 {
@@ -813,20 +813,20 @@ write_ombrage(x,y,l,h)
 
 }
 
-/*�����������������������������������������������
+/*-----------------------------------------------
  * write_mbox - dessiner le contour d'un menu
- *�����������������������������������������������
+ *-----------------------------------------------
  */
 FUNCTION write_mbox(mp)
 struct OBJ *mp;
 {
-  /* type '�' */
+  /* type '-' */
   write_box(mp->title, mp->ul_x, mp->ul_y, mp->ncol, mp->nline, mp->border, 0);
 }
 
-/*�����������������������������������������������
+/*-----------------------------------------------
  * write_box - dessiner le contour d'une BOXE
- *�����������������������������������������������
+ *-----------------------------------------------
  */
 FUNCTION write_box(title,x,y,l,h,att,typ)
 char *title;
@@ -874,9 +874,9 @@ unsigned char att;
         _wstringDB(x + l + 1, i, 1, NEWATT, att, &Vchar);
    }
 }
-/*�����������������������������������������������
+/*-----------------------------------------------
  * write_wbox - dessiner le contour de la fenetre
- *�����������������������������������������������
+ *-----------------------------------------------
  */
 FUNCTION write_wbox(wp, type)
 struct OBJ *wp;
@@ -884,10 +884,10 @@ struct OBJ *wp;
       write_box(wp->title, wp->ul_x, wp->ul_y, wp->ncol, wp->nline, wp->border, type);
 }
 
-/*������������������������������������������������������������������������
- * restoreScreen - RESTITUER la partie de l'ecran ecras� par le SOUS MENU
+/*------------------------------------------------------------------------
+ * restoreScreen - RESTITUER la partie de l'ecran ecras- par le SOUS MENU
  *                 ou la WINDOW
- *������������������������������������������������������������������������
+ *------------------------------------------------------------------------
  */
 restoreScreen(mp)
 struct OBJ *mp;
@@ -902,9 +902,9 @@ struct OBJ *mp;
                   mp->save);
 
 }
-/*�����������������������������������������������������������
+/*-----------------------------------------------------------
  * restoreFromMenu- ecriture PHYSIQUE d'un tampon sur l'ecran
- *�����������������������������������������������������������
+ *-----------------------------------------------------------
  */
 restoreFromMenu(mp,buf)
 struct OBJ *mp;
@@ -922,10 +922,10 @@ int            *buf;
                   mp->ncol,
                   buf);
 }
-/*��������������������������������������������������������������������������
+/*--------------------------------------------------------------------------
  * saveScreen - SAUVEGARDER la partie de l'ecran correspondant au SOUS MENU
  *              ou a la WINDOW
- *��������������������������������������������������������������������������
+ *--------------------------------------------------------------------------
  */
 saveScreen(mp)
 struct OBJ *mp;
@@ -954,9 +954,9 @@ struct OBJ *mp;
         write_ombrage(mp->ul_x, mp->ul_y, mp->ncol, mp->nline);
 }
 
-/*������������������������������������
+/*------------------------------------
  * initWin : initialiser une fenetre
- *������������������������������������
+ *------------------------------------
  */
 FUNCTION initWin(wp,title,ul_x,ul_y,ncols,nlines,ombrage,bar,ink,paper,border,batt)
 struct OBJ *wp;
@@ -980,9 +980,9 @@ char *title;
 
 }
 
-/*��������
+/*--------
  * pushPop_MESS
- *��������
+ *--------
  */
 pushPop_MESS(str, y, msgtyp)
 char *str;
@@ -995,10 +995,10 @@ char *str;
    winPopUp(messwin, W_CLOSE);
 }
 
-/*�����������������������������������������������������������
+/*-----------------------------------------------------------
  * print_at - ecrire la string str aux coordonnees x, y, dans
  *            la window wp
- *�����������������������������������������������������������
+ *-----------------------------------------------------------
  */
 print_at(wp, x, y, str, isnewatt, att)
 struct OBJ *wp;
@@ -1011,10 +1011,10 @@ char *str;
 }
 
 
-/*�����������������������������������������������������������
+/*-----------------------------------------------------------
  * print_at_nb - ecrire nb carac aux coordonnees x, y, dans
  *               la window wp
- *�����������������������������������������������������������
+ *-----------------------------------------------------------
  */
 print_nb_at(wp, x, y, str, nb, isnewatt, att)
 struct OBJ *wp;
@@ -1040,11 +1040,11 @@ getkey()
    unsigned key, main, auxiliary;
 
    /* Saisir soit un caractere du clavier, soit un caractere issu
-    * de l'automate d'�mulation clavier de la souris
+    * de l'automate d'-mulation clavier de la souris
     */
    for (;;) {
         /* examiner le status du clavier */
-        if (_look_kbd()) { /* caractere tap� au clavier */
+        if (_look_kbd()) { /* caractere tap- au clavier */
              key = _read_kbd();
              break;
          }
@@ -1071,7 +1071,7 @@ getkey()
                (auxiliary == CTRL_PGUP))
                 return(CTRLNUMPAD | auxiliary);
           return(ALT | auxiliary);  /* REMARQUE : Shift TAB
-                                     * est conditionn� en ALT TAB
+                                     * est conditionn- en ALT TAB
                                      */
        }
        else  /* command Key */

@@ -114,7 +114,10 @@ int flag_schedul;         /* boolean specifying if the scheduler must be
     tp->tstate = READY;
     tp->tevent = 0;
     _insertKFR(pid, rdytail, tp->tprio);
-    if (flag_schedul == SCHEDUL)   _swpProc();
+    if (flag_schedul == SCHEDUL) {
+        _swpProc();
+    }
+
     _itRes(ps);
     return(ROK);
 }
@@ -247,7 +250,9 @@ int newprio;                  /* newprio > 0 */
         _itRes(ps);
         return(RERR);
     }
-    if (newprio > MAXPRIO) newprio = MAXPRIO;
+    if (newprio > MAXPRIO) {
+        newprio = MAXPRIO;
+    }
     oldprio     = tp->tprio;
     tp->tprio = newprio;
     if (tp->tstate == READY)  {
@@ -265,9 +270,10 @@ int newprio;                  /* newprio > 0 */
 _kernelMode(forcePUSHBP)
 int forcePUSHBP;
 {
-   if (Tasktab[RUNpid].tkernel++ <= 0)
+   if (Tasktab[RUNpid].tkernel++ <= 0) {
        /* Saves SP USER and sets SP KERNEL */
        _UtoK(&Tasktab[RUNpid].tUSP,Tasktab[RUNpid].tKSP);
+   }
 }
 
 /*----------------------------------------------------------------------------
@@ -277,9 +283,10 @@ int forcePUSHBP;
 _userMode(forcePUSHBP)
 int forcePUSHBP;
 {
-   if (--Tasktab[RUNpid].tkernel <= 0)
+   if (--Tasktab[RUNpid].tkernel <= 0) {
        /* replaces SP USER */
        _KtoU(Tasktab[RUNpid].tUSP);
+   }
 }
 
 /*----------------------------------------------------------------------------

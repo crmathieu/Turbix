@@ -14,7 +14,7 @@
 #define SHARE    TRUE
 #define NOSHARE  FALSE
 
-/* translation du mode de cr‚ation MKD -> DOS */
+/* translation du mode de cr-ation MKD -> DOS */
 unsigned ioCreatMode[] =       {0x20,   /* 0 S_IFREG (archive) */
                                 0x01,   /* 1 S_IREAD */
                                 0x20,   /* 2 S_IWRITE */
@@ -42,7 +42,7 @@ extern int *_MXmalloc();
  *----------------------------------------------------------------------
  */
 _openFile(pid, path, access, mode)
-char *path;  /* mode ne sert que lorsque O_CREAT est positionn‚ */
+char *path;  /* mode ne sert que lorsque O_CREAT est positionn- */
 {
     int                  ps ,fd, status, handle, acc;
     fslot               *fp;
@@ -57,7 +57,7 @@ char *path;  /* mode ne sert que lorsque O_CREAT est positionn‚ */
     if (access & O_TRUNC) { /*  RAZ fichier */
         /* supprimer le fichier, puis le recreer */
         att = _getFatt(&req, auxPath);
-        if (_removeFile(auxPath))  /* le fichier est d‚j… utilis‚ */
+        if (_removeFile(auxPath))  /* le fichier est d-j- utilis- */
                 return(RERR);
         if ((fd = m_Creat(auxPath, 0)) < 0)
                 return(RERR);
@@ -91,7 +91,7 @@ char *path;  /* mode ne sert que lorsque O_CREAT est positionn‚ */
     /* gestion floppies logiques */
     _vflopp(auxPath);
 
-    /* suivant le type d'acc‚s, cr‚er ou non un tampon d'E/S */
+    /* suivant le type d'acc-s, cr-er ou non un tampon d'E/S */
     /* si Read ET Write ou CREAT : PAS de tampon */
     if (!(access & O_RDWR) && !(access & O_CREAT)) {
         /* allouer buffer tampon de type SPECIAL */
@@ -132,7 +132,7 @@ char *path;  /* mode ne sert que lorsque O_CREAT est positionn‚ */
     sp->s_access  = acc;
     sp->s_limit   = IOBUFSZ;   /* taille du tampon d'E/S */
 
-    if (fp->fcount > 1) { /* fichier d‚j… ouvert */
+    if (fp->fcount > 1) { /* fichier d-j- ouvert */
         Tasktab[pid].terrno = 0;
         _itRes(ps);
         return(fd);
@@ -176,7 +176,7 @@ char *path;  /* mode ne sert que lorsque O_CREAT est positionn‚ */
  *                  S_IREAD      autoriser lecture
  *                  S_IWRITE     autoriser ecriture
  *                  S_IDIR       creer directory
- *                  S_IHI        creer fichier cach‚
+ *                  S_IHI        creer fichier cach-
  *----------------------------------------------------------------------
  */
 BIBLIO m_Creat(path, mode)
@@ -204,7 +204,7 @@ int   mode;
          return(RERR);
     }
 
-    if (fp->fcount > 1) { /* fichier d‚j… ouvert : ERREUR */
+    if (fp->fcount > 1) { /* fichier d-j- ouvert : ERREUR */
         fp->fcount--;
         _itRes(ps);
         return(RERR);
@@ -225,7 +225,7 @@ int   mode;
           return(RERR);
     }
 
-    /* PAS de tampon pour les fichiers en cr‚ation */
+    /* PAS de tampon pour les fichiers en cr-ation */
 
         /* allouer buffer tampon de type SPECIAL */
         if (((int *)sp->s_buf = _MXmalloc(pid, IOBUFSZ, SPECIALB)) == (int *)NULL) {
@@ -327,7 +327,7 @@ stream_entry *sp;
 
 /*----------------------------------------------------------------------
  * _removeFile  - supprimer un fichier
- *                valeurs retourn‚es:
+ *                valeurs retourn-es:
  *                      0               OK
  *                Dos
  *                      2               ERROR_FILE_NOT_FOUND
@@ -348,7 +348,7 @@ char *path;
 
     /* allouer un slot dans la table des fichiers */
     if (((fp = _getfileEntry(auxPath, &status, NOSHARE)) == (fslot *)RERR) ||
-         (status == F_LOAD)) { /* le fichier est d‚j… utilis‚ : REFUSER */
+         (status == F_LOAD)) { /* le fichier est d-j- utilis- : REFUSER */
              _itRes(ps);
              return(RERR);
     }

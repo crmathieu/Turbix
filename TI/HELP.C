@@ -16,9 +16,9 @@
 
 extern char *helpFName[];
 
-/*ÄÄÄÄÄÄÄÄÄÄ
+/*----------
  * doHelp
- *ÄÄÄÄÄÄÄÄÄÄ
+ *----------
  */
 doHelp(mp, num)
 struct OBJ *mp;
@@ -74,7 +74,7 @@ struct OBJ *mp;
    /* selection d'une fonction de la librairie */
    if ((num == INDEX) || (num == INDEXA)) {
        /* reinitialiser la fenetre editeur au format help SELECT */
-       /* ÄÄÄÄÄÄÄÄÄÄÄÄÄÄ TITLE ÄÄÄ       X  Y  L  H  BTYPE   OMBRAGE BARRE   ARROW INK        PAPER         WBORDER       BLOCK ATT ÄÄ */
+       /* -------------- TITLE ---       X  Y  L  H  BTYPE   OMBRAGE BARRE   ARROW INK        PAPER         WBORDER       BLOCK ATT -- */
        initWin(pedwin, 0, hlpSelectStr, 2, 3,74,17, TYP1,   FALSE,  FALSE,  TRUE, WINHLPink, WINHLPpaper,  WINHLPborder, WINHLPblock);
 
        /* placer press Bouton Droit */
@@ -103,20 +103,20 @@ struct OBJ *mp;
        topBlock        = 0;
        bottomBlock     = lnnext(pedwin, 0);
 
-       /* recuperer la ligne selectionn‚e (current_line_no) */
+       /* recuperer la ligne selectionn-e (current_line_no) */
        if (num == INDEX)
                 ret_value = get_helpCommand(pedwin);
        else
                 ret_value = get_helpCommandA(pedwin);
 
        if (ret_value == 0) {
-           /* R‚cuperer le nom de la fonction */
+           /* R-cuperer le nom de la fonction */
            for (i=FIRST_CHAR; i<nb_car_per_line; i++)
                   if ((work[i - FIRST_CHAR] = linebuf[i]) == ' ') {
                                work[i - FIRST_CHAR] = '\0';
                                break;
                   }
-                  /* R‚cuperer le nom de fichier */
+                  /* R-cuperer le nom de fichier */
                   for (i=0; strlen(hlpFile[i]) ; i += 2) {
                        if (stricmp(work, hlpFile[i]) == 0)
                            break;
@@ -141,7 +141,7 @@ struct OBJ *mp;
         if (num < 0) { /* appel direct */
             strcpy(work, defhlp);
 
-            /* R‚cuperer le nom de fichier */
+            /* R-cuperer le nom de fichier */
             for (i=0; strlen(hlpFile[i]); i += 2) {
                  if (stricmp(work, hlpFile[i]) == 0)
                      break;
@@ -167,7 +167,7 @@ struct OBJ *mp;
    }
 
    /* Charger le HELP Final */
-   /* ÄÄÄÄÄÄÄÄÄÄÄÄÄÄ TITLE ÄÄÄ       X  Y  L  H  BTYPE   OMBRAGE BARRE   ARROW INK        PAPER         WBORDER       BLOCK ATT ÄÄ */
+   /* -------------- TITLE ---       X  Y  L  H  BTYPE   OMBRAGE BARRE   ARROW INK        PAPER         WBORDER       BLOCK ATT -- */
    initWin(pedwin, FUNC|F6, hlpName,        2, 3,74,17, TYP1,   FALSE,  FALSE,  TRUE, WINHLPink, WINHLPpaper,  WINHLPborder, WINHLPblock);
 
    /* placer press Bouton Droit */
@@ -222,9 +222,9 @@ SKIP_HELP2:
    return(ret_value);
 }
 
-/*ÄÄÄÄÄÄÄÄ
+/*--------
  * edHelp
- *ÄÄÄÄÄÄÄÄ
+ *--------
  */
 edHelp(action)
 {
@@ -269,9 +269,9 @@ edHelp(action)
    return(ret_value);
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*--------------------------------------------------
  * get_helpCommand - balayer la fenetre de selection
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *--------------------------------------------------
  */
 get_helpCommandA(wp)
 struct OBJ *wp;
@@ -380,7 +380,7 @@ SKIP_KEY:
                                             YMOUSE - (wp->ul_y + 1) == Yreference) {
                                                 /* la position de la souris est
                                                  * inchangee depuis la pression :
-                                                 * positionner le curseur … cet emplacement
+                                                 * positionner le curseur - cet emplacement
                                                  */
                                                 Key = NORMAL|RETURN;
                                                 goto SKIP_KEY;
@@ -553,7 +553,7 @@ SKIP_KEY:
                                             YMOUSE - (wp->ul_y + 1) == Yreference) {
                                                 /* la position de la souris est
                                                  * inchangee depuis la pression :
-                                                 * positionner le curseur … cet emplacement
+                                                 * positionner le curseur - cet emplacement
                                                  */
                                                 Key = NORMAL|RETURN;
                                                 goto SKIP_KEY;
@@ -614,9 +614,9 @@ SKIP_KEY:
       }
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄ
+/*----------
  * moveBloc
- *ÄÄÄÄÄÄÄÄÄÄ
+ *----------
  */
 moveBloc(wp)
 struct OBJ *wp;

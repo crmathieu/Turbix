@@ -22,16 +22,16 @@ char  y_o[2][4] = {{'Y','y','N','n'},{'O','o','N','n'}};
  ************/
 
 /* gestion de l'insertion du disque de travail par install.exe */
-/* signature de d�but de zone : le dernier �l�ment est le checksum */
+/* signature de d-but de zone : le dernier -l-ment est le checksum */
 unsigned char debZone[8] = {168, 01, 172, 174, 149, 143, 239, 139};
-/*                           �        �    �    �    �    �    �   */
+/*                           -        -    -    -    -    -    -   */
 /*                          A8   01   AC   AE   95   8F   EF   8B  */
 
 /* checksum de la signature */
 #define CHECKSUM  0xd5
 
-/* �l�ments � ins�rer */
-char configFile[] = "c:\\tx\\ti\\ti.pro"; /* c par d�faut */
+/* -l-ments - ins-rer */
+char configFile[] = "c:\\tx\\ti\\ti.pro"; /* c par d-faut */
 
 unsigned char         arrLeft   = 0x1b,
                       arrRight  = 0x1a,
@@ -84,17 +84,17 @@ struct OBJ edwin,      /* window de l'editeur     */
 struct OBJ *pedwin;    /* pointe sur la fenetre courante d'edition */
 
 
-unsigned char boxtype[7][11] = {{'�','�','�','�','�','�','�','�','�','�','�'},   /* type 1 */
-                                {'�','�','�','�','�','�','�','�','�','�','�'},   /* type 2 */
-                                {'�','�','�','�','�','�','�','�','�','�','�'},   /* type 3 */
-                                {'�','�','�','�','�','�','�','�','�','�','�'},   /* type 4 */
-                                {'�','�','�','�','�','�','�','�','�','�','�'},   /* type 5 */
-                                {'�','�','�','�','�','�','�','�','�','�','�'},   /* status */
+unsigned char boxtype[7][11] = {{'-','-','-','-','-','-','-','-','-','-','-'},   /* type 1 */
+                                {'-','-','-','-','-','-','-','-','-','-','-'},   /* type 2 */
+                                {'-','-','-','-','-','-','-','-','-','-','-'},   /* type 3 */
+                                {'-','-','-','-','-','-','-','-','-','-','-'},   /* type 4 */
+                                {'-','-','-','-','-','-','-','-','-','-','-'},   /* type 5 */
+                                {'-','-','-','-','-','-','-','-','-','-','-'},   /* status */
                                 {' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' '},   /* external windows */
 };
 
 
-unsigned char fillpattern[] = {'�','�','�','�','�','�','�','�'};
+unsigned char fillpattern[] = {'-','-','-','-','-','-','-','-'};
 
 
 /* INITIALISATION TABLE D'ACCES */
@@ -127,7 +127,7 @@ struct ctab Ctab[] = { ALT_F,  NOTERMINAL, {0 ,NP,NP,NP,NP,NP,NP,NP,NP,NP},
 
 
 /* lorsque la rubrique ne comporte pas de sous menu, la fonction
- * appliqu�e est terminale.
+ * appliqu-e est terminale.
  */
 
 /* MASTER MENU */
@@ -144,15 +144,15 @@ struct ITem mainstr[] = {{"Fichier",          'F',ALT_F,5,0,1,&fileMenu,ScanVmen
 /* FILE MENU */
 unsigned ReturnFromSaveFile = 0;  /* variable de positionnement sur retour SAVE FILE */
 struct ITem filestr[] = {{" Charger fichier ...            F3 ",'C',F3,     0,1, 0,NULL,doLoad},
-                         {" charger Fichier pr�c�dent      F5 ",'F',F5,     0,9, 0,NULL,doLoadlast},
+                         {" charger Fichier pr-c-dent      F5 ",'F',F5,     0,9, 0,NULL,doLoadlast},
                          {" Historique des fichiers    ALT+F3 ",'H',ALT_F3, 0,1, 1,&pickMenu,ScanVmenu},
-                         {"�����������������������������������",' ',NOEXTC, 0,0, 0,NULL,nullfunc},
+                         {"-----------------------------------",' ',NOEXTC, 0,0, 0,NULL,nullfunc},
                          {" Purger historique                 ",'P',NOEXTC, 0,1, 1,NULL,doClearPick},
-                         {"�����������������������������������",' ',NOEXTC, 0,0, 0,NULL,nullfunc},
+                         {"-----------------------------------",' ',NOEXTC, 0,0, 0,NULL,nullfunc},
                          {" Sauvegarder                    F2 ",'S',F2,     0,1, 0,NULL,doSaveFile},
                          {" sAuvegarder sous ...              ",'A',NOEXTC, 0,2, 0,NULL,doSaveAs},
-                         {"�����������������������������������",' ',NOEXTC, 0,0, 0,NULL,nullfunc},
-                         {" changer de R�pertoire ...         ",'R',NOEXTC, 0,12,0,NULL,doChgDir},
+                         {"-----------------------------------",' ',NOEXTC, 0,0, 0,NULL,nullfunc},
+                         {" changer de R-pertoire ...         ",'R',NOEXTC, 0,12,0,NULL,doChgDir},
                          {" Dos                       ALT+F10 ",'D',ALT_F10,0,1, 0,NULL,doShell},
                          {" Quitter                     ALT+Q ",'Q',ALT_Q,  0,1, 0,NULL,doQuit},
                          {"",                            ' ',NOEXTC, 0,0, 0,NULL,NULL}
@@ -182,43 +182,43 @@ struct ITem runstr[] = {{ " lancer Projet        ", 'P',NOEXTC,0,8,0,NULL,doRunP
 /* HELP MENU */
 struct ITem helpstr[]  = {{" aide sUr l'aide        ", 'U',NOEXTC,0,7,  0,NULL,doHelp},
                           {" A propos de DUNIX     ", 'A',NOEXTC,0,1,  0,NULL,doHelp},
-                          {" Commandes de l'�diteur ", 'C',NOEXTC,0,1,  0,NULL,doHelp},
+                          {" Commandes de l'-diteur ", 'C',NOEXTC,0,1,  0,NULL,doHelp},
                           {" Syntaxe du make        ", 'S',NOEXTC,0,1,  0,NULL,doHelp},
                           {" Index par type...      ", 'I',ALT_F1,0,1,  0,NULL,doHelp},
                           {" indeX alphabetique...  ", 'X',ALT_F1,0,5,  0,NULL,doHelp},
-                          {" Jeux de caract�res     ", 'J',NOEXTC,0,1,  0,NULL,doHelp},
+                          {" Jeux de caract-res     ", 'J',NOEXTC,0,1,  0,NULL,doHelp},
                           {"",                         ' ',NOEXTC,0,  0,0,NULL,NULL}};
 
 
 
 /* EDIT menu */
 struct ITem editstr[]  = {{" Editeur                     F6 ", 'E',F6    ,0,1,0,NULL,doEdit},
-                          {"��������������������������������", ' ',NOEXTC,0,0,0,NULL,nullfunc},
-                          {" Chercher une cha�ne...    ^Q^F ", 'C',NOEXTC,0,1,0,NULL,doFindstr},
+                          {"--------------------------------", ' ',NOEXTC,0,0,0,NULL,nullfunc},
+                          {" Chercher une cha-ne...    ^Q^F ", 'C',NOEXTC,0,1,0,NULL,doFindstr},
                           {" Prochaine occurence         ^L ", 'P',NOEXTC,0,1,0,NULL,doFindnext},
-                          {" Remplacer une cha�ne...   ^Q^A ", 'R',NOEXTC,0,1,0,NULL,doRepl},
-                          {"��������������������������������", ' ',NOEXTC,0,0,0,NULL,nullfunc},
+                          {" Remplacer une cha-ne...   ^Q^A ", 'R',NOEXTC,0,1,0,NULL,doRepl},
+                          {"--------------------------------", ' ',NOEXTC,0,0,0,NULL,nullfunc},
                           {" Dupliquer un bloc         ^K^C ", 'D',NOEXTC,0,1,0,NULL,doDuplicate},
                           {" Supprimer un bloc         ^K^Y ", 'S',NOEXTC,0,1,0,NULL,doDelete},
                           {" deplacer un Bloc          ^K^V ", 'B',NOEXTC,0,13,0,NULL,doMove},
-                          {"��������������������������������", ' ',NOEXTC,0,0,0,NULL,nullfunc},
+                          {"--------------------------------", ' ',NOEXTC,0,0,0,NULL,nullfunc},
                           {" Enregistrer               ^K^W ", 'E',NOEXTC,0,1,0,NULL,doCopyToPaste},
                           {" Lire                      ^K^R ", 'L',NOEXTC,0,1,0,NULL,doReadFromPaste},
                           {" Changer fichier tampon...      ", 'C',NOEXTC,0,1, 0,NULL,doChgPaste},
-                          {"��������������������������������", ' ',NOEXTC,0,0,0,NULL,nullfunc},
-                          {" Aller � la Ligne...       ^Q^G ", 'A',NOEXTC,0,1,0,NULL,doGoto},
+                          {"--------------------------------", ' ',NOEXTC,0,0,0,NULL,nullfunc},
+                          {" Aller - la Ligne...       ^Q^G ", 'A',NOEXTC,0,1,0,NULL,doGoto},
                           {" Tabulation...                  ", 'T',NOEXTC,0,1,0,NULL,doTabulation},
                           {"",                        ' ',NOEXTC,0,0,0,NULL,NULL}};
 
 
 /* BUILD MENU */
 struct ITem bltstr[]  = {{" changer de fichier de Projet...           ", 'C',NOEXTC,0,23,0,NULL,doChgMkfile},
-                         {"�������������������������������������������", ' ',NOEXTC,0,0,0,NULL,nullfunc},
-                         {" Mise � jour base de r�f�rences            ", 'M',NOEXTC,0,1,0,NULL,doBuildDB},
-                         {" Se positionner sur d�claration... Ctrl-F2 ", 'S',NOEXTC,0,1,0,NULL,doGotoDef},
-                         {" R�f�rences crois�es ...           Ctrl-F3 ", 'R',NOEXTC,0,1,0,NULL,doDispRef},
-                         {"�������������������������������������������", ' ',NOEXTC,0,0,0,NULL,nullfunc},
-                         {" Construire un .EXE multit�che          F9 ", 'C',F9    ,0,1,0,NULL,doMake},
+                         {"-------------------------------------------", ' ',NOEXTC,0,0,0,NULL,nullfunc},
+                         {" Mise - jour base de r-f-rences            ", 'M',NOEXTC,0,1,0,NULL,doBuildDB},
+                         {" Se positionner sur d-claration... Ctrl-F2 ", 'S',NOEXTC,0,1,0,NULL,doGotoDef},
+                         {" R-f-rences crois-es ...           Ctrl-F3 ", 'R',NOEXTC,0,1,0,NULL,doDispRef},
+                         {"-------------------------------------------", ' ',NOEXTC,0,0,0,NULL,nullfunc},
+                         {" Construire un .EXE multit-che          F9 ", 'C',F9    ,0,1,0,NULL,doMake},
                          {"",                          ' ',NOEXTC,0,0,0,NULL,NULL}};
 
 /* PICK MENU */
@@ -248,20 +248,20 @@ struct ITem pickstr[] = {{"", 'H',NOEXTC,0,1,0,NULL,doPick},
 
 /* INSTALLATION MENU */
 struct ITem optstr[]  = {{" Installation outils ", 'I',ALT_I ,0,1,1,&instMenu,ScanVmenu},
-                         {" Param�tres ...      ", 'P',NOEXTC,0,1,0,NULL,doToolsChoice},
+                         {" Param-tres ...      ", 'P',NOEXTC,0,1,0,NULL,doToolsChoice},
                          {"",                ' ',NOEXTC,0,0,0,NULL,NULL}};
 
 
-struct ITem confstr[] = {{" r�p Compilateur/linkeur...        ", 'C',NOEXTC,0,5,0,NULL,doGetCoLnk},
-                         {" r�p Assembleur...                 ", 'A',NOEXTC,0,5,0,NULL,doGetAss},
-                         {" r�p fichiers incluDe C...         ", 'D',NOEXTC,0,19, 0,NULL,doGetInc},
-                         {" r�p Librairies C...               ", 'L',NOEXTC,0,5, 0,NULL,doGetLib},
-                         {"�����������������������������������", ' ',NOEXTC,0,0,0,NULL,nullfunc},
-                         {" r�p Utilisateur/DUNIX include... ", 'U',NOEXTC,0,5,0, NULL,doGetUsr},
-/*                       {" r�p fichiers Include DUNIX...    ", 'I',NOEXTC,0,14,0, NULL,doGetIncMkd},*/
-                         {" r�p librairies Noyau DUNIX...    ", 'N',NOEXTC,0,16, 0,NULL,doGetNmx},
-                         {" r�p Fichiers d'aide...            ", 'F',NOEXTC,0,5, 0,NULL,doInstHelp},
-                         {"�����������������������������������", ' ',NOEXTC,0,0,0,NULL,nullfunc},
+struct ITem confstr[] = {{" r-p Compilateur/linkeur...        ", 'C',NOEXTC,0,5,0,NULL,doGetCoLnk},
+                         {" r-p Assembleur...                 ", 'A',NOEXTC,0,5,0,NULL,doGetAss},
+                         {" r-p fichiers incluDe C...         ", 'D',NOEXTC,0,19, 0,NULL,doGetInc},
+                         {" r-p Librairies C...               ", 'L',NOEXTC,0,5, 0,NULL,doGetLib},
+                         {"-----------------------------------", ' ',NOEXTC,0,0,0,NULL,nullfunc},
+                         {" r-p Utilisateur/DUNIX include... ", 'U',NOEXTC,0,5,0, NULL,doGetUsr},
+/*                       {" r-p fichiers Include DUNIX...    ", 'I',NOEXTC,0,14,0, NULL,doGetIncMkd},*/
+                         {" r-p librairies Noyau DUNIX...    ", 'N',NOEXTC,0,16, 0,NULL,doGetNmx},
+                         {" r-p Fichiers d'aide...            ", 'F',NOEXTC,0,5, 0,NULL,doInstHelp},
+                         {"-----------------------------------", ' ',NOEXTC,0,0,0,NULL,nullfunc},
                          {" Sauvegarder la configuration      ", 'S',NOEXTC,0,1, 0,NULL,doSconfig},
                          {"",                               ' ',NOEXTC,0, 0,0,NULL,NULL}};
 
@@ -270,7 +270,7 @@ char Yes[] = "Oui ";
 char No[]  = "Non ";
 
 /* LOGO */
-char logoStr[] = " -- Interface de D�veloppement DUNIX -- ";
+char logoStr[] = " -- Interface de D-veloppement DUNIX -- ";
 int mouse_present, nbuttom;
 
 /*********
@@ -285,15 +285,15 @@ int mouse_present, nbuttom;
 #define XFILE  60
 /*********************/
 char tabStr[]           = " Entrer Tabulation - valeur actuelle: ";
-char loadErrStr[]       = " exc�de 64Ko - Tronquer ? ";
+char loadErrStr[]       = " exc-de 64Ko - Tronquer ? ";
 char expStr1[]          = " Expansion ";
-char expStr2[]          = " exc�de 64Ko : troncature ! ";
+char expStr2[]          = " exc-de 64Ko : troncature ! ";
 char chgDirStr[]        = " Entrer le Chemin du nouveau Rep ";
 /*char chgDriveStr[]    = " Nom de lecteur Incorrect ";*/
 char saveAsStr1[]       = " Sauver sous ";
 char badDrvStr[]        = " Nom de lecteur Incorrect ";
 char chgPaste[]         = " Entrer le nom du fichier tampon ";
-char confErrStr[]       = " Attention: l'acc�s au fichier de configuration est impossible ";
+char confErrStr[]       = " Attention: l'acc-s au fichier de configuration est impossible ";
 
 /***********************/
 
@@ -321,7 +321,7 @@ struct file_lst file_lst;
 
 #define FILE_SIZE sizeof(struct file_lst)
 
-int dir_lst_nfiles,  /* # de fichiers selectionn�s dans la directory */
+int dir_lst_nfiles,  /* # de fichiers selectionn-s dans la directory */
     dir_lst_npages;  /* # de pages de directory */
 
 char  file_name[80], fpath[80], work[80];
@@ -338,38 +338,38 @@ char validYN[]    = "  <   OK    >  ";
 /************/
 /* messages gestion saisie du nom de fichier */
 char AutoSearch[]  = " Recherche Auto                                ";
-char NewFile[]     = " Fichier inconnu : Cr�ation ?  Oui ( )  Non ( )  <   OK    >";
+char NewFile[]     = " Fichier inconnu : Cr-ation ?  Oui ( )  Non ( )  <   OK    >";
 char Search[]      = " Recherche                                     ";
 char Enter[]       = " Entrer le nom de fichier                      ";
 
 char TooMany[]     = " Trop de fichiers APPUYER sur une touche ";
-char NoFile[]      = " Aucun fichier ou r�pertoire pour ce masque : APPUYER sur une touche ";
+char NoFile[]      = " Aucun fichier ou r-pertoire pour ce masque : APPUYER sur une touche ";
 char Verify[]      = " Inserer une disquette en ( ) et APPUYER sur une touche ";
 char BadPath[]     = " Chemin invalide : APPUYER sur une touche ";
 char Savefile[]    = " Sauvegarder ";
 char Question[]    = " ? ";
 char Unkfile[]     = " Drive ( ) : Fichier introuvable - ";
-char Creatfile[]   = " - cr�er (O/N) ?";
+char Creatfile[]   = " - cr-er (O/N) ?";
 
 /* messages hardware */
-char Dnotrdy[]     = " Drive ( ) non pr�t : Essayer � nouveau ? ";
+char Dnotrdy[]     = " Drive ( ) non pr-t : Essayer - nouveau ? ";
 char Unkmedia[]    = " type de support inconnu ";
-char Gnfail[]      = " Echec g�n�ral : APPUYER sur une touche ";
+char Gnfail[]      = " Echec g-n-ral : APPUYER sur une touche ";
 
 /* message erreurs systemes */
-char Ens[]         = " Erreur non support�e APPUYER sur une touche ";
-char Enoent[]      = " Aucun fichier ou r�pertoire APPUYER sur une touche ";
+char Ens[]         = " Erreur non support-e APPUYER sur une touche ";
+char Enoent[]      = " Aucun fichier ou r-pertoire APPUYER sur une touche ";
 char E2big[]       = " Liste d'arguments trop longue APPUYER sur une touche ";
 char Enoexec[]     = " Erreur du format Exec APPUYER sur une touche ";
 char Ebadf[]       = " Handle de fichier invalide APPUYER sur une touche ";
-char Enomem[]      = " Pas assez de m�moire APPUYER sur une touche ";
-char Eacces[]      = " Permission refus�e APPUYER sur une touche ";
-char Eexist[]      = " fichier d�j� existant APPUYER sur une touche ";
-char Exdev[]       = " Lien crois� sur p�riph�rique APPUYER sur une touche ";
+char Enomem[]      = " Pas assez de m-moire APPUYER sur une touche ";
+char Eacces[]      = " Permission refus-e APPUYER sur une touche ";
+char Eexist[]      = " fichier d-j- existant APPUYER sur une touche ";
+char Exdev[]       = " Lien crois- sur p-riph-rique APPUYER sur une touche ";
 char Einval[]      = " Argument invalide APPUYER sur une touche ";
 char Emfile[]      = " Trop de fichiers ouverts APPUYER sur une touche ";
 char Enospc[]      = " Pas assez d'espace - changer de support et APPUYER sur une touche ";
-char Edeadlock[]   = " Possibilit� d'interblocage de ressources APPUYER sur une touche ";
+char Edeadlock[]   = " Possibilit- d'interblocage de ressources APPUYER sur une touche ";
 
 char *errno_tab[]  = {Ens,Ens,Enoent,Ens,Ens,Ens,Ens,E2big,Enoexec,Ebadf,Ens,Ens,
                       Enomem,Eacces,Ens,Ens,Ens,Eexist,Exdev,Ens,Ens,Ens,Einval,
@@ -392,7 +392,7 @@ int Yes_answ, No_answ;
 char *lineTab;
 int tablength = 8; /* valeur tabulation par defaut */
 /**************/
-char lineTooLongStr[] = " ligne trop longue - APPUYER sur ESC pour ins�rer LF ";
+char lineTooLongStr[] = " ligne trop longue - APPUYER sur ESC pour ins-rer LF ";
 /*************/
 
 /**********
@@ -406,16 +406,16 @@ char Save[]        =  " Sauvegarder fichier ";
 char Load[]        =  " Charger fichier ";
 
 /***************/
-char insStr[]      =  "Ins�rer";
+char insStr[]      =  "Ins-rer";
 /**************/
 
 char ltoobig[]     =  " Ligne trop longue ... APPUYER sur une touche et tronquer ";
-char outofmem[]    =  " Pas assez de m�moire ... APPUYER sur une touche ";
-char strNotFound[] =  " Cha�ne introuvable ... APPUYER sur une touche ";
-char YesNo[]       =  " Remplacer la Cha�ne ? (O/N) ";
+char outofmem[]    =  " Pas assez de m-moire ... APPUYER sur une touche ";
+char strNotFound[] =  " Cha-ne introuvable ... APPUYER sur une touche ";
+char YesNo[]       =  " Remplacer la Cha-ne ? (O/N) ";
 char errmalloc[]   =  " Erreur allocation EXIT ";
 
-char find[]        =  "  Chercher cha�ne :      ";
+char find[]        =  "  Chercher cha-ne :      ";
 char replace[]     =  "  Remplacer par :        ";
 char *rplmode[4]   = {"  ( ) Changer TOUT et VERIFIER  ",
                       "  ( ) Changer TOUT              ",
@@ -483,7 +483,7 @@ unsigned  char   WINink,         /* avant plan fenetre */
                  WINHLPblock,
 
                  MENUborder,     /* cadre menu */
-                 MENUselected,   /* article selectionn� */
+                 MENUselected,   /* article selectionn- */
                  MENUlcom,       /* lettre de commande */
                  MENUink,        /* avant plan menu */
                  MENUpaper,      /* arriere plan menu */
@@ -492,7 +492,7 @@ unsigned  char   WINink,         /* avant plan fenetre */
 
 
 /* VARIABLES de travail de l'editeur */
-int        fdcurr;     /* file descriptor du fichier charg�        */
+int        fdcurr;     /* file descriptor du fichier charg-        */
 char       *linebuf;   /* tampon ligne             */
 char  far *bigbuf;     /* buffer de reception du fichier           */
 unsigned   fsize,      /* taille actuelle du fichier en memoire    */
@@ -501,7 +501,7 @@ unsigned   fsize,      /* taille actuelle du fichier en memoire    */
            topPage,    /* offset ligne en sommet de fenetre        */
            topBlock,   /* offset ligne de debut bloc               */
            bottomBlock;/* offset ligne de fin de block             */
-int        fillCh,     /* # Blancs ajout�s apres une fin de ligne  */
+int        fillCh,     /* # Blancs ajout-s apres une fin de ligne  */
            fflag,      /* gestion etat du fichier dans l'editeur   */
            blockatt,   /* attribut block defini                    */
            current_line_no, /* no de la ligne courante             */
@@ -511,7 +511,7 @@ int        fillCh,     /* # Blancs ajout�s apres une fin de ligne  */
 struct varLink *vl;
 
 
-char errToolsStr[]  = " Impossible d'ex�cuter les outils de d�veloppement ...";
+char errToolsStr[]  = " Impossible d'ex-cuter les outils de d-veloppement ...";
 char errKernelStr[] = " Impossible de lancer : ";
 /*unsigned char cp0412[] = {0x20, 0x42, 0x6D, 0x73, 0x7D,    /* copyright */
 /*                          0x77, 0x6F, 0x60,                /* copyright */
@@ -577,7 +577,7 @@ char cpyPasteStr[] = " Impossible d'ouvrir le fichier tampon ";
   CONFIG
  *********/
 char envIncompletStr[] = " Environnement incomplet - appuyer sur une touche ";
-char turbocStr[]       = " Impossible de cr�er le fichier de configuration du compilateur ";
+char turbocStr[]       = " Impossible de cr-er le fichier de configuration du compilateur ";
 
 #define HBYTE  0xff00
 #define LBYTE  0x00ff
@@ -727,7 +727,7 @@ char builtStr[] = " Impossible d'ouvrir le fichier de redirection ";
  **********/
 
 /* interface entre compilateurs microsoft et Borland :
- * Adaptation des fonctions du turbo � la syntaxe
+ * Adaptation des fonctions du turbo - la syntaxe
  * Microsoft
  */
 
@@ -801,7 +801,7 @@ char *helpFName[] = {"help.hlp","preambul.hlp","ed.hlp",
 char defhlp[80];
 int helpInLine;
 
-char UnknownStr[] = " Fonction inconnue ou non support�e ";
+char UnknownStr[] = " Fonction inconnue ou non support-e ";
 
 char  *hlpFile[] = { /* fonction           -          Fichier */
 
@@ -834,7 +834,7 @@ char  *hlpFile[] = { /* fonction           -          Fichier */
 /*                    "m_ReadEventMou",           "h84.hlp",*/
 /*                    "m_EventMaskMou",           "h85.hlp",*/
 
-                    /* S�maphore */
+                    /* S-maphore */
                     "m_Countsem",                  "h7.hlp",
                     "m_Creatsem",                  "h9.hlp",
                     "m_Delsem",                    "H12.hlp",
@@ -853,7 +853,7 @@ char  *hlpFile[] = { /* fonction           -          Fichier */
                     "m_Msgsync",                   "h37.hlp",
                     "m_Msgwait",                   "h38.hlp",
 
-                    /* M�moire */
+                    /* M-moire */
                     "m_AdjustPTR",                 "h0.hlp",
                     "m_Free",                   "h65.hlp",
                     "m_Malloc",                 "h66.hlp",
@@ -865,7 +865,7 @@ char  *hlpFile[] = { /* fonction           -          Fichier */
                     "m_Sleep",                     "h55.hlp",
                     "m_Wakeup",                    "h63.hlp",
 
-                    /* Vid�o */
+                    /* Vid-o */
                     "m_Beep",                      "h2.hlp",
                     "m_ChgActiveSession",          "h5.hlp",
                     "m_CursorShape",               "h10.hlp",
@@ -966,10 +966,10 @@ char  *hlpFile[] = { /* fonction           -          Fichier */
   WLINK
  *******/
 
-char lnkChoiceStr[] = "Param�trage du Lien";
-char lnkChoiceInt[] = "  ( ) Lier avec l'interpr�teur SPY                ";
-char lnkChoiceFS[]  = "  ( ) Lier avec le syst�me de gestion de fichiers ";
-char lnkAutoAsk[]   = "  ( ) V�rification du param�trage avant le lien   ";
+char lnkChoiceStr[] = "Param-trage du Lien";
+char lnkChoiceInt[] = "  ( ) Lier avec l'interpr-teur SPY                ";
+char lnkChoiceFS[]  = "  ( ) Lier avec le syst-me de gestion de fichiers ";
+char lnkAutoAsk[]   = "  ( ) V-rification du param-trage avant le lien   ";
 
 char lnkChoiceRep[] = "  <   OK    >    < Annuler >            ";
 int mkd_shell, mkd_FS, mkd_AutoAsk;
@@ -996,6 +996,6 @@ int rmode;
 char gotoFuncNameStr[] = " Se positionner : Entrer le nom de function ";
 char dispFuncNameStr[] = " References     : Entrer le nom de function ";
 char dbaseOpenErr[] = " Erreur d'ouverture fichier de la base ";
-char notUserStr[] = " fonction non r�f�renc�e ";
-char rebuildStr[] = " Les fichiers du projet ont �t� modifi�s - Appuyer sur une touche ";
-char buildDBstr[] = " Lancer le menu mise � jour BASE de reference ";
+char notUserStr[] = " fonction non r-f-renc-e ";
+char rebuildStr[] = " Les fichiers du projet ont -t- modifi-s - Appuyer sur une touche ";
+char buildDBstr[] = " Lancer le menu mise - jour BASE de reference ";

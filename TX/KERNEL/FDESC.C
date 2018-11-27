@@ -11,11 +11,11 @@
 #include "iodos.h"
 #include "\tc\include\string.h"
 
-stream_entry       Streamtab[NSTREAM];   /* table des streams         */
-fslot              Filetab[F_NSLOT];     /* des fichiers ouverts      */
+stream_entry       Streamtab[NSTREAM];   /* streams table  */
+fslot              Filetab[F_NSLOT];     /* open files     */
 
 /*----------------------------------------------------------------------
- * init_stream - initialisation de la stream table
+ * init_stream - stream table initialization 
  *----------------------------------------------------------------------
  */
 _init_stream()
@@ -27,7 +27,7 @@ _init_stream()
         sp->s_pos       = 0L;
         sp->s_limit     = IOBUFSZ;
         sp->s_bload     = FALSE;
-        sp->s_streamtyp = FILESTREAM;   /* par defaut */
+        sp->s_streamtyp = FILESTREAM;   /* by default */
         sp->s_pbuf      = 0;
         sp->s_buf       = NULLPTR;
         sp->s_bdirty    = FALSE;
@@ -35,7 +35,7 @@ _init_stream()
 }
 
 /*---------------------------------------------------------------------------
- * getstream - chaine la file entry passee en parametre a
+ * getstream - link chaine la file entry passee en parametre a
  *             un slot libre de la stream table. retourne l'adresse du slot
  *---------------------------------------------------------------------------
  */
@@ -176,7 +176,7 @@ int    *status;
     }
 
     /*  le fichier n'est pas en table
-     *  initialiser cette nelle entr‚e
+     *  initialiser cette nelle entrï¿½e
      */
 
     memset(fp->fname, 0, 64);
@@ -355,7 +355,7 @@ char *fname;
         return(fname);
 }
 /*---------------------------------------------------------------
- * m_Setdrv - realise un changement logique de drive courant
+ * m_Setdrv - change current drive
  *---------------------------------------------------------------
  */
 m_Setdrv(drive)  /* A = 1, B = 2, C = 3 etc ... */
@@ -364,7 +364,7 @@ m_Setdrv(drive)  /* A = 1, B = 2, C = 3 etc ... */
     if ((pdt + drive)->valide == TRUE) {
         Tasktab[RUNpid].tcurrdev = drive;
 
-        /* recopier le directory par defaut pour ce drive */
+        /* copy default directory for this drive */
         strcpy(Tasktab[RUNpid].tcurrdir,(pdt + drive)->path);
     }
     else {
@@ -376,7 +376,7 @@ m_Setdrv(drive)  /* A = 1, B = 2, C = 3 etc ... */
 }
 
 /*---------------------------------------------------------------
- * m_Chdir - changement logique de repertoire courant
+ * m_Chdir - change current working diectory
  *---------------------------------------------------------------
  */
 m_Chdir(dirPath)
@@ -386,28 +386,29 @@ char *dirPath;
         int fd, i;
 
 
-        /* interdire les noms complets (incluant les drives) */
+        /* forbid name including drive letter */
         if (dirPath[1] == ':') {
                 Tasktab[RUNpid].terrno = ENOPATH;
                 return(RERR);
         }
 
-        /* 1) verifier si la directory existe */
+        /* 1) make sure directory exists */
         strcpy(work, dirPath);
-        if (strlen(work) && work[strlen(work)-1] == '\\')
+        if (strlen(work) && work[strlen(work)-1] == '\\') {
                 work[strlen(work)-1] = '\0';
+        }
 
         strcpy(aux, work);
         strcat(work, "\\___0412.tmp");
-        if ((fd = m_Creat(work, 0)) < 0)
+        if ((fd = m_Creat(work, 0)) < 0) {
                 return(RERR);
-
+        }
         m_Close(fd);
         _removeFile(work);
 
-        /* 2) mise a jour de la default directory de ce process */
+        /* 2) update task's default directory */
 
-        /* ecrire le nom complet de la directory */
+        /* write directory name */
         strcpy(work, (pdt+Tasktab[RUNpid].tcurrdev)->path);
         if (aux[0] == '\\')
                 strcpy(work, aux);
@@ -433,7 +434,7 @@ char *dirPath;
         return(ROK);
 }
 /*------------------------------------------
- * m_Mkdir - creat directory
+ * m_Mkdir - create directory
  *------------------------------------------
  */
 m_Mkdir(dirPath)
@@ -452,7 +453,7 @@ char *dirPath;
         return(ret);
 }
 /*------------------------------------------------------------
- * m_SetErrHandler - initialise le pointeur de handler d'erreur
+ * m_SetErrHandler - initialize error handler function pointer
  *------------------------------------------------------------
  */
 m_SetErrHandler(newhandler)

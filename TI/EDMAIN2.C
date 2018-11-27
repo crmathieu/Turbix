@@ -2,9 +2,9 @@
 #include "ext_var.h"
 #include <fcntl.h>
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*------------------
  * init_editor
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *------------------
  */
 init_editor()
 {
@@ -44,9 +44,9 @@ resize_line()
    memset(clippbuf, EOS,  nb_car_per_line);
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*------------------
  * init_edVar
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *------------------
  */
 init_edVar(status)
 {
@@ -59,9 +59,9 @@ init_edVar(status)
         write_status(pedwin);
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*----------------------------
  * ed - rentrer dans l'editeur
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *----------------------------
  */
 ed(wp)
 struct OBJ *wp;
@@ -88,9 +88,9 @@ struct OBJ *wp;
 }
 
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*------------------
  * get_command
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *------------------
  */
 get_command(wp)
 struct OBJ *wp;
@@ -147,9 +147,9 @@ struct OBJ *wp;
       }
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*------------------
  * special_key
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *------------------
  */
 unsigned special_key(wp, ChX, ChL)
 struct OBJ *wp;
@@ -263,7 +263,7 @@ int Ch;
                     if (posX == XMOUSE && posY == YMOUSE) {
                         /* la position de la souris est
                          * inchangee depuis la pression :
-                         * positionner le curseur … cet emplacement
+                         * positionner le curseur - cet emplacement
                          * si on est pas sur le cadre
                          */
                         if ((posX == wp->ul_x) || (posX == wp->ul_x + wp->ncol + 1) ||
@@ -318,7 +318,7 @@ struct OBJ *wp;
 
 
      fflag        &= ~FF_BLOCKDEF;
-     if (topBlock  != NIL_LN ) /* on a deja marqu‚ un debut bloc */
+     if (topBlock  != NIL_LN ) /* on a deja marqu- un debut bloc */
         if (topBlock <= bottomBlock)
                 fflag |= FF_BLOCKDEF;
 
@@ -721,7 +721,7 @@ struct OBJ *wp;
 {
   int extra, type;
   if ((extra = getItem(c,0, &type)) != NP)
-      /* un extra caractere a ete frapp‚ */
+      /* un extra caractere a ete frapp- */
       return(ALT|c);
   return(0);
 }
@@ -869,8 +869,8 @@ struct OBJ *wp;
 
   /* ecriture barres */
   if (wp->f_bar) {
-        anneau = 'Û';
-        barre =  '°';
+        anneau = '-';
+        barre =  '-';
 
         /* calcul position dans le fichier */
         if (fsize) {
@@ -1443,7 +1443,7 @@ struct OBJ *wp;
         hide_cursor(wp);
         pushPop_MESS(strNotFound, NMXMSG);
         setcursor(wp);
-        /* BBBUUUGGG peut etre trouv‚ */
+        /* BBBUUUGGG peut etre trouv- */
         formatt_line(linebuf, bigbuf, current, lnlen(wp, current), EOS, nb_car_per_line * 2);
 
     }
@@ -1644,7 +1644,7 @@ struct OBJ *wp;
         return;
       }
 
-    /* tester si buffer ligne deja charg‚ */
+    /* tester si buffer ligne deja charg- */
      fflag |= (FF_LINE_UPDATE | FF_DIRTY);
 
      /* tester si position courante apres fin de ligne */
