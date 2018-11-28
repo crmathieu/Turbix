@@ -2,7 +2,7 @@
 
 
 /*
- *          Kernel constant
+ *          Kernel constants
  *
  */
 

@@ -164,7 +164,7 @@ unsigned n;
 }
 
 /*----------------------------------------------------------------------------
- * _timeout - lance un delais et indique s'il a ete a son terme
+ * _timeout - starts a delay and return indicating if delay has expired
  *----------------------------------------------------------------------------
  */
 _timeout(pid, n)
@@ -184,14 +184,15 @@ unsigned n;
     isDelay = TRUE;
     firstDelay = (int *)&(Clkq[Clkq[DelayList].next].key);
 
-    /* indiquer etat attente message avec tempo */
+    /* indicate state as SLEEP with waiting on message with timeout */
     tp->tstate  = SLEEP;
     tp->tevent  = EV_TMESS;
     _swpProc();
+    /* coming back only when delay has expired -or- message has arrived */
     status = (tp->tflag & F_TIMOUT ? TRUE : FALSE);
     tp->tflag  &= ~F_TIMOUT;
     _itRes(ps);
-    return(status);   /* retourner VRAI si tempo � son terme */
+    return(status);   /* returns true if delay has expired */
 }
 
 
@@ -401,7 +402,7 @@ long *tloc;
 
     ps = _itDis();
     hbuff.b_pid = m_Getpid();
-    hbuff.b_func = HOR_SRV;
+    hbuff.b_func = CLK_SRV;
 
     _biosenq(&hbuff);
     m_Msgclr();
@@ -449,7 +450,7 @@ int *td;
 
     ps = _itDis();
     hbuff.b_pid  = RUNpid;
-    hbuff.b_func = HOR_SRV;
+    hbuff.b_func = CLK_SRV;
     _biosenq(&hbuff);
     m_Msgclr();
     m_Sigsem(bsem);
@@ -476,7 +477,7 @@ TASK _service()
           _waitsem(bsem,STAIL);
           while (hbreq != BIOSNULL) {
                  switch(hbreq->b_func) {
-                 case HOR_SRV:  /* Service Horloge et Date */
+                 case CLK_SRV:  /* Service Horloge et Date */
                                 _getsystime(hbreq->h_time);
                                 _getsysdate(hbreq->h_date);
                                 break;

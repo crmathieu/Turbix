@@ -1,4 +1,4 @@
-/*  ULK Error Codes strings */
+/*  dunix Error Codes strings */
 static char nullstr[] = "";
 char *errStr[] = {
         " : Error 0\n",                           /* 0  EZERO   */
@@ -97,7 +97,7 @@ char winErrStr[]    = "\nWarning : window processing has not been initialized\n"
 char winInit1Str[]  = "\nCannot allocate space for a new window\n";
 char winInit2Str[]  = "\nCannot allocate space for window buffer\n";
 
-/* xenstart */
+/* dunix */
 char errFreeStr[]   = "\n Error freeing global Memory - %x -\n";
 char errIniDirStr[] = "\n\033[37mCannot initialize working directory block number\033[33m\n";
 char shutDwnStr[]   = "\n\033[3mSystem shutdown\033[0m\n";

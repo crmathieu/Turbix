@@ -1,9 +1,6 @@
 /* pc.h */
 
-/*
- * Ne pas modifier les numeros de registre sans modifier dans cxtswp.asm
- *
- */
+/* Do not modify registers numbers without updating them in cxtswp.asm */
 
 #define  RSP    0
 #define  RSS    1

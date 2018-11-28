@@ -33,7 +33,7 @@ device.obj : device.c   proc.h kernel.h io.h tty.h disk.h console.h fs\ftype.h
 
 semaph.obj : semaph.c proc.h kernel.h q.h sem.h
 
-xenstart.obj : xenstart.c kernel.h proc.h  mem.h disk.h  signal.h const.h
+dunix.obj : dunix.c kernel.h proc.h  mem.h disk.h  signal.h const.h
 
 utask.obj : utask.c kernel.h proc.h  disk.h
 

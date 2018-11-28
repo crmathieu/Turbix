@@ -1,6 +1,6 @@
 ;****************************************************************************
 ;*   IT_DOS.ASM                                                             *
-;*   Autres modules ASSEMBLEUR :                                            *
+;*   Other ASSEMBLER modules:                                               *
 ;*                  VIDEO.ASM , GR.ASM , IT_HARD.ASM , CXTSWP.ASM           *
 ;*                                                                          *
 ;****************************************************************************
@@ -22,7 +22,7 @@ _DATA ENDS
 DGROUP GROUP CONST, _BSS, _DATA
  ASSUME  CS: _TEXT, DS: DGROUP, SS: DGROUP, ES: DGROUP
 
-;* gestion des E/S disque *
+;* I/O disk management *
 PUBLIC __ioopen
 PUBLIC __iocreat
 PUBLIC __ioread
@@ -57,10 +57,10 @@ __setHandleCount PROC FAR
      push di
      pushf
 
-     mov bx,6[bp]               ; bx = nb de handles
+     mov bx,6[bp]               ; bx = # handles
      mov ah,67h
 
-     int 21h                    ; appel routine BIOS
+     int 21h                    ; call BIOS
      jc  setHc_err
      xor ax,ax
      jmp setHc_end
@@ -97,7 +97,7 @@ __getcwdir PROC FAR
      mov dl,10[bp]              ; drive
      mov ah,47h
 
-     int 21h                    ; appel routine BIOS
+     int 21h                    ; call BIOS
      jc  gwd_err
      xor ax,ax
      jmp gwd_end
@@ -135,7 +135,7 @@ __ioopen PROC FAR
 
      mov ah,3Dh
 
-     int 21h                    ; appel routine BIOS
+     int 21h                    ; call BIOS
      jc  open_err
      jmp open_end
 
@@ -172,7 +172,7 @@ __iocreat PROC FAR
 
      mov ah,3Ch
 
-     int 21h                    ; appel routine BIOS
+     int 21h                    ; call BIOS
      jc  creat_err
      jmp creat_end
 
@@ -211,7 +211,7 @@ __ioread PROC FAR
 
      mov ah,3Fh
 
-     int 21h                    ; appel routine BIOS
+     int 21h                    ; call BIOS
      jc  read_err
      jmp read_end
 
@@ -250,7 +250,7 @@ __iowrite PROC FAR
 
      mov ah,40h
 
-     int 21h                    ; appel routine BIOS
+     int 21h                    ; call BIOS
      jc  write_err
      jmp write_end
 
@@ -285,7 +285,7 @@ __ioclose PROC FAR
 
      mov ah,3Eh
 
-     int 21h                    ; appel routine BIOS
+     int 21h                    ; call BIOS
      jc  close_err
      xor ax,ax
      jmp close_end
@@ -307,7 +307,7 @@ close_end:
 __ioclose ENDP
 
 ;*
-;*  IOREMOVE(nom de fichier)
+;*  IOREMOVE(filename)
 ;*
 __ioremove PROC FAR
      push bp
@@ -317,11 +317,11 @@ __ioremove PROC FAR
      push si
      push di
      pushf
-     lds dx,6[bp]               ; ZSTRING du nom de fichier
+     lds dx,6[bp]               ; filename (ZSTRING)  
 
      mov ah,41h
 
-     int 21h                    ; appel routine BIOS
+     int 21h                    ; call BIOS
      jc  remove_err
      xor ax,ax
      jmp remove_end
@@ -343,7 +343,7 @@ remove_end:
 __ioremove ENDP
 
 ;*
-;*  IOMOVE(handle, pos, org)
+;*  IOMOVE(handle, pos, orig)
 ;*
 __iomove PROC FAR
      push bp
@@ -358,11 +358,11 @@ __iomove PROC FAR
      mov dx,8[bp]               ; Low pos
      mov cx,10[bp]              ; High pos
 
-     mov al,12[bp]              ; org
+     mov al,12[bp]              ; orig
 
      mov ah,42h
 
-     int 21h                    ; appel routine BIOS
+     int 21h                    ; call BIOS
      jc  move_err
      jmp move_end
 
@@ -383,7 +383,7 @@ move_end:
 __iomove ENDP
 
 ;*
-;*  IOSETFATT(nom de fichier, att)
+;*  IOSETFATT(filename, att)
 ;*
 __iosetfatt PROC FAR
      push bp
@@ -393,12 +393,12 @@ __iosetfatt PROC FAR
      push si
      push di
      pushf
-     lds dx,6[bp]               ; ZSTRING du nom de fichier
+     lds dx,6[bp]               ; filename (ZSTRING)
      mov cx,10[bp]
 
      mov ax,4301h
 
-     int 21h                    ; appel routine DOS
+     int 21h                    ; call DOS
      jc  setfatt_err
      xor ax,ax
      jmp setfatt_end
@@ -420,7 +420,7 @@ setfatt_end:
 __iosetfatt ENDP
 
 ;*
-;*  IOGETFATT(nom de fichier)
+;*  IOGETFATT(filename)
 ;*
 __iogetfatt PROC FAR
      push bp
@@ -430,13 +430,13 @@ __iogetfatt PROC FAR
      push si
      push di
      pushf
-     lds dx,6[bp]               ; ZSTRING du nom de fichier
+     lds dx,6[bp]               ; filename (ZSTRING)
 
      mov ax,4300h
 
-     int 21h                    ; appel routine DOS
+     int 21h                    ; call DOS
      jc  getfatt_err
-     mov ax,cx                  ; attributs dans cx
+     mov ax,cx                  ; attributs in cx
      jmp getfatt_end
 
 getfatt_err:
@@ -471,7 +471,7 @@ __iomkdir PROC FAR
 
      mov ah,39h
 
-     int 21h                    ; appel routine BIOS
+     int 21h                    ; call BIOS
      jc  mkd_err
      xor ax,ax
      jmp mkd_end

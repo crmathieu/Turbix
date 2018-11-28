@@ -1,9 +1,9 @@
 ;****************************************************************************
 ;*  CXTSWP.ASM                                                              *
 ;*                                                                          *
-;*  Gestion de la commutation des piles                                     *
+;*  Stack switching management                                              *
 ;*                                                                          *
-;*  Autres modules ASSEMBLEUR :                                             *
+;*  Other ASSEMBLING modules:                                               *
 ;*                 VIDEO.ASM , SYSTEM.ASM , GR.ASM , IT_HARD.ASM            *
 ;*                                                                          *
 ;****************************************************************************

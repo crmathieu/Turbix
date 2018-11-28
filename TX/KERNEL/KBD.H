@@ -1,8 +1,6 @@
 /* kbd.h */
 
-
-
-/* position des cles */
+/* positioning keys */
 #define ARROWL  75
 #define ARROWR  77
 #define ARROWD  80
@@ -13,7 +11,7 @@
 #define PGUP    73
 
 /* constantes relatives au clavier */
-/* 1) constantes materialisant les positions des touches speciales */
+/* 1) constantes specific to special keys */
 #define F1             0
 #define F2             0
 #define F3             0
@@ -33,7 +31,7 @@
 #define SCROLLLOCK     0
 #define SYSREQ         0
 
-/* 2) valeurs prises par la variable d'etat du clavier */
+/* 2) values used by keyboard state variable */
 #define  KBD           1
 #define  KBDCTRL       2
 #define  KBDCTRALT     3
@@ -41,7 +39,7 @@
 #define  KBDSHIFT      5
 #define  KBDALTCTRL    6
 
-/* 3) codes des touches significatives */
+/* 3) pressing codes of special keys */
 #define CTRLcod       29
 #define ALTcod        56
 #define SHIFTGcod     42
@@ -56,13 +54,13 @@
 #define SLOCKcod      70
 #define RETURNcod     28
 
-/* 4) codes release des touches clefs */
+/* 4) releasing codes of special keys */
 #define CTRLcodR     157
 #define ALTcodR      184
 #define SHIFTGcodR   170
 #define SHIFTDcodR   182
 
-/* variables liees au driver clavier */
+/* variables linked to keyboard driver */
 LOCAL shift_key = FALSE;
 LOCAL shift_release = TRUE;
 LOCAL ctrl_key = FALSE;
@@ -88,15 +86,15 @@ struct KEY keyTab[] = {
 /* 0  */	{0,         0,         0,      0,  	0        },
 /* 1  */	{'\x1B',    '\x1B',    0,      0,  	'\x1B'   },
 /* 2  */	{'&',       '1',       0,      0,  	0        },
-/* 3  */	{'‚',       '2',       0,      0,  	'@'      },
+/* 3  */	{'ï¿½',       '2',       0,      0,  	'@'      },
 /* 4  */	{'"',       '3',       0,      0,  	'#'      },
 /* 5  */	{'\x27',    '4',       0,      0,  	0        },
 /* 6  */	{'(',       '5',       0,      0,  	0        },
 /* 7  */	{'|',       '6',       0,      0,  	'^'      },
 /* 8  */	{' ',       '7',       0,      0,  	0        },
 /* 9  */	{'!',       '8',       0,      0,  	0        },
-/* A  */	{'‡',       '9',       0,      0,  	0        },
-/* B  */	{'…',       '0',       0,      0,  	0        },
+/* A  */	{'ï¿½',       '9',       0,      0,  	0        },
+/* B  */	{'ï¿½',       '0',       0,      0,  	0        },
 /* C  */	{')',       ')',       0,      0,  	0        },
 /* D  */	{'-',       '_',       0,      0,  	0        },
 
@@ -131,13 +129,13 @@ struct KEY keyTab[] = {
 /* 25 */	{'k',       'K',       0,      '\x0B', 	0        },
 /* 26 */	{'l',       'L',       0,      '\x0C', 	0        },
 /* 27 */	{'m',       'M',       0,      '\x0D', 	0        },
-/* 28 */	{'~',       '—',       0,      0, 	0        },
+/* 28 */	{'~',       'ï¿½',       0,      0, 	0        },
 /* 29 */  	{'<',       '>',       0,      0, 	'\\'     },
 
 /* SCAN    	MINUS	   MAJUS      NUMLCK  CTRL	ALTER	 */
 
 /* 2A */	{SHIFTG,    SHIFTG,    0,      0, 	SHIFTG   },
-/* 2B */	{'æ',       'œ',       0,      0, 	0        },
+/* 2B */	{'ï¿½',       'ï¿½',       0,      0, 	0        },
 /* 2C */	{'w',       'W',       0,      '\x17', 	0        },
 /* 2D */	{'x',       'X',       0,      '\x18', 	0        },
 /* 2E */	{'c',       'C',       0,      '\x03', 	0        },

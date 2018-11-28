@@ -1,4 +1,4 @@
-/* xenstart.c */
+/* dunix.c */
 #include "sys.h"
 #include "conf.h"
 #include "io.h"
@@ -159,7 +159,7 @@ char *argv[];
         return;
     }
 
-    /* revenir au DOS en effa‡ant l'‚cran */
+    /* revenir au DOS en effaï¿½ant l'ï¿½cran */
     putchar('\x0c');
     gotoxy(0, 0);
     return;
@@ -179,7 +179,7 @@ task0()
     int           _premain(),_itdisk(), _int15(), _itcritical();
     int           interrupt _dummy_interrupt();
 
-    /* On peut utiliser les int 21h jusqu'… la modification
+    /* On peut utiliser les int 21h jusqu'ï¿½ la modification
      * des vecteurs d'interruption
      */
     _disable();
@@ -224,7 +224,7 @@ task0()
 
     enable();
 
-    /* lancer la tache utilisateur apres avoir positionn‚ la directory
+    /* lancer la tache utilisateur apres avoir positionnï¿½ la directory
      * de travail dans la table des USERS
      */
     _start(_buildTask(_premain    , SYS_TASK, 4096, 10 ,"main"   , 0 ),DIFFERED);
@@ -258,7 +258,7 @@ FIN:
 }
 
 /*---------------------------------------------------------------------------
- * _premain - lancer la tache utilisateur apres avoir positionn‚ la directory
+ * _premain - lancer la tache utilisateur apres avoir positionnï¿½ la directory
  *           de travail dans la table des USERS
  *---------------------------------------------------------------------------
  */
@@ -279,7 +279,7 @@ TASK _premain()
 
 /*---------------------------------------------------------------------------
  * shutdown - sortir proprement de ulk - Les fichiers encore ouverts sont
- *            automatiquement ferm‚s par DOS
+ *            automatiquement fermï¿½s par DOS
  *---------------------------------------------------------------------------
  */
 TASK _shutdown()
@@ -307,7 +307,7 @@ TASK _shutdown()
         _doKill(i);
    }
 
-   /* donner la main … la tache IDLE */
+   /* donner la main ï¿½ la tache IDLE */
    ps = disable();
    sysrun = 0;
    _setprio(TASK0,70);

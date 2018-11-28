@@ -1,50 +1,49 @@
 /* mem.h */
 
-/* definition  d'une entete de bloc libre */
+/* free block header definition */
 struct     mblock    {
-           struct    mblock  *mnext ;     /* prochain bloc libre */
-           unsigned  mlen ;               /* taille du bloc      */
+           struct    mblock  *mnext ;     /* next free block */
+           unsigned  mlen ;               /* block size      */
 };
 
-/* definition d'un header de bloc :
- * zone m‚moire d'un PARA situ‚ juste
- * avant le bloc allou‚ lui mˆme
+/* 
+ * memory used by parameter located just before the allocated block itself
  */
 struct     hblk  {
-      unsigned     sig;       /* Signatures header de block
+      unsigned     sig;       /* Signature header block
                                * 0x1956 = normal block
                                * 0x0412 = special block (buffer Session)
                                */
-      unsigned     blen;      /* taille du bloc allou‚ (en click) */
-      struct hblk *nextBlk;   /* prochain bloc du process */
-      struct hblk *prevBlk;   /* bloc precedent du process */
-      struct hblk *dupb;      /* si bloc dupliqu‚ lors d'un fork */
+      unsigned     blen;      /* allocated block size (in click) */
+      struct hblk *nextBlk;   /* next task block */
+      struct hblk *prevBlk;   /* previous task block */
+      struct hblk *dupb;      /* used when block was duplicated during a fork call */
       struct hblk *nextMsg;   /* prochain "message en attente" du process */
 };
 
-#define MAXCLICKS    4094      /* maximum de clicks allouables pour 1 seg */
+#define MAXCLICKS    4094      /* maximum number of possible clicks for 1 seg */
 #define CLICK_SHIFT  0020
 #define CLICK_SIZE   4
 #define HBLK_SIZE    (sizeof(struct hblk)/16)+(sizeof(struct hblk)%16?1:0)
-#define NORMALB      0x1956   /* signature block normal  */
-#define SPECIALB     0x0412   /* signature special block */
-#define STACKB       0x1234   /* bloc de type pile       */
+#define NORMALB      0x1956   /* normal block signature  */
+#define SPECIALB 0x0412       /* special block signature */
+#define STACKB       0x1234   /* stack type of block     */
 
-/* macros de gestion memoire */
+/* memory management macros */
 #define truncew(x)   (int *)( (int)(x) >> 4)
 #define FP_SEG(fp) (*((unsigned *)&(fp) + 1))
 #define FP_OFF(fp) (*((unsigned *)&(fp)))
 
-extern     struct mblock memlist;      /* tete de la liste des zones libres */
-extern     int  far *maxaddr;        /* adresse maxi de la memoire        */
-extern     int  far *debaddr;        /* debut d'adresse libre             */
+extern     struct mblock memlist;    /* free zone list head        */
+extern     int  far *maxaddr;        /* memory max address         */
+extern     int  far *debaddr;        /* beginning of free address  */
 
-/* variables du compilateur C */
+/* C compiler variables */
 extern     int end;
 extern     int edata;
 extern     int etext;
 
-/* fonctions d'allocation memoire ( newmeml.c )  */
+/* memory allocation functions ( newmeml.c )  */
 extern int  far *_stackAlloc();
 extern int  far *mkdMalloc();
 extern int  far *_XSmalloc();

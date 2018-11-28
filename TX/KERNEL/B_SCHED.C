@@ -70,7 +70,7 @@ _swpProcC()
     int ps, Y, X,pid;
 
     ps = _disable();
-    old           = &Tasktab[pid = RUNpid];
+    old = &Tasktab[pid = RUNpid];
 /*    old->tITvalid = itvalidee;*/
 
     /* set CALLOUT as RUNNING */

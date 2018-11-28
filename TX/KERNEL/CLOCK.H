@@ -2,8 +2,7 @@
 
 #define TIMOVER      -5
 #define DOSCLOCK      27     /* int 1Bh : interruption horloge DOS */
-/*#define XENCLOCK      28     /* int 1Ch : it horloge de Xenius     */
-#define XENCLOCK      8 /* MODIFFFFFF */
+#define XENCLOCK      8      /* int 1Ch: dunix clock interrupt */
 #define NOCLOCK       FALSE
 #define QUANTUM       3
 
@@ -19,14 +18,13 @@ struct biosreq {
        int            m_etatBouton;
        unsigned       m_nofunc;
 
-       /* PID de la tache appelante */
+       /* calling task's PID */
        int            b_pid;
        int            b_func;
 
        struct biosreq *b_next;
 };
 
-/* utilisation future des messages */
 struct msgtime {
        int          h_op;
        int          h_time[3];
@@ -35,12 +33,12 @@ struct msgtime {
 
 #define BIOSNULL       (struct biosreq *)0
 
-/* differents services supportes */
-#define HOR_SRV        0x80   /* service horloge */
-#define MOU_SRV        0x90   /* service souris  */
+/* various supported services */
+#define CLK_SRV        0x80   /* clock service */
+#define MOU_SRV        0x90   /* mouse service */
 
-/* -- remarque : dans le message … la tache souris
- * la partie HAUTE du message correspond … MOU_GET
+/* -- remarque : dans le message - la tache souris
+ * la partie HAUTE du message correspond - MOU_GET
  *                                         MOU_SRV
  * pour un service de type MOU_MASK, la
  * partie basse correspond au masque

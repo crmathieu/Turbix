@@ -1,4 +1,4 @@
-/* xenstart.c */
+/* dunix.c */
 #include "sys.h"
 #include "conf.h"
 #include "io.h"
@@ -9,12 +9,7 @@
 #include "fsopen.h"
 #include "file.h"
 
-
-
-/*  Sauvegarde des vecteurs d'nterruptions
- *  au moment du demarrage
- */
-
+/*  Save current interrupt vectors */
 long               msdosv_clk , msdosv_kbd , msdosv_com , msdosv_div0;
 long               msdosv_ovf , msdosv_ill, msdosv_int15, msdosv_int61,
                    msdosv_mou,  msdosv_int24;
@@ -41,8 +36,8 @@ extern  long       m_Time();
 int                GlobalArgc;
 char              *GlobalArgv[5];
 
-/*---------------------------------------------------------------------------------------------------------------------------------------
- * getAllMem - reserver toute la memoire
+/*---------------------------------------------------------------------------
+ * getAllMem - grabs all the memory available
  *---------------------------------------------------------------------------
  */
 _getAllMem(nb_paragraphes)
@@ -51,17 +46,19 @@ int *nb_paragraphes;
 #define MAXPARAGRAFS 40000
 
     *nb_paragraphes = MAXPARAGRAFS;
-     debaddr        = _allocmem(*nb_paragraphes);
-    *nb_paragraphes = (FP_SEG(debaddr)); /* essai : ne prendre que 1/2 */
-     debaddr        = _allocmem(*nb_paragraphes);
-     if (FP_OFF(debaddr) == 0xffff)
-         return(RERR);
-/*     deb1 = debaddr;*/
-     return(ROK);
+    debaddr         = _allocmem(*nb_paragraphes);
+    *nb_paragraphes = (FP_SEG(debaddr)); 
+    debaddr         = _allocmem(*nb_paragraphes);
+
+    if (FP_OFF(debaddr) == 0xffff) {
+        return(RERR);
+    }
+    /* deb1 = debaddr;*/
+    return(ROK);
 }
 
 /*---------------------------------------------------------------------------
- * ulk_startup - appele par le startup du compilateur
+ * dunix entrypoint - called by compiler startup
  *---------------------------------------------------------------------------
  */
 main(argc,argv)
@@ -78,9 +75,10 @@ char *argv[];
     unsigned         amount;
 
 
-    /* copier arguments */
-    for (i = 0;(argv[i] && i < argc); i++)
+    /* copy arguments */
+    for (i = 0;(argv[i] && i < argc); i++) {
            GlobalArgv[i] = argv[i];
+    }
 
     GlobalArgv[0]    = "umain";
     GlobalArgv[argc] = NULLPTR;
@@ -88,18 +86,18 @@ char *argv[];
 
     _disable();
 
-    /* augmenter le nombre des Handles REELS possibles */
-    if (_setHandleCount(F_NSLOT))
+    /* increase number of possible handles */
+    if (_setHandleCount(F_NSLOT)) {
         return;
-
-    if (_getAllMem(&nb_paragraphes))
+    }
+    if (_getAllMem(&nb_paragraphes)) {
         return;
-
+    }
     maxaddr          = debaddr;
     FP_SEG(maxaddr) += (nb_paragraphes-1);
 
-    /*   calcul le nombre total de paragrafs et retire la taille
-     *   de la pile de la tache initiale
+    /* calculate total # of paragraphs and remove 
+     * the initial task0 stack size from it 
      */
 
     i             = 2048/16;
@@ -109,10 +107,10 @@ char *argv[];
     mp->mnext     = (struct mblock *)NULL;
     mp->mlen      =  paragrafs;
 
-    /*   initialise la tache initiale
-     *   ----------------------------
-     */
-
+    /* ------------------  
+     * initialize task0
+     * ------------------ */
+     
     tp = &Tasktab[TASK0];
     stack = _stackAlloc(i*16);
     tp->tstklen  = i * 16;
@@ -120,8 +118,10 @@ char *argv[];
     tp->tstate   = RUNNING;
     tp->tevent   = tp->tflag = 0;
 
-    for (i = 0; i < TNMLEN; i++)
+    for (i = 0; i < TNMLEN; i++) {
          tp->tname[i] = "idle"[i];
+    }
+
     RUNpid        = TASK0;
 /*    *(tp->tUstkbase) = MAGIC;*/
     tp->tprio    = 5;
@@ -142,36 +142,39 @@ char *argv[];
     tp->tITvalid = FALSE;
     fpanic       = FALSE;
 
-
-    /* mettre en place les E/S standards */
+    /* set standard I/O */
     _init_stream();
 
-    /* initialiser les  file descriptors */
-    for ( i = 0 ; i  < NFD ; i++)
-                             tp->tfd[i] = NULLSTREAM;
+    /* initialize file descriptors */
+    for ( i = 0 ; i  < NFD ; i++) {
+        tp->tfd[i] = NULLSTREAM;
+    }
 
-    /* enregistrer l'instant de demarrage */
+    /* record starting time */
     _getsystime(stime);
     _getsysdate(sdate);
 
-    _starttask0(stack);   /*  change l'adresse de pile de la tache task0
-                           *  on revient de _starttask0 lors du SHUTDOWN
-                           */
+    /* change task0 stack address. We will come back 
+     * from _starttask0 when dunix will shut down */
 
-    tty[VS0].wmode = FALSE; /* remettre fenetres inoperantes */
-    if ((ret = _disallocmem(debaddr)) != 0) { /* redonner toute la memoire au DOS */
+    _starttask0(stack);   
+
+    /* dunix is shutting down */
+
+    tty[VS0].wmode = FALSE; 
+    if ((ret = _disallocmem(debaddr)) != 0) { /* give back allocated memory to DOS */
         m_Printf(errFreeStr,ret);
         return;
     }
 
-    /* revenir au DOS en effa‡ant l'‚cran */
+    /* return to DOS after clearing screen */
     m_Putc('\x0c', 1);
     m_Gotoxy(0, 0);
     return;
 }
 
 /*---------------------------------------------------------------------------
- * task0 - process IDLE
+ * task0 - IDLE task
  *---------------------------------------------------------------------------
  */
 task0()
@@ -184,21 +187,17 @@ task0()
     int           _entryP(),_itdisk(), _int15(), _itcritical();
     int           interrupt _dummy_interrupt();
 
-    /* On peut utiliser les int 21h jusqu'… la modification
-     * des vecteurs d'interruption
-     */
+    /* we can use int 21h until we change the interrupt vectors */
     _disable();
     _sysinit();
 
-    /* placer directorie et drive par defaut */
+    /* set directory and default drive */
     Tasktab[0].tcurrdev = currDrive;
     memset(Tasktab[0].tcurrdir, 0, 64);
     fastcpy(Tasktab[0].tcurrdir, currWD, strlen(currWD));
 
 
-    /* placer les vecteurs d'interruptions gerant les
-     * signaux et les memoires de masse
-     */
+    /* set interrupt vectors handling signals and secondary memory */
     _sasVector(XENDIV0,_int_itDiv0,    &msdosv_div0);
     _sasVector(XENOVF, _itOverflow,&msdosv_ovf );
     _sasVector(XENILL, _int_itIllegal, &msdosv_ill );
@@ -207,25 +206,25 @@ task0()
     _sasVector(0x24, _itcritical, &msdosv_int24);
 /*    _sasVector(0x33, _dummy_interrupt, &msdosv_mou);*/
 
-    /* determiner le type de MACHINE */
+    /* determine the MACHINE type */
     Machine = *MachineID;
 
-    /* ignorer tous les signaux */
-    for (i=0;i<SIGNR;i++)
+    /* ignore all signals */
+    for (i=0;i<SIGNR;i++) {
          m_Signal(i,SIG_IGN);
+    }
 
-    /* mettre en place les E/S standards */
+    /* set standard I/O */
     fd = m_Open("/DEV/VS0", O_RDWR);
     m_Dup(fd);
     m_Dup(fd);
 
-    /*  lancer les taches systemes - ATTENTION  : toute modification
-     *  de l'ordre de construction des taches systemes entraine une
-     *  mise a jour des constantes d'Identification des taches dans
-     *  "proc.h"
-     */
-    _launch(_makeProcess(_scheduler  , SYS_TASK,2048 , 60 ,"kernel", 0 ),DIFFERED);
-    _launch(_makeProcess(_clockT     , SYS_TASK,2048 , 50 ,"clock", 0 ),IMMEDIAT);
+    /* start system tasks: WARNING: any change in the order of these tasks
+     * must be matched by changes in the values of each task's indentifier
+     * in the "proc.h" file */
+
+    _launch(_makeProcess(_scheduler  , SYS_TASK,2048 , 60 ,"kernel",  0 ),DIFFERED);
+    _launch(_makeProcess(_clockT     , SYS_TASK,2048 , 50 ,"clock",   0 ),IMMEDIAT);
     _launch(_makeProcess(_service    , SYS_TASK,1024 , 30 ,"request", 0 ),IMMEDIAT);
     _launch(_makeProcess(_ioTsk      , SYS_TASK,2048 , 20 ,"i/o"    , 0 ),IMMEDIAT);
     _launch(_makeProcess(_shutdown   , SYS_TASK,1024 , 55 ,"shtdwn" , 0 ),IMMEDIAT);
@@ -235,9 +234,7 @@ task0()
 
 
 
-    /* lancer la tache utilisateur apres avoir positionn‚ la directory
-     * de travail dans la table des USERS
-     */
+    /* start user task after setting the working directory in the USERS table */
     _doCursorShape(CURS_SMALL);
     _launch(_makeProcess(_entryP    , UMAIN_TASK, 4096, 10 ,"umain"   , 0 ),DIFFERED);
 
@@ -246,20 +243,21 @@ task0()
     /* IDLE loop */
     sysrun = 1;
     while (sysrun) {
-     /*             m_printf(" IDLE ");*/
-                  _swpProc();
+        _swpProc();
     }
 
     /* Normal Shutdown */
-FIN:
+END:
     _disable();
+
+    /* restore interrupt vectors */
     _rVector(XENCLOCK,msdosv_clk);
     _rVector(XENKBD  ,msdosv_kbd);
     _rVector(XENCOM  ,msdosv_com);
     _rVector(XENDIV0 ,msdosv_div0);
     _rVector(XENOVF  ,msdosv_ovf);
     _rVector(XENILL  ,msdosv_ill);
-/*    _rVector(0x15  ,  msdosv_int15);
+/*  _rVector(0x15  ,  msdosv_int15);
     _rVector(0x61  ,  msdosv_int61);*/
     _rVector(0x24  ,  msdosv_int24);
 
@@ -274,8 +272,8 @@ FIN:
 }
 
 /*---------------------------------------------------------------------------
- * _entryP - lancer la tache utilisateur apres avoir positionn‚ la directory
- *           de travail dans la table des USERS
+ * _entryP - start user task after setting the 
+ *           working directory in the USERS table
  *---------------------------------------------------------------------------
  */
 TASK _entryP()
@@ -284,8 +282,7 @@ TASK _entryP()
 }
 
 /*---------------------------------------------------------------------------
- * shutdown - sortir proprement de ulk - Les fichiers encore ouverts sont
- *            automatiquement ferm‚s par DOS
+ * shutdown - exit dunix - open files will be automatically closed by DOS
  *---------------------------------------------------------------------------
  */
 TASK _shutdown()
@@ -294,26 +291,27 @@ TASK _shutdown()
    int stat, i, ps;
    extern SEM iosem;
 
-   /* attente message de shutdown */
+   /* wait for shutdown message */
    m_Msgwait(&mess, -1, &stat);
 
    ps = _itDis();
    iorun = 0;
-   _setprio(E_S, 60);           /* s'assurer qu'une IO dos n'est pas en cours */
-   _sigsem(iosem, NOSCHEDUL);   /* reveiller le process manager d'E/S disque */
+   _setprio(E_S, 60);           /* make sure there is no current DOS I/O */
+   _sigsem(iosem, NOSCHEDUL);   /* wake up disk I/O handler */
    _itRes(ps);
 
-   /* attente message de shutdown depuis IOTASK */
+   /* wait for shutdown message from IOTASK */
    m_Msgwait(&mess, -1, &stat);
 
-   /* tuer les taches en cours */
+   /* kill current tasks */
    for (i=NSYSTASK; i<NTASK; i++) {
-        if (Tasktab[i].tstate == UNUSED)
+        if (Tasktab[i].tstate == UNUSED) {
             continue;
+        }
         _doKill(i);
    }
 
-   /* donner la main … la tache IDLE */
+   /* set IDLE task as highest priority to give it the CPU */
    ps = _itDis();
    _setprio(SCHEDULER, 0);
    sysrun = 0;
@@ -326,7 +324,7 @@ TASK _shutdown()
 
 
 /*---------------------------------------------------------------------------
- *  itDiv0 - interruption de division par 0
+ *  itDiv0 - division by 0 interrupt
  *---------------------------------------------------------------------------
  */
 _itDiv0()
@@ -336,17 +334,16 @@ _itDiv0()
    _itDis();
 
    if ((sigfunc = Tasktab[m_Getpid()].tevfunc[SIGDIV]) == SIG_DFL || \
-        sigfunc == SIG_IGN)
-        {
+        sigfunc == SIG_IGN) {
            sysmsg(errDiv0Str,Tasktab[m_Getpid()].tname);
            m_Exit(-1);
-        }
-        else
-           m_Kill(m_Getpid(),SIGDIV);
+    } else {
+        m_Kill(m_Getpid(),SIGDIV);
+    }
 }
 
 /*---------------------------------------------------------------------------
- *  itovf - interruption overflow
+ *  itovf - overflow interrupt
  *---------------------------------------------------------------------------
  */
 interrupt _itOverflow()
@@ -355,17 +352,16 @@ interrupt _itOverflow()
 
    _itDis();
    if ((sigfunc = Tasktab[m_Getpid()].tevfunc[SIGOVF]) == SIG_DFL || \
-        sigfunc == SIG_IGN)
-        {
+        sigfunc == SIG_IGN) {
            sysmsg(errOvfStr,Tasktab[m_Getpid()].tname);
            m_Exit(-1);
-        }
-        else
-           m_Kill(m_Getpid(),SIGOVF);
+    } else {
+        m_Kill(m_Getpid(),SIGOVF);
+    }
 }
 
 /*---------------------------------------------------------------------------
- *  itIllegal - interruption illegale instruction
+ *  itIllegal - illegal instruction interrupt
  *---------------------------------------------------------------------------
  */
 _itIllegal()
@@ -379,16 +375,10 @@ _itIllegal()
         sigfunc == SIG_IGN) {
         sysmsg(errIIStr,tp->tname,tp->tKstkbase);
         m_Exit(-1);
- /*     for (i=tp->tstklen;i > 0;i--)
-               m_Printf(" %lX",*(tp->tKstkbase-i));*/
-/*           _panic("\nexit from it ILLEGAL\n");
-        m_Exit(-1);*/
-        }
-        else
-           m_Kill(m_Getpid(),SIGILL);
+    } else {
+        m_Kill(m_Getpid(),SIGILL);
+    }
 }
 
-interrupt _dummy_interrupt()
-{
-}
+interrupt _dummy_interrupt() { }
 

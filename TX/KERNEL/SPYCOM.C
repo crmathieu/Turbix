@@ -1,4 +1,4 @@
-/* spycom.c commandes de l'interpreteur */
+/* spycom.c shell commands */
 
 
 #include "sys.h"
@@ -41,7 +41,7 @@ LOCAL    char *ev[] = {"sem","zom","msg","tms","pau","clk","sus","pip","wai","lc
 LOCAL    char *hproc[]  = {"dev", "pipe", "file"};
 
 /*-----------------------------------------------
- * c_copy  -  recopier un fichier  dans un autre
+ * c_copy  -  file copy
  *-----------------------------------------------
  */
 c_copy( argc, argv)
@@ -75,7 +75,7 @@ char *argv[];
 
 
 /*-----------------------------------------
- * c_type - lister le contenu d'un fichier
+ * c_type - display file content
  *-----------------------------------------
  */
 c_type( argc, argv)
@@ -238,7 +238,7 @@ char *argv[];
 
 
 /*----------------------------------------------------------------------
- * c_ps - (command ps) format and print process table information
+ * c_ps - (command ps) format and print task table information
  *----------------------------------------------------------------------
  */
 SHELLCOM c_ps(argc,argv)
@@ -315,15 +315,22 @@ c_mem()
 
     /* calculate current size of free memory and stack memory */
 
-    for (free = 0, mptr = memlist.mnext; mptr != (struct mblock *)NULL;
-         mptr = mptr->mnext)         free += mptr->mlen;
+    for (free = 0, mptr = memlist.mnext; 
+            mptr != (struct mblock *)NULL;
+                mptr = mptr->mnext) {
+        free += mptr->mlen;
+    }
 
     for (stkmem = 0, i = 0; i < NTASK; i++) {
-         if (Tasktab[i].tstate != UNUSED)
-             stkmem += (unsigned)Tasktab[i].tstklen;
+        if (Tasktab[i].tstate != UNUSED) {
+            stkmem += (unsigned)Tasktab[i].tstklen;
+        }
     }
-    for (i = 0,k = 0; i < NVS-1 ; i++)
-         if (tty[i].vsinit) k++;
+    for (i = 0,k = 0; i < NVS-1 ; i++) {
+        if (tty[i].vsinit) {
+            k++;
+        }
+    }
 
     free *= 16;
     avail1 = FP_SEG(maxaddr);
@@ -336,7 +343,7 @@ c_mem()
     m_Sprintf(str,"%lu   %7lu  %7lu  %7lu    %7lu\n",
                  avail1, avail2, stkmem, free, (long)(k * 4000));
     m_Printf(str);
-/*    m_Sprintf(str,"\nfree blocks           Address  |     Size   \n");
+/*  m_Sprintf(str,"\nfree blocks           Address  |     Size   \n");
     m_Sprintf(str,"                               | \n");
 
     for (mptr = memlist.mnext, i = 0; mptr != (struct mblock *)NULL;
@@ -358,46 +365,50 @@ c_more( argc, argv)
 int   argc;
 char *argv[];
 {
-     char c, buff[80];
-     int n, i, j, fdin, flag, s, nb, savPid;
-     struct window *pwin;
+    char c, buff[80];
+    int n, i, j, fdin, flag, s, nb, savPid;
+    struct window *pwin;
 
-     i = 0;
-     if ((fdin = m_Open(ttyname[s = _getSessionHandle()], O_RDWR)) == RERR)
-          return(RERR);
+    i = 0;
+    if ((fdin = m_Open(ttyname[s = _getSessionHandle()], O_RDWR)) == RERR) {
+        return(RERR);
+    }
 
-     flag = tty[s].wmode;
-     if (flag) {
-         pwin = tty[s].curwin;
-         nb = pwin->_maxy - 2;
-         savPid = pwin->_pid;
-     }
-     else
-         nb = 22;
+    flag = tty[s].wmode;
+    if (flag) {
+        pwin = tty[s].curwin;
+        nb = pwin->_maxy - 2;
+        savPid = pwin->_pid;
+    } else {
+        nb = 22;
+    }
 
-     while ((n = m_Read(0,buff,80)) > 0) {
-            j = 0;
-            while (n-->0) {
-                   putchar(c = buff[j++]);
-                   if (c == '\n')
-                       if (++i > nb) {
-                           i = 0;
-                           m_Printf(moreStr);
-                           if (flag)
-                                 (* winfunc[WIN_GETCH])(pwin);
-                           else
-                                 m_Sessiongetch(s);
-                       }
+    while ((n = m_Read(0,buff,80)) > 0) {
+        j = 0;
+        while (n-->0) {
+            putchar(c = buff[j++]);
+            if (c == '\n') {
+                if (++i > nb) {
+                    i = 0;
+                    m_Printf(moreStr);
+                    if (flag) {
+                        (* winfunc[WIN_GETCH])(pwin);
+                    } else {
+                        m_Sessiongetch(s);
+                    }
+                }
             }
-     }
-     if (n < 0)
+        }
+    }
+    if (n < 0) {
         m_perror("more");
-     m_Close(fdin);
-     if (flag) {
-         pwin->_pid    = savPid;
-         pwin->_flags |= W_SUSP;
-     }
-     return(ROK);
+    }
+    m_Close(fdin);
+    if (flag) {
+        pwin->_pid    = savPid;
+        pwin->_flags |= W_SUSP;
+    }
+    return(ROK);
 }
 
 /*--------
@@ -409,18 +420,18 @@ c_sem()
     int i, j;
 
     m_Printf("\nSEMAPHORE       COUNT       SID\n");
-    for ( i = j = 0; i<NSEM ; i++)
+    for ( i = j = 0; i<NSEM ; i++) {
         if (Semtab[i].sstate != SFREE ) {
-                j++;
-                m_Printf("%-8s        %3d          %2d\n",
-                           Semtab[i].sname, Semtab[i].semcnt, i);
+            j++;
+            m_Printf("%-8s        %3d          %2d\n",
+                     Semtab[i].sname, Semtab[i].semcnt, i);
         }
-
+    }
     m_Printf("\n%d semaphore(s) used\n", j);
 }
 
 /*--------
- * c_seml - Liste les processes bloques sur un semaphore donne
+ * c_seml - List tasks blocked on a given semaphore
  *--------
  */
 c_seml(argc, argv)
@@ -439,16 +450,16 @@ char *argv[];
         return(0);
     }
 
-    m_Printf("\nPROCESSES        PID\n");
+    m_Printf("\nTASKS        PID\n");
     for (j = 0, i = Sysq[Semtab[sem].sqhead].next; i != Semtab[sem].sqtail; i = Sysq[i].next) {
         j++;
         m_Printf("%-8s        %2d\n", Tasktab[i].tname, i);
     }
-    if (!j)
+    if (!j) {
         m_Printf("\nno process waiting for semaphore %d\n", sem);
-    else
+    } else {
         m_Printf("\n%d process(es) wait(s) for this semaphore\n", j);
-
+    }
 }
 
 /*--------
@@ -460,11 +471,12 @@ c_pipe()
     int i, j;
 
     m_Printf("\nPIPE ID       AVAIL\n");
-    for (i = j = 0; i < NPIPE ; i++)
+    for (i = j = 0; i < NPIPE ; i++) {
         if (Piptab[i].count != 0) {
-                j++;
-                m_Printf("%4d           %4d\n", i, Piptab[i].avail);
+            j++;
+            m_Printf("%4d           %4d\n", i, Piptab[i].avail);
         }
+    }
     m_Printf("\n%d pipe(s)\n", j);
 }
 /*--------
@@ -487,30 +499,32 @@ char *argv[];
         m_Printf("Bad pipe ID\n");
         return(0);
     }
-    for (i = 0; i < NPIPE; i++)
-        if (Piptab[i].pipe_nr == pipe)
+    for (i = 0; i < NPIPE; i++) {
+        if (Piptab[i].pipe_nr == pipe) {
                 break;
-
+        }
+    }
     if (i == NPIPE) {
         m_Printf("Bad pipe ID\n");
         return(0);
     }
-    m_Printf("\nPROCESS          PID            OPERATION\n");
+    m_Printf("\nTASKS          PID            OPERATION\n");
     for (j = 0, next = Sysq[piphead].next; next != piptail;) {
         next2 = Sysq[next].next;
         if ((tp = &Tasktab[next])->tpipe_nr == Piptab[i].pipe_nr) {
-                j++;
-                m_Printf("%-8s         %3d              %-6s\n", Tasktab[next].tname, next, _status[tp->tpipe_op]);
+            j++;
+            m_Printf("%-8s         %3d              %-6s\n", Tasktab[next].tname, next, _status[tp->tpipe_op]);
         }
         next = next2;
     }
-    if (!j)
+    if (!j) {
         m_Printf("\nno process suspended on pipe %d\n", pipe);
-    else
+    } else {
         m_Printf("\n%d process(es) suspended on this pipe\n", j);
+    }
 }
 /*--------
- * c_pipec - contenu d'un pipe
+ * c_pipec - pipe content
  *--------
  */
 c_pipec(argc, argv)
@@ -528,17 +542,19 @@ char *argv[];
         m_Printf("Bad pipe ID\n");
         return(0);
     }
-    for (i = 0; i < NPIPE; i++)
-        if (Piptab[i].pipe_nr == pipe)
-                break;
-
+    for (i = 0; i < NPIPE; i++) {
+        if (Piptab[i].pipe_nr == pipe) {
+            break;
+        }
+    }
     if (i == NPIPE) {
         m_Printf("Bad pipe ID\n");
         return(0);
     }
     m_Printf("\nPipe Contents:\n");
-    for (j=0; j < Piptab[i].avail; j++)
+    for (j=0; j < Piptab[i].avail; j++) {
         putchar(Piptab[i].pipzon[(Piptab[i].offR+j) % 4096]);
+    }
 }
 
 /*--------
@@ -555,44 +571,44 @@ char *argv[];
      struct taskslot *tp;
 
     if (argc != 2) {
-        m_Printf("\nuse : PROC <process ID>\n");
+        m_Printf("\nuse : TASK <task ID>\n");
         return(0);
     }
     pid = atoi(argv[1]);
     tp = &Tasktab[pid];
 
-    m_Printf("\nPROCESS %s", tp->tname);
+    m_Printf("\nTASK %s", tp->tname);
     m_Printf("\nHANDLE     TYPE     NAME\n");
-    for (slot = j = 0 ; slot < NFD ; slot++)
-       if ((sp = tp->tfd[slot]) == NULLSTREAM)
-                continue;
-       else {
-                switch(sp->s_streamtyp) {
-                case TTYSTREAM : typ = 0;hprocw = &tty[tp->tgrp].ttyname[0];break;
-                case PIPESTREAM: typ = 1;hprocw = NULLSTR;break;
-                case FILESTREAM: typ = 2;hprocw = &sp->s_ft->fname[0];break;
-                }
-                m_Printf("%3d        %4s     %s\n", slot, hproc[typ], hprocw);
-                j++;
-       }
-       m_Printf("\n%d handle(s) used\n", j);
+    for (slot = j = 0 ; slot < NFD ; slot++) {
+        if ((sp = tp->tfd[slot]) == NULLSTREAM) {
+            continue;
+        } else {
+            switch(sp->s_streamtyp) {
+            case TTYSTREAM : typ = 0;hprocw = &tty[tp->tgrp].ttyname[0];break;
+            case PIPESTREAM: typ = 1;hprocw = NULLSTR;break;
+            case FILESTREAM: typ = 2;hprocw = &sp->s_ft->fname[0];break;
+            }
+            m_Printf("%3d        %4s     %s\n", slot, hproc[typ], hprocw);
+            j++;
+        }
+        m_Printf("\n%d handle(s) used\n", j);
         switch (tp->tevent) {
-        case EV_SEM  : /* bloquee sur semaphore           */
-                       m_printf("semID = %d semName = %8s with count = %d\n",
-                       tp->tsem, Semtab[tp->tsem].sname, Semtab[tp->tsem].semcnt);
-                       break;
-        case EV_ZOM  :     /* attente prise en compte du pere */
-        case EV_MESS :     /* attente reception message       */
-        case EV_TMESS:     /* attente message avec tempo      */
-        case EV_PAUSE:     /* attente signal                  */
-        case EV_CLOCK:     /* attente fin de delais           */
-        case EV_SUSP :     /* attente d'introduction          */
-        case EV_PIPE :     /* attente sur pipe plein ou vide  */
-        case EV_WAIT :     /* attente exit du fils            */
-        case EV_LOCK :     /* attente sur file locking        */
+        case EV_SEM  :     /* blocked on semaphore                  */
+                        m_printf("semID = %d semName = %8s with count = %d\n",
+                        tp->tsem, Semtab[tp->tsem].sname, Semtab[tp->tsem].semcnt);
+                        break;
+        case EV_ZOM  :     /* wait to be handled by parent          */
+        case EV_MESS :     /* wait for message to receive           */
+        case EV_TMESS:     /* wait for message to recv with timeout */
+        case EV_PAUSE:     /* wait for signal                       */
+        case EV_CLOCK:     /* wait for end delay                    */
+        case EV_SUSP :     /* wait to start                         */
+        case EV_PIPE :     /* wait on empty or full pipe            */
+        case EV_WAIT :     /* wait for child to exit                */
+        case EV_LOCK :     /* wait on file lock                     */
         default      : break;
         }
-
+    }
 }
 /*--------
  * user_app

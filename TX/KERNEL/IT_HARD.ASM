@@ -1,9 +1,9 @@
 ;****************************************************************************
 ;*  IT_HARD.ASM                                                             *
 ;*                                                                          *
-;*  Gestion des interruptions HARDWARE : horloge , clavier , communication  *
+;*  Hardware interrupts management : clock, keyboard, serial com            *
 ;*                                                                          *
-;*  Autres modules ASSEMBLEUR :                                             *
+;*  Other ASSEMBLER modules:                                                *
 ;*                 VIDEO.ASM , GR.ASM , SYSTEM.ASM , CXTSWP.ASM             *
 ;*                                                                          *
 ;****************************************************************************
@@ -43,7 +43,7 @@ EXTRN  _msdosv_kbd : DWORD
 
 ;EXTRN  _curD : WORD
 
-; procedures d'interruption
+; interrupts handling
 PUBLIC  __itcom1
 PUBLIC __itclock
 PUBLIC __itkbd
@@ -56,7 +56,7 @@ PUBLIC __itcritical
 ;PUBLIC _itdisk
 ;PUBLIC _diskess
 
-; gestion masquage interruption
+; mask interrupt handling
 PUBLIC __activwait
 PUBLIC __disable
 PUBLIC __enable
@@ -73,7 +73,7 @@ _TEXT SEGMENT
 
 
 ;*
-;*  ACTIVWAIT - place le processeur en attente active
+;*  ACTIVWAIT - set CPU in active wait 
 ;*
 __activwait PROC FAR
     sti
@@ -82,8 +82,7 @@ P2: wait
 __activwait ENDP
 
 ;*
-;*   DISABLE - interdit toutes les IT et retourne la valeur du CCR
-;*             avant l'interdiction
+;*   DISABLE - blocks all interrupts and returns previous CCR value
 ;*
 __disable PROC FAR
     pushf
@@ -93,7 +92,7 @@ __disable PROC FAR
 __disable ENDP
 
 ;*
-;*   ENABLE - autorise toutes les IT
+;*   ENABLE - enables all interrupts
 ;*
 __enable PROC FAR
     sti
@@ -101,7 +100,7 @@ __enable PROC FAR
 __enable ENDP
 
 ;*
-;*   RESTORE(ps) - place dans le CCR la valeur de ps
+;*   RESTORE(ps) - set the CCR with the parameter value (in ps)
 ;*   int ps
 ;*
 __restore PROC FAR
@@ -115,7 +114,7 @@ __restore PROC FAR
 __restore ENDP
 
 ;*
-;*   ITCLOCK - interruption horloge (18 fois par seconde)
+;*   ITCLOCK - clock interrupt (18 times / second)
 ;*
 __itclock PROC FAR
      push ax
@@ -127,7 +126,7 @@ __itclock PROC FAR
      push si
      push es
      push ds
-;     mov ax,20h                ; debloquer le 8259
+;     mov ax,20h                ; unlock 8259
 ;     out 20h,ax
      mov ax,DGROUP
      mov ds,ax
@@ -138,7 +137,7 @@ __itclock PROC FAR
      dec _quantum
      jnz itclk10
 
-; 18 / QUANTUM  appels horloge par seconde
+; 18 / QUANTUM  calls / second
      mov ds:_quantum,QUANTUM
      call FAR PTR __clock
 
@@ -156,7 +155,7 @@ itclk10:
 __itclock ENDP
 
 ;*
-;*   ITKBD - interruption clavier
+;*   ITKBD - keyboard interrupt
 ;*
 __itkbd PROC FAR
      cli
@@ -195,7 +194,7 @@ _itkbd_fin:
 __itkbd  ENDP
 
 ;*
-;*   DOSITKBD - appel l'interruption clavier du DOS
+;*   DOSITKBD - DOS keyboard interrupt
 ;*
 __dositkbd PROC FAR
      push word ptr _msdosv_kbd+2  ;
@@ -206,7 +205,7 @@ __dositkbd PROC FAR
 __dositkbd  ENDP
 
 ;*
-;*  ITCOM1 - it communication circuit 1
+;*  ITCOM1 - communication circuit 1 interrupt
 ;*
 __itcom1 PROC FAR
       push ax
@@ -250,7 +249,7 @@ __itcritical PROC FAR
       push es
       push ax
 
-;     placer les parametres sur la pile
+;     set params on stack
       push ax
       push di
       push bp
@@ -276,14 +275,14 @@ __itcritical PROC FAR
 __itcritical ENDP
 
 ;*
-;*   CALL_IT - appeler la routine d'interruption passee en parametre
+;*   CALL_IT - calls the interrupt handler provided as a parameter
 ;*
 __call_it PROC FAR
      push bp
      mov bp,sp
      push es
      push bx
-     sub sp,4       ; reserver place pour variable locale de travail
+     sub sp,4       ; reserver space for necessary local variables
      les bx,arg1
      mov [bp-2],es
      mov [bp-4],bx
@@ -297,7 +296,7 @@ __call_it PROC FAR
 __call_it  ENDP
 
 ;*
-;*   ITDISK - interruption disk et floppy
+;*   ITDISK - disk and floppy interrupts
 ;*
 ;_itdisk2 PROC FAR
 ;     push ax
@@ -310,7 +309,7 @@ __call_it  ENDP
 ;     push es
 ;     push bp
 ;     mov bp,sp
-;     sub sp,4       ; reserver place pour variable locale de travail
+;     sub sp,4       ; reserver space for necessary local variables
 ;     mov ax,DGROUP
 ;     mov ds,ax
 ;     cmp _curD,2

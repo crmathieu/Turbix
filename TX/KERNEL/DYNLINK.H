@@ -1,4 +1,4 @@
-/* lien dynamique avec le window managing */
+/* dynamic link with window manager */
 #define  WIN_SELEC     0      /* wselect  */
 #define  WIN_BOX       1      /* box      */
 #define  WIN_TOUCH     2      /* wtouch   */
