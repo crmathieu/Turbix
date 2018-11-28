@@ -11,9 +11,9 @@
 
 long cxtswitching = 0L;
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
- * cxtswitch - number of process switching per second
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*----------------------------------------------------
+ * cxtswitch - number of task switching per second
+ *----------------------------------------------------
  */
 cxtswitch()
 {
@@ -57,9 +57,9 @@ cxtswitch()
 #define S_UP         4
 #define S_DWN        8
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*-------------
  * creatWindow
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *-------------
  */
 struct window *creatWindow(name,ink,paper,x,y,maxx,maxy)
 char *name;
@@ -68,14 +68,14 @@ char *name;
    int i,ps;
    pwin = newwin(maxy,maxx,y,x,ink,paper,name);
    wpush(pwin);
-   box(pwin,'º','Í');
+   box(pwin,'-','-');
    touchwin(pwin);
    return(pwin);
 }
 
-/*ÄÄÄÄÄÄÄ
+/*-------
  * wdemo
- *ÄÄÄÄÄÄÄ
+ *-------
  */
 wdemo()
 {
@@ -205,9 +205,9 @@ struct window *pwin, *stdscr;
 
 }
 
-/*ÄÄÄÄÄÄÄ
+/*-------
  * wSpy
- *ÄÄÄÄÄÄÄ
+ *-------
  */
 wSpy()
 {
@@ -216,9 +216,9 @@ wSpy()
 }
 
 
-/*ÄÄÄÄÄÄÄ
+/*-------
  * hanoi
- *ÄÄÄÄÄÄÄ
+ *-------
  */
 hanoi(pwin,n,a,b,c)
 struct window *pwin;
@@ -231,9 +231,9 @@ int *a,*b,*c;
    }
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄ
+/*----------
  * moveP
- *ÄÄÄÄÄÄÄÄÄÄ
+ *----------
  */
 moveP(pwin,polS,polT,size)
 struct window *pwin;
@@ -246,9 +246,9 @@ int *polS,*polT; /* source & target pole */
     polT[POLE_HIGHT]++;
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄ
+/*------------
  * starthanoi
- *ÄÄÄÄÄÄÄÄÄÄÄÄ
+ *------------
  */
 starthanoi(pwin)
 struct window *pwin;
@@ -265,14 +265,16 @@ struct window *pwin;
         pol[i][POLE_XCOOR] = (i-1)*BasePlate + i + BasePlate/2;
    }
    pol[1][POLE_HIGHT] = Nplates;   /* init left plate */
-   for (i=0; i<pwin->wsize; i++)
+   for (i=0; i<pwin->wsize; i++) {
         pwin->_wbuff[i] = (pwin->paper|pwin->ink)<<8;
-   for (i=0;i<Nplates; i++)
+   }
+   for (i=0;i<Nplates; i++) {
         drawp(pwin,
               pol[1][POLE_XCOOR]-(Nplates-i-1),
               pwin->_maxy-(2+i),
               2 * (Nplates-i) - 1,
               1);
+   }
    /* perform a global refresh */
    touchwin(pwin);
 
@@ -280,94 +282,98 @@ struct window *pwin;
    hanoi(pwin, Nplates, &pol[1], &pol[3], &pol[2]);
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄÄ
+/*-----------
  * move_vert
- *ÄÄÄÄÄÄÄÄÄÄÄ
+ *-----------
  */
 move_vert(pwin,pol,direction,size)
 struct window *pwin;
 int           *pol;
 {
    int j,ps;
-   if (direction == MOVEUP)
-       for (j=pwin->_maxy -(1+pol[POLE_HIGHT]); j>2 ;j--) {
-            ps = disable();
-            drawp(pwin,pol[POLE_XCOOR]-(size-1),j,2*size-1,0);
-            drawp(pwin,pol[POLE_XCOOR]-(size-1),j-1,2*size-1,1);
-            m_Sleep(0);
-            restore(ps);
-       }
-   else
-       for (j=2; j<pwin->_maxy -(2+pol[POLE_HIGHT]); j++) {
-            ps = disable();
-            drawp(pwin,pol[POLE_XCOOR]-(size-1),j,2*size-1,0);
-            drawp(pwin,pol[POLE_XCOOR]-(size-1),j+1,2*size-1,1);
-            m_Sleep(0);
-            restore(ps);
-       }
+        if (direction == MOVEUP) {
+                for (j=pwin->_maxy -(1+pol[POLE_HIGHT]); j>2 ;j--) {
+                        ps = disable();
+                        drawp(pwin,pol[POLE_XCOOR]-(size-1),j,2*size-1,0);
+                        drawp(pwin,pol[POLE_XCOOR]-(size-1),j-1,2*size-1,1);
+                        m_Sleep(0);
+                        restore(ps);
+                }
+        } else {
+                for (j=2; j<pwin->_maxy -(2+pol[POLE_HIGHT]); j++) {
+                        ps = disable();
+                        drawp(pwin,pol[POLE_XCOOR]-(size-1),j,2*size-1,0);
+                        drawp(pwin,pol[POLE_XCOOR]-(size-1),j+1,2*size-1,1);
+                        m_Sleep(0);
+                        restore(ps);
+                }
+        }
 }
 
-/*ÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+/*--------------
  * move_horizon
- *ÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ *--------------
  */
 move_horizon(pwin,polS,polT,size)
 struct window *pwin;
 int           *polS,*polT;
 {
-   int i,ps;
-   if (polS[POLE_XCOOR] < polT[POLE_XCOOR]) /* left to right */
-       for (i=polS[POLE_XCOOR]-(size-1);
-            i<polT[POLE_XCOOR]-(size-1) ;i++) {
-            ps = disable();
-            drawp(pwin,i,2,2*size-1,0);
-            drawp(pwin,i+1,2,2*size-1,1);
-            m_Sleep(0);
-            restore(ps);
-       }
-   else
-       for (i=polS[POLE_XCOOR]-(size-1);
-            i>polT[POLE_XCOOR]-(size-1) ;i--) {
-            ps = disable();
-            drawp(pwin,i,2,2*size-1,0);
-            drawp(pwin,i-1,2,2*size-1,1);
-            m_Sleep(0);
-            restore(ps);
-       }
+        int i,ps;
+        if (polS[POLE_XCOOR] < polT[POLE_XCOOR]) { /* left to right */
+                for (i=polS[POLE_XCOOR]-(size-1);
+                        i<polT[POLE_XCOOR]-(size-1) ;i++) {
+                        ps = disable();
+                        drawp(pwin,i,2,2*size-1,0);
+                        drawp(pwin,i+1,2,2*size-1,1);
+                        m_Sleep(0);
+                        restore(ps);
+                }
+        } else {
+                for (i=polS[POLE_XCOOR]-(size-1);
+                        i>polT[POLE_XCOOR]-(size-1) ;i--) {
+                        ps = disable();
+                        drawp(pwin,i,2,2*size-1,0);
+                        drawp(pwin,i-1,2,2*size-1,1);
+                        m_Sleep(0);
+                        restore(ps);
+                }
+        }
 }
 
-/*ÄÄÄÄÄÄÄ
+/*-------
  * drawp
- *ÄÄÄÄÄÄÄ
+ *-------
  */
 drawp(pwin,x,y,size,visible)
 struct window *pwin;
 {
-   int i,savink;
-   wmove(pwin,y,x);
-   savink = pwin->ink;
-   if (!visible)
-       pwin->ink = (pwin->paper>>4)&0x7f;
-
-   for (i=0; i<size; i++)
-        if (waddch(pwin, 219) == -1)  /* semi graphic character */
-                m_Exit(-1);
-   pwin->ink = savink;
-   wrefresh(pwin);
+        int i,savink;
+        wmove(pwin,y,x);
+        savink = pwin->ink;
+        if (!visible) {
+                pwin->ink = (pwin->paper>>4)&0x7f;
+        }
+        for (i=0; i<size; i++) {
+                if (waddch(pwin, 219) == -1) { /* semi graphic character */
+                        m_Exit(-1);
+                }
+        }
+        pwin->ink = savink;
+        wrefresh(pwin);
 }
 
-/*ÄÄÄÄÄÄ
+/*------
  * loop
- *ÄÄÄÄÄÄ
+ *------
  */
 loop(pwin)
 struct window *pwin;
 {
-   pwin->_flags |= W_GLOBALR;
-    while(TRUE) {
-          m_Printf("Dos Multitasking Kernel ");
-          m_Sleep(0);
-    }
+        pwin->_flags |= W_GLOBALR;
+        while(TRUE) {
+                m_Printf("Dos Multitasking Kernel ");
+                m_Sleep(0);
+        }
 }
 
 /*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Message >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/

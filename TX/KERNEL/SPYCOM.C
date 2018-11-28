@@ -48,27 +48,27 @@ c_copy( argc, argv)
 int   argc;
 char *argv[];
 {
-     unsigned char buff[512];
-     int n,i;
-     int fdsource,fdtarget;
+    unsigned char buff[512];
+    int n,i;
+    int fdsource,fdtarget;
 
-     if (argc != 3)
-     {
-         m_Printf("\nuse : copy [sourcefile] [targetfile]\n");
-         return;
-     }
-     putchar('\n');
-     if ((fdsource = m_Open(argv[1],O_RDONLY)) < 0) {
-          m_Perror("copy");
-          m_Exit(-1);
-     }
-     if ((fdtarget = m_Creat(argv[2],S_IREAD|S_IWRITE)) < -1) {
-          m_Perror("copy");
-          m_Exit(-1);
-     }
-     while ((n = m_Read(fdsource,buff,512)) > 0)
-             m_Write(fdtarget,buff,n);
-
+    if (argc != 3)
+    {
+        m_Printf("\nuse : copy [sourcefile] [targetfile]\n");
+        return;
+    }
+    putchar('\n');
+    if ((fdsource = m_Open(argv[1],O_RDONLY)) < 0) {
+        m_Perror("copy");
+        m_Exit(-1);
+    }
+    if ((fdtarget = m_Creat(argv[2],S_IREAD|S_IWRITE)) < -1) {
+        m_Perror("copy");
+        m_Exit(-1);
+    }
+    while ((n = m_Read(fdsource,buff,512)) > 0) {
+        m_Write(fdtarget,buff,n);
+    }
      m_Close(fdsource);
      m_Close(fdtarget);
 }
@@ -100,7 +100,7 @@ char *argv[];
      }
 /*     m_Lock(fd);*/
      while ((n = m_Read(fd,buff,512)) > 0) {
-        VS0printf("Type : ecriture...\n");
+        VS0printf("Type : writing...\n");
         m_Write(1, buff, n);
      }
 
@@ -109,8 +109,8 @@ char *argv[];
 }
 typeExit()
 {
-  m_Printf("\nTerminated by user : exit\n");
-  m_Exit(0);
+    m_Printf("\nTerminated by user : exit\n");
+    m_Exit(0);
 }
 
 /*----------------------
@@ -133,12 +133,11 @@ char *argv[];
 {
     int hs[5], i;
 
-     if (argc != 2)
-     {
-         m_Printf("\nuse : delay <n sec>\n");
-         return;
-     }
-     m_Sleep(atoi(argv[1]));
+    if (argc != 2) {
+        m_Printf("\nuse : delay <n sec>\n");
+        return;
+    }
+    m_Sleep(atoi(argv[1]));
 }
 
 
@@ -186,16 +185,17 @@ c_help()
     int i;
     int j,n;
     n = nb_command();
-    if ( (inc = (n + COLUMNS - 1) / COLUMNS) <= 0)
-         inc = 1;
-
+    if ( (inc = (n + COLUMNS - 1) / COLUMNS) <= 0) {
+        inc = 1;
+    }
     m_Printf(hlpStr);
     for (i = 0; i < inc && i < n; i++) {
-         m_Printf("  ");
-         for (j = i; j < n; j += inc)
-              m_Printf("%-16s", Commandtab[j].cmdName);
-         m_Printf("\n");
-         m_Sleep(0);
+        m_Printf("  ");
+        for (j = i; j < n; j += inc) {
+            m_Printf("%-16s", Commandtab[j].cmdName);
+        }
+        m_Printf("\n");
+        m_Sleep(0);
     }
     return(ROK);
 }
@@ -218,19 +218,18 @@ char *argv[];
     }
     pid = atoi(argv[1]);
     ps = _itDis();
-    for ( i = 3;i<NTASK;i++)
-        if (i == pid)
-        {
+    for ( i = 3;i<NTASK;i++) {
+        if (i == pid) {
            j = Tasktab[i].tppid;
-           if ( (status = _sendsig(j,SIGCLD,-1,i)) == RERR)
+           if ( (status = _sendsig(j,SIGCLD,-1,i)) == RERR) {
                 m_Printf(killOkStr, pid);
-           else
-           {
+           } else {
                 m_Printf(killNokStr, Tasktab[i].tname);
            }
            _itRes(ps);
            return(status);
         }
+    }
     m_Printf(badPidStr);
     _itRes(ps);
     return(RERR);
@@ -251,41 +250,47 @@ char *argv[];
     unsigned currstk;
     unsigned nbproc;
 
-    if (argc == 1) window = NSYSTASK;
-    else
-        if (*argv[1] == 'a')  window = 0;
-        else                  window = NSYSTASK;
-
+    if (argc == 1) {
+        window = NSYSTASK;
+    } else {
+        if (*argv[1] == 'a') {
+            window = 0;
+        } else {
+            window = NSYSTASK;
+        }
+    }
     putchar('\n');
     m_Printf("%s",ps1);
     ps = _itDis();
-    for (nbproc = 0, i = window; i < NTASK; i++)
-    {
-       if ((pptr = &Tasktab[i])->tstate == UNUSED)   continue;
-       nbproc++;
-       m_Printf( "%3s %4d   %4d   %3u   %5u   %-8s",
-               pstnams[pptr->tstate-1],
-               i,
-               pptr->tppid,
-               pptr->tprio,
-               pptr->tstklen,
-               pptr->tname);
+    for (nbproc = 0, i = window; i < NTASK; i++) {
+        if ((pptr = &Tasktab[i])->tstate == UNUSED) {
+            continue;
+        }
+        nbproc++;
+        m_Printf( "%3s %4d   %4d   %3u   %5u   %-8s",
+                pstnams[pptr->tstate-1],
+                i,
+                pptr->tppid,
+                pptr->tprio,
+                pptr->tstklen,
+                pptr->tname);
 
-       switch(pptr->tfd[1]->s_streamtyp) {
-              case PIPESTREAM :
-                   psw = hproc[1];break;
-              case TTYSTREAM  :
-                   psw = &tty[pptr->tfd[stdout]->s_minor].ttyname[0];
-                   break;
-              default         :
-                   psw = hproc[2];
-       }
-       m_Printf(" %-5s ", psw);
-       if (pptr->tstate == SLEEP)
-           p = ev[position(pptr->tevent)];
-       else
-           p = "...";
-       m_Printf("  %3s\n", p);
+        switch(pptr->tfd[1]->s_streamtyp) {
+            case PIPESTREAM :
+                psw = hproc[1];break;
+            case TTYSTREAM  :
+                psw = &tty[pptr->tfd[stdout]->s_minor].ttyname[0];
+                break;
+            default         :
+                psw = hproc[2];
+        }
+        m_Printf(" %-5s ", psw);
+        if (pptr->tstate == SLEEP) {
+            p = ev[position(pptr->tevent)];
+        } else {
+            p = "...";
+        }
+        m_Printf("  %3s\n", p);
     }
     _itRes(ps);
     m_Printf(psStr, nbproc);
@@ -293,10 +298,11 @@ char *argv[];
 
 static position(val)
 {
-   int i = 0;
-   while ((val = val >> 1) > 0)
-      i++;
-   return(i);
+    int i = 0;
+    while ((val = val >> 1) > 0) {
+        i++;
+    }
+    return(i);
 }
 
 
@@ -451,7 +457,9 @@ char *argv[];
     }
 
     m_Printf("\nTASKS        PID\n");
-    for (j = 0, i = Sysq[Semtab[sem].sqhead].next; i != Semtab[sem].sqtail; i = Sysq[i].next) {
+    for (j = 0, i = Sysq[Semtab[sem].sqhead].next; 
+            i != Semtab[sem].sqtail; 
+                i = Sysq[i].next) {
         j++;
         m_Printf("%-8s        %2d\n", Tasktab[i].tname, i);
     }
