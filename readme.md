@@ -41,7 +41,7 @@ To start the Multitasking Kernel for DOS application Development Interface, type
 
   Now, DUNIX is ready to be used.
 
-## DUNIX PROGRAMMING OVERVIEW      |
+## DUNIX PROGRAMMING OVERVIEW
 
 
 ### INTRODUCTION
