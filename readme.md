@@ -143,12 +143,14 @@ H - Exit windows mode
   1)    Create his application in the user entry point "umain". In
         such case, there is no possibility to control what the
         process does.
-
+```text
                    .-------------------.
                    |    APPLICATION    |
                    |-------------------|
                    |    K E R N E L    |
                    `-------------------'
+```
+
 ```C
         umain()
         {
@@ -185,6 +187,7 @@ H - Exit windows mode
                using spy command in the spy session to check how the
                application works.
 
+```text
               .---------------------------------------. available
               |user_app |spy tool1|spy tool2|spy toolN| commands
               |---------------------------------------|
@@ -192,6 +195,8 @@ H - Exit windows mode
               |---------------------------------------|
               |              K E R N E L              |
               `---------------------------------------'
+```
+
 ```C
           #include "const.h"
           umain(argc, argv)
@@ -283,6 +288,7 @@ H - Exit windows mode
   A process shifts from one state to another according to
   this diagram:
 
+```text
                               System call or
              .--------------. clock interrupt   .--------------.
              |  R E A D Y   |--------->---------| R U N N I N G|
@@ -290,19 +296,16 @@ H - Exit windows mode
              `--------------'                   `--------------'
                   |    | Event receipt               |    |
                   |    |                             |    |
-                  |    |    .---------------       |    |
+                  |    |    .---------------         |    |
        m_Fork     |    `-<--|  S L E E P   |----<----'    | m_Exit
                   |         |              |              |
                   |         `--------------' Waiting for  |
                   |                           an  Event   |
-                  |         .---------------            |
+                  |         .---------------              |
                   `------<--| U N U S E D  |----<---------'
                             |              |
                             `--------------'
-
-
-
-
+```
 
   A process will enter a SLEEP state when waiting for one of
   the following events:
@@ -359,8 +362,6 @@ H - Exit windows mode
   no other process will be ready to run.
 
 
-
-
   D) INTER PROCESS COMMUNICATION
 
 
@@ -385,8 +386,8 @@ H - Exit windows mode
   process execution as soon as the signal will be received by the
   process. This is an asynchronous IPC.
 
-
-     .----------          .---------.
+```text
+     .---------.            .---------.
      |Process 1|            |Process 2|
      |    -    |            |    -    |
      |    _    |            |Init sig |
@@ -394,12 +395,13 @@ H - Exit windows mode
      |    _    |            |    _    |
      |    _    |            |    _    |                      .----------.
      |       ===Send Signal====>     ======Soft interrupt===>|  Signal  |
-     |    _    |            |    <--------------------     |  action  |
+     |    _    |            |    <-------------------.       |  action  |
      |    _    |            |    _    |              |       |    __    |
      |    _    |            |    _    |              |       |    __    |
      `---------'            `---------'              |       `----------'
                                                      |             |
-						     `-------------'	
+						                                         `-------------'	
+```
 
 
   3)    Pipes
@@ -454,6 +456,7 @@ H - Exit windows mode
         one session is active, that is, owns physical screen and
         keyboard resources.
 
+```text
                   .-----------.
                .-----------.3 |
             .-----------.2 |  |
@@ -464,6 +467,7 @@ H - Exit windows mode
                                      |           |
                                      |  Session  |
                                      `-----------'
+```
 
 
         This session mechanism has been implemented in order to
