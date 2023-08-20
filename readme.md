@@ -643,9 +643,16 @@ H - Exit Windows mode
 
 
   H) EXIT WINDOWS MODE
-  To exit from windows mode and return to full-screen mode,
+  To exit from Windows mode and return to full-screen mode,
   the "m_endwin" function has to be called. It releases all resources
-  needed for windows mode and sets the session to full-screen mode.
+  needed for Windows mode and sets the session to full-screen mode.
+
+
+DEMO
+
+  
+
+https://github.com/crmathieu/Turbix/assets/6110399/bdfd0efb-2b1b-4ade-9d51-20d1aebbf442
 
 
 ----------------------------------------------------------------------------------
