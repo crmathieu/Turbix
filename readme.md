@@ -645,9 +645,16 @@ H - Exit Windows mode
 
 
 DEMO
-This demo is run from the Turbix editor (TI) from which a project can be created, built, and run. In this case,
-a "proj2.mke" makefile located in the TX/USR folder is used as a project to build. The 2 files used in the build
-are TX/USR/example2.c and TX/USR/sample.c. Example2.c contains the demo entry point (the declaration of the "umain"
+This demo is run from the Turbix editor (TI) from which a project can be created, built, and run. In this 
+case, a "demo.mke" makefile located in the TX/USR folder is used to build the project. Only 1 file is used (demo.c). 
+Demo.c contains the program's entry point (the declaration of the "umain"). This entry point runs a command interpreter 
+that includes a number of built-in Unix commands, such as ps, cls, kill, exit, mem, session, delay, etc... A complete list
+can be displayed by invoking the "help" command. Among the commands, one in particular is "user_app", which is a simple
+placeholder and can be used as a callback for a user-defined command that can be called via the interpreter. In our demo, 
+the demo.c file contains such a function. Its "user_app" function's job is to switch to "windows-mode" and create 6 processes, each
+containing a sub-window in which the Hanoi Tower algorithm is run. The parent also creates an additional process in charge
+of changing the focus among the windows running the Hanoi Tower code. The parent finally proceeds to change the locations of the windows 
+at regular intervals.
 
   
 
