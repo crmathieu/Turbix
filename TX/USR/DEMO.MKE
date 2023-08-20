@@ -1,0 +1,7 @@
+#
+# demo
+#
+
+demo.obj : demo.c
+
+demo.exe : demo.obj
