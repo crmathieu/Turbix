@@ -271,13 +271,11 @@ H - Exit Windows mode
 
         There are THREE possible values:
 
-        -  READY        The process is able to run but another
-                        Process is using the CPU
+        -  READY        The process is able to run but another process is using the CPU
 
         -  RUNNING      The process uses the CPU
 
-        -  SLEEP        The process is waiting for an event, a
-                        resource availability or a delay
+        -  SLEEP        The process is waiting for an event, a resource availability or a delay
 
   Note:
   There is a fourth state that corresponds to an uncreated process.
@@ -418,7 +416,7 @@ H - Exit Windows mode
   A process can synchronize its execution with other processes. There
   are several ways to realize this.
 
-  The first and simplest method is to wait for a process completion. A
+  The first and simplest method is to wait for process completion. A
   process creates a child process and waits for its death with the
   "m_Wait" system call. The parent process remains suspended during
   this time.
@@ -445,11 +443,9 @@ H - Exit Windows mode
 
         SESSION
 
-        a session is a virtual screen and keyboard. When a process
-        is created, it is always attached to a given session. The
-        kernel manages 10 sessions, but at a given instant, only
-        one session is active, that is, owns physical screen and
-        keyboard resources.
+        a session is a virtual screen and keyboard. When a process is created, it is always 
+        attached to a given session. The Kernel manages 10 sessions, but at a given instant, 
+        only one session is active, that is, owns the physical screen and keyboard resources.
 
 ```text
                   .-----------.
@@ -546,7 +542,7 @@ H - Exit Windows mode
   Note: When a child process inherits an open object, both processes
   (child and parent) use the same stream, in other words, they share
   not only the object but the object reference variable too (for
-  example: if the object is a file, child and parent processes will
+  example, if the object is a file, child and parent processes will
   share the same file pointer)
 
 
@@ -571,15 +567,15 @@ H - Exit Windows mode
 
 
   B) ENTER WINDOWS MODE
-  Before using any Windows functions, the session where windows will be
-  hosted has to be initialized in windows mode. The "m_initscr" function
+  Before using any Windows functions, the session where Windows will be
+  hosted has to be initialized in Windows mode. The "m_initscr" function
   performs this initialization.
 
-  All sessions can be set to windows mode at the same time.
+  All sessions can be set to Windows mode at the same time.
 
 
   C) WINDOW CREATION
-  When the session works in windows mode, the "m_newwin" function is
+  When the session works in Windows mode, the "m_newwin" function is
   used to define window parameters. The "m_box" function draws window
   borders when needed. After calling these functions, a window is
   created but it is not yet visible on the screen. To make a window
@@ -627,7 +623,7 @@ H - Exit Windows mode
 
 
   G) STANDARD SCREEN
-  When the session has been initialized in windows mode, the whole
+  When the session has been initialized in Windows mode, the whole
   screen is considered as a default window called "standard screen";
   this default window is a little bit different from other windows in
   the following ways:
@@ -635,7 +631,7 @@ H - Exit Windows mode
         - Drawing borders is not allowed
         - Pushing or popping this window is not allowed
 
-  Because initializing windows mode implicitly creates the default
+  Because initializing Windows mode implicitly creates the default
   window, it is already visible and doesn't need to be pushed.
 
   If the standard screen is needed, the "m_initStdscrPTR" function will
@@ -649,6 +645,9 @@ H - Exit Windows mode
 
 
 DEMO
+This demo is run from the Turbix editor (TI) from which a project can be created, built, and run. In this case,
+a "proj2.mke" makefile located in the TX/USR folder is used as a project to build. The 2 files used in the build
+are TX/USR/example2.c and TX/USR/sample.c. Example2.c contains the demo entry point (the declaration of the "umain"
 
   
 
