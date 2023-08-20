@@ -644,7 +644,7 @@ H - Exit Windows mode
   needed for Windows mode and sets the session to full-screen mode.
 
 
-DEMO
+### DEMO
 This demo is run from the Turbix editor (TI) from which a project can be created, built, and run. In this 
 case, a "demo.mke" makefile located in the TX/USR folder is used to build the project. Only 1 file is used (demo.c). 
 Demo.c contains the program's entry point (the declaration of the "umain"). This entry point runs a command interpreter 
