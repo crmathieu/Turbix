@@ -1,4 +1,4 @@
-# Dunix
+# Turbix
 A Dos based C library implementing Unix system calls
 
 ## PACKAGE COMPONENTS
@@ -6,7 +6,7 @@ This package is designed to work with the BORLAND C compiler, but doesn't includ
 
 ## DISK COMPONENTS
 - install.exe (installation program).
-- \TX\KERNEL directory which contains the DUNIX kernel libraries.
+- \TX\KERNEL directory which contains the TURBIX kernel libraries.
 - \TX\TI directory which contains executable and overlay development tools files.
 - \TX\TI\HELP directory which contains help files
 - \TX\USR directory which contains the kernel header files (.H) and where the user will have to create his program and header files
@@ -18,7 +18,7 @@ To start the Multitasking Kernel for DOS application Development Interface, type
 - TXSPY:   SPY library
 - TXWIN:   Windows library
 
-## Installing DUNIX is easy:
+## Installing TURBIX is easy:
 - Insert the diskette in any floppy and type "INSTALL.EXE"; this program creates the following directories on the hard disk:
                 \TX\KERNEL
                 \TX\USR
@@ -34,14 +34,14 @@ To start the Multitasking Kernel for DOS application Development Interface, type
         - C Libraries path          -> C:\TC\LIB
         - C Include path            -> C:\TC\INCLUDE
         - User path                 -> C:\TX\USR
-        - DUNIX header files path  -> C:\TX\USR
-        - DUNIX kernel             -> C:\TX\KERNEL
+        - TURBIX header files path  -> C:\TX\USR
+        - TURBIX kernel             -> C:\TX\KERNEL
         - Help files path           -> C:\TI\TI\HELP
 
 
-  Now, DUNIX is ready to be used.
+  Now, TURBIX is ready to be used.
 
-## DUNIX PROGRAMMING OVERVIEW
+## TURBIX PROGRAMMING OVERVIEW
 
 
 ### INTRODUCTION
@@ -78,7 +78,7 @@ H - Exit windows mode
 
   _Introduction_
 
-  DUNIX is a library including a multitasking kernel. The concepts provided are the same as those available on multitasking operating systems. This package enables the writing of multitasking applications in "C" language and binds them to the provided multitasking library. The result is a DOS executable that can run parallel tasks.
+  TURBIX is a library including a multitasking kernel. The concepts provided are the same as those available on multitasking operating systems. This package enables the writing of multitasking applications in "C" language and binds them to the provided multitasking library. The result is a DOS executable that can run parallel tasks.
 
   A) TERMINOLOGY
 
@@ -86,7 +86,7 @@ H - Exit windows mode
   contexts swapping, process creation, process deletion, files
   access, semaphores, signals, messages and pipes mechanisms.
 
-  The Mutitasking Kernel for Dos application (DUNIX) is composed
+  The Mutitasking Kernel for Dos application (TURBIX) is composed
   of a kernel and system calls that can be used by a process.
 
   A PROCESS is a program that has begun to run. It is composed
@@ -112,7 +112,7 @@ H - Exit windows mode
 
   C) KERNEL INITIALIZATION
 
-  When a DUNIX application starts, the kernel gets all the available
+  When a TURBIX application starts, the kernel gets all the available
   DOS memory, initializes its own memory management and builds the
   first process.
 
@@ -498,7 +498,7 @@ H - Exit windows mode
 
         FILE SYSTEM
 
-        DUNIX allows to use up to 255 different files at the same time
+        TURBIX allows to use up to 255 different files at the same time
         (set "files = 255" in the config.sys). The file system manages
         concurrent access to a same file from several processes. In order
         to prevent multi access when critical system calls are used (write
@@ -562,7 +562,7 @@ H - Exit windows mode
   WINDOWS
   -------
 
-  DUNIX includes a set of window functions close to the UNIX "curs"
+  TURBIX includes a set of window functions close to the UNIX "curs"
   functions. These functions are useful to build multitasking
   window applications.
 
@@ -660,8 +660,8 @@ H - Exit windows mode
   CONCLUSION
   ----------
 
-  DUNIX is an easy to use and powerful tool to understand the new
-  concepts introduced by the multitasking operating systems. DUNIX
+  TURBIX is an easy to use and powerful tool to understand the new
+  concepts introduced by the multitasking operating systems. TURBIX
   could be used not only as a pedagogic platform to procure skills
   for students in computer science, but for professional applications
   too. The user will find some programming examples in the source
