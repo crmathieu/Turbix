@@ -5,7 +5,7 @@ A Dos-based C library implementing Unix system calls through a built-in multitas
 This demo runs inside a DOS emulator program called DOSBOX. First, the Turbix editor (TI) from which a project can be created, built, 
 and run is invoked. A "project" in the form of a "demo.mke" makefile located in the TX/USR folder is used to build the demo. Only 1 file 
 is used (demo.c). Demo.c contains the program's entry point (the declaration of the "umain" function). This entry point runs a command 
-interpreter that includes a number of built-in Unix commands, such as ps, cls, kill, exit, mem, session, delay, etc... A complete list 
+interpreter that includes a number of built-in Unix commands, such as <b>ps, cls, kill, exit, mem, session, delay,</b> etc... A complete list 
 can be displayed by invoking the "help" command. Among the commands, one, in particular, is "user_app", which is a simple placeholder 
 and can be used as a callback for a user-defined command that can be called via the interpreter. In our demo, the demo.c file contains 
 such a function. Its "user_app" function's job is to switch to "windows-mode" and create 6 processes, each containing a sub-window in 
