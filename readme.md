@@ -62,37 +62,6 @@ To start the Multitasking Kernel for DOS application Development Interface, type
 ## TURBIX PROGRAMMING OVERVIEW
 
 
-### INTRODUCTION
-A - Terminology
-B - Package contents
-C - Kernel initialization
-D - Return to DOS
-E - Creating an application
-F - System processes
-
-### PROCESS MANAGEMENT
-A - Introduction
-B - Process states
-C - Process scheduling
-D - Interprocess communication
-E - Process synchronization
-
-### INPUT/OUTPUT
-A - Terminology
-B - Overview
-
-### WINDOWS
-A - Introduction
-B - Enter Windows mode
-C - Window creation
-D - Window focus
-E - Window Refresh
-F - Window deletion
-G - Standard screen
-H - Exit Windows mode
-
-----------------------------------------------------------------------------------
-
 
   _Introduction_
 
