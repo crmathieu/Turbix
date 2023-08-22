@@ -12,6 +12,9 @@ such a function. Its "user_app" function's job is to switch to "windows-mode" an
 which the Hanoi Tower algorithm is run. The parent also creates an additional process in charge of changing the focus among the windows 
 running the Hanoi Tower code. The parent finally proceeds to change the locations of the windows at regular intervals.
 
+Note: Because Turbix directly handles keyboard hardware interrupts, its behavior may interfere with the DOSBOX keyboard emulation. When this 
+happens, the result is usually skipped keystrokes. If you run Turbix on a genuine DOS OS, it should not be a problem.
+
 https://github.com/crmathieu/Turbix/assets/6110399/bdfd0efb-2b1b-4ade-9d51-20d1aebbf442
 
 
