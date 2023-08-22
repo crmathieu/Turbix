@@ -2,16 +2,15 @@
 A Dos-based C library implementing Unix system calls through a built-in multitasked kernel. Largely inspired by the book "The Xinu Operating System" authored by Douglas Comer.
 
 ## DEMO
-This demo is run from the Turbix editor (TI) from which a project can be created, built, and run. In this 
-case, a "demo.mke" makefile located in the TX/USR folder is used to build the project. Only 1 file is used (demo.c). 
-Demo.c contains the program's entry point (the declaration of the "umain"). This entry point runs a command interpreter 
-that includes a number of built-in Unix commands, such as ps, cls, kill, exit, mem, session, delay, etc... A complete list
-can be displayed by invoking the "help" command. Among the commands, one in particular is "user_app", which is a simple
-placeholder and can be used as a callback for a user-defined command that can be called via the interpreter. In our demo, 
-the demo.c file contains such a function. Its "user_app" function's job is to switch to "windows-mode" and create 6 processes, each
-containing a sub-window in which the Hanoi Tower algorithm is run. The parent also creates an additional process in charge
-of changing the focus among the windows running the Hanoi Tower code. The parent finally proceeds to change the locations of the windows 
-at regular intervals.
+This demo runs inside a DOS emulator program called DOSBOX. First, the Turbix editor (TI) from which a project can be created, built, 
+and run is invoked. A "project" in the form of a "demo.mke" makefile located in the TX/USR folder is used to build the demo. Only 1 file 
+is used (demo.c). Demo.c contains the program's entry point (the declaration of the "umain"). This entry point runs a command interpreter 
+that includes a number of built-in Unix commands, such as ps, cls, kill, exit, mem, session, delay, etc... A complete list can be displayed 
+by invoking the "help" command. Among the commands, one, in particular, is "user_app", which is a simple placeholder and can be used as a 
+callback for a user-defined command that can be called via the interpreter. In our demo, the demo.c file contains such a function. Its 
+"user_app" function's job is to switch to "windows-mode" and create 6 processes, each containing a sub-window in which the Hanoi Tower 
+algorithm is run. The parent also creates an additional process in charge of changing the focus among the windows running the Hanoi Tower 
+code. The parent finally proceeds to change the locations of the windows at regular intervals.
 
 https://github.com/crmathieu/Turbix/assets/6110399/bdfd0efb-2b1b-4ade-9d51-20d1aebbf442
 
